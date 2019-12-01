@@ -7,8 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <ResourceDictionary Source="/ProjectManagement;component/Resources/UI/ProgressBar/ProgressbarResource.xaml" />
-
+         
     </UserControl.Resources>
     <Grid>
         <!-- should disable on 2nd transition... -->

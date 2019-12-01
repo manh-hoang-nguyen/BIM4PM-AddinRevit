@@ -149,7 +149,7 @@
                 Content="Cancel"
                 Style="{StaticResource MHButton}" />
         </StackPanel>
-        <progressBar:CircularProgressBar Grid.RowSpan="2" Visibility="{Binding VisibilityProgressBar }" />
+        <progressBar:CircularProgressBar Grid.RowSpan="2" Visibility="{Binding VisibilityProgressBar, FallbackValue=Hidden}" />
 
 
     </Grid>

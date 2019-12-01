@@ -8,8 +8,7 @@
     
     mc:Ignorable="d">
     <UserControl.Resources>
-        <ResourceDictionary Source="/ProjectManagement;component/Resources/UI/ProgressBar/ProgressbarResource.xaml" />
-
+       
     </UserControl.Resources>
     <Grid>
         <!--  linear progress bars (the default style  -->
