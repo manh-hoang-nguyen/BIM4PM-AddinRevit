@@ -15,9 +15,9 @@
         {
             
             var same = RevitElementList.InCloud.Count == RevitElementList.InModel.Count && RevitElementList.InCloud.Keys.SequenceEqual(RevitElementList.InModel.Keys);
-            var keysDictionary1HasThat2DoesNot = RevitElementList.InCloud.Keys.Except(RevitElementList.InModel.Keys);
-            var keysDictionary2HasThat1DoesNot = RevitElementList.InModel.Keys.Except(RevitElementList.InCloud.Keys);
-            var xx = RevitElementList.InModel.Keys.Except(keysDictionary2HasThat1DoesNot);
+            var DeletedElementGuid = RevitElementList.InCloud.Keys.Except(RevitElementList.InModel.Keys);
+            var NewElementGuid = RevitElementList.InModel.Keys.Except(RevitElementList.InCloud.Keys);
+            var ElementToCheck = RevitElementList.InModel.Keys.Except(NewElementGuid);
         }
     }
 }

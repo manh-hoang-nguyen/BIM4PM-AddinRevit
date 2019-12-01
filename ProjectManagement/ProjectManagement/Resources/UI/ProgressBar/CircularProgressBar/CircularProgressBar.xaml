@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ProjectManagement;component/Resources/UI/ProgressBar/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="/ProjectManagement;component/Resources/UI/ProgressBar/ProgressbarResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

@@ -354,7 +354,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\UI\ProgressBar\ResourceDictionary.xaml">
+    <Page Include="Resources\UI\ProgressBar\ProgressbarResource.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
