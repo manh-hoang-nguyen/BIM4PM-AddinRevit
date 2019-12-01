@@ -1,0 +1,74 @@
+﻿<Window x:Class="ProjectManagement.FormInterface.frm_ModificationWatcher"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:ProjectManagement.FormInterface"
+        xmlns:xctk1="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        mc:Ignorable="d" 
+             Height="450" Width="450" Topmost="True" Name="EleWatcher" SizeChanged="EleWatcher_SizeChanged">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="BurlyWood"></Setter>
+            <Setter Property="Foreground" Value="Blue"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="BorderBrush" Value="White"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+         
+        <Grid.RowDefinitions>
+            <RowDefinition  ></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <WrapPanel>
+                <TextBlock HorizontalAlignment="Left" >Modified Element</TextBlock>
+                <Button   Grid.Row="1" Content="{Binding ModificationWatcher.NbrModifiedElement}"></Button>
+            </WrapPanel>
+             
+                <DataGrid Grid.Row="2" Name="dgModifiedElement"
+                          AlternatingRowBackground="#FFEEEEED"
+                          AutoGenerateColumns="False" VerticalGridLinesBrush="White" HorizontalGridLinesBrush="#FFB0B0B0" GridLinesVisibility="Horizontal">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                        <DataGridTextColumn Header="Category" Width="Auto" Binding="{Binding Category}"/>
+                        <DataGridTextColumn Header="Comment" Width="Auto" Binding="{Binding Comment}"/> 
+                    </DataGrid.Columns> 
+                </DataGrid>
+            
+          
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <WrapPanel>
+                <TextBlock HorizontalAlignment="Left"   >New Element</TextBlock>
+                <Button     Grid.Row="1" Content="{Binding ModificationWatcher.NbrNewElement}" ></Button>
+            </WrapPanel>
+         
+        </StackPanel>
+        <StackPanel  Grid.Row="2">
+            <WrapPanel>
+                <TextBlock HorizontalAlignment="Left" >Deleted Element</TextBlock>
+
+                <Button  Grid.Row="1" Content="{Binding ModificationWatcher.NbrDeletedElement}" ></Button>
+            </WrapPanel>
+         
+        </StackPanel>
+     
+      
+      
+
+     
+      
+      
+    </Grid>
+</Window>

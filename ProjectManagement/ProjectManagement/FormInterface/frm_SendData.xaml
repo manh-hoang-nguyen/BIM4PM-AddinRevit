@@ -1,0 +1,28 @@
+﻿<Window x:Class="ProjectManagement.FormInterface.frm_SendData"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjectManagement.FormInterface"
+             mc:Ignorable="d" 
+             Height="350"  Width="350">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Label>Select projet:</Label>
+            <ComboBox Name="cbxSelectProject"> </ComboBox>
+            <CheckBox Name="version">Monter en version</CheckBox>
+            <Label>Auteur:</Label>
+            <TextBox Name="auteur"></TextBox>
+            <Label>Comment:</Label>
+            <TextBox Name="comment" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
+           
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Button VerticalAlignment="Center" Click="Button_Click">Envoyer</Button>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+      None
+    </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B6A257CE-526C-4D67-A450-9A2895F187F0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProjectManagement</RootNamespace>
+    <AssemblyName>ProjectManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2019\Revit.exe</StartProgram>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2019\Revit.exe</StartProgram>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AdWindows">
+      <HintPath>C:\Program Files\Autodesk\Revit 2019\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HOK.Core">
+      <HintPath>C:\Users\NGUYEN\Documents\_Programmation\Divers\HOK-Revit-Addins-master\HOK.Core\HOK.Core\obj\Debug\HOK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Imaging, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RevitAPI">
+      <HintPath>$(ProgramW6432)\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>$(ProgramW6432)\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitUIAPI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitUIAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.cs" />
+    <Compile Include="CmdRevit\CmdCheckModel.cs" />
+    <Compile Include="CmdRevit\CmdCreateVersion.cs" />
+    <Compile Include="CmdRevit\CmdDeleteData.cs" />
+    <Compile Include="CmdRevit\CmdGetAllElement.cs" />
+    <Compile Include="CmdRevit\CmdGetComment.cs" />
+    <Compile Include="CmdRevit\CmdGetData.cs" />
+    <Compile Include="CmdRevit\CmdHidePanel.cs" />
+    <Compile Include="CmdRevit\CmdLogin.cs" />
+    <Compile Include="CmdRevit\CmdLogout.cs" />
+    <Compile Include="CmdRevit\CmdModificationWatcher.cs" />
+    <Compile Include="CmdRevit\CmdSendData.cs" />
+    <Compile Include="CmdRevit\CmdSendDeletedElement.cs" />
+    <Compile Include="CmdRevit\CmdSynchronization.cs" />
+    <Compile Include="CmdRevit\CmdTestProgressBar.cs" />
+    <Compile Include="CmdRevit\Utils\AvailabilityButton.cs" />
+    <Compile Include="CmdRevit\Utils\Compare.cs" />
+    <Compile Include="CmdRevit\Utils\PanelAvailability.cs" />
+    <Compile Include="Commun\CompareResult.cs" />
+    <Compile Include="Commun\ProjectCommun.cs" />
+    <Compile Include="Commun\RevitElementList.cs" />
+    <Compile Include="Commun\Route.cs" />
+    <Compile Include="Commun\Commun.cs" />
+    <Compile Include="Commun\ModificationTracker.cs" />
+    <Compile Include="Commun\UserData.cs" />
+    <Compile Include="Commun\VersionCommun.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\ComparisonController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserProjectController.cs" />
+    <Compile Include="Controllers\Utils\UtilHttp.cs" />
+    <Compile Include="Controllers\Utils\HttpAysnc.cs" />
+    <Compile Include="Controllers\VersionController.cs" />
+    <Compile Include="Controllers\ViewController.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormInterface\frm_CreateVersion.xaml.cs">
+      <DependentUpon>frm_CreateVersion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormInterface\frm_Login.xaml.cs">
+      <DependentUpon>frm_Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormInterface\frm_ModificationWatcher.xaml.cs">
+      <DependentUpon>frm_ModificationWatcher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormInterface\frm_ProgressBar.xaml.cs">
+      <DependentUpon>frm_ProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormInterface\frm_SelectProject.xaml.cs">
+      <DependentUpon>frm_SelectProject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormInterface\frm_SendData.xaml.cs">
+      <DependentUpon>frm_SendData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormInterface\frm_UpdateDataInCloud.xaml.cs">
+      <DependentUpon>frm_UpdateDataInCloud.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FormInterface\PanelProprety.xaml.cs">
+      <DependentUpon>PanelProprety.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comparison.cs" />
+    <Compile Include="MethodeRevitApi.cs" />
+    <Compile Include="Models\History.cs" />
+    <Compile Include="Models\Authentication.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\RevitElement.cs" />
+    <Compile Include="Models\Token.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserProject.cs" />
+    <Compile Include="Models\Version.cs" />
+    <Compile Include="Models\View.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\ArcEndPointConverter.cs" />
+    <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\ArcSizeConverter.cs" />
+    <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\CircularProgressBar.xaml.cs">
+      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\LargeArcConverter.cs" />
+    <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\LocalEx.cs" />
+    <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\NotZeroConverter.cs" />
+    <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\RotateTransformCentreConverter.cs" />
+    <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\StartPointConverter.cs" />
+    <Compile Include="Resources\Utils\BrushRoundConverter.cs" />
+    <Compile Include="Resources\Utils\DataGridAssist.cs" />
+    <Compile Include="Resources\Utils\EqualityToVisibilityConverter.cs" />
+    <Compile Include="Resources\Utils\Extensions.cs" />
+    <Compile Include="Resources\Utils\HintAssist.cs" />
+    <Compile Include="Resources\Utils\ListViewAssist.cs" />
+    <Compile Include="Resources\Utils\ListViewGridViewConverter.cs" />
+    <Compile Include="Resources\Utils\PasswordBoxMonitor.cs" />
+    <Compile Include="Resources\Utils\ControlzEx\PopupEx.cs" />
+    <Compile Include="Resources\Utils\ScrollViewerAssist.cs" />
+    <Compile Include="Resources\Utils\TextFieldHintVisibilityConverter.cs" />
+    <Compile Include="Resources\Utils\ValidationAssist.cs" />
+    <Compile Include="RevitUI.cs" />
+    <Compile Include="Routes\CommentRouter.cs" />
+    <Compile Include="Routes\ComparisonRouter.cs" />
+    <Compile Include="Routes\HistoryRouter.cs" />
+    <Compile Include="Routes\LoginRouter.cs" />
+    <Compile Include="Routes\ProjectRouter.cs" />
+    <Compile Include="Routes\UserRouter.cs" />
+    <Compile Include="Routes\VersionRouter.cs" />
+    <Compile Include="Routes\ViewRouter.cs" />
+    <Compile Include="Tools\Auth\LoginModel.cs" />
+    <Compile Include="Tools\Auth\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Auth\LoginViewModel.cs" />
+    <Compile Include="Tools\Project\ModelRequestHandler.cs" />
+    <Compile Include="Tools\Project\ProjectModel.cs" />
+    <Compile Include="Tools\Project\ProjectView.xaml.cs">
+      <DependentUpon>ProjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Project\ProjectViewModel.cs" />
+    <Compile Include="Utils\CastReponseAPI.cs" />
+    <Compile Include="Utils\ProgressBar\CircularProgressBar.xaml.cs">
+      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ProgressBar\HorizontalProgressBar.xaml.cs">
+      <DependentUpon>HorizontalProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ProgressBar\VerticalProgressBar.xaml.cs">
+      <DependentUpon>VerticalProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\RevitUtils\Compare.cs" />
+    <Compile Include="Utils\RevitUtils\DocumentUtils.cs" />
+    <Compile Include="Utils\RevitUtils\ElementUtils.cs" />
+    <Compile Include="Utils\RevitUtils\FilterUtils.cs" />
+    <Compile Include="Utils\RevitUtils\ParameterUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ProjectManagement.addin" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="FormInterface\frm_CreateVersion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormInterface\frm_Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormInterface\frm_ModificationWatcher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormInterface\frm_ProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormInterface\frm_SelectProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormInterface\frm_SendData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormInterface\frm_UpdateDataInCloud.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FormInterface\PanelProprety.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\BorderResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ButtonResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ComboBoxResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ListViewResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\MaterialDesignTheme.Shadows.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\MaterialDesignTheme.ValidationErrorTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\TextBlockResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\UI\ProgressBar\CircularProgressBar\CircularProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\UI\ProgressBar\ResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\PasswordResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\MaterialDesignTheme.Light.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\MaterialDesignTheme.Thumb.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\Auth\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\Project\ProjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utils\ProgressBar\CircularProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utils\ProgressBar\HorizontalProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utils\ProgressBar\VerticalProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CmdRevit\DockableWindow\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if exist "$(AppData)\Autodesk\REVIT\Addins\2019" copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\REVIT\Addins\2019"
+if exist "$(AppData)\Autodesk\REVIT\Addins\2019" copy "$(ProjectDir)$(OutputPath)*.dll" "$(AppData)\Autodesk\REVIT\Addins\2019"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="AfterClean">
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2019\ProjectManagement.addin" />
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2019\ProjectManagement.dll" />
+  </Target>
+</Project>

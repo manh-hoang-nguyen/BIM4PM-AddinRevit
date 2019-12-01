@@ -1,0 +1,15 @@
+﻿<ResourceDictionary
+    x:Class="ProjectManagement.Resources.BorderResource"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ProjectManagement.Resources"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Style x:Key="MHBorderTextBox" TargetType="Border">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="BorderBrush" Value="BlueViolet" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="3" />
+    </Style>
+</ResourceDictionary>

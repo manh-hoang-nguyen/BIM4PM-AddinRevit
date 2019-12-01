@@ -1,0 +1,98 @@
+﻿<Window
+    x:Class="ProjectManagement.Tools.Project.ProjectView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:ProjectManagement.Tools.Project"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Win"
+    Title="Projects"
+    Width="450"
+    Height="800"
+    mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding WindowLoaded}" CommandParameter="{Binding ElementName=Win}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding WindowClosed}" CommandParameter="{Binding ElementName=Win}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ProjectManagement;component/Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="/ProjectManagement;component/Resources/ComboBoxResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <TextBlock Style="{StaticResource MHHeader1}" Text="Welcome!" />
+            <TextBlock Style="{StaticResource MHHeader1}" Text="{Binding Path=User.name.lastName}" />
+            <Grid Height="50" Margin="3">
+                <Border CornerRadius="8" Style="{StaticResource MHBorderTextBox}">
+                    <ComboBox
+                        x:Name="Projects"
+                        DisplayMemberPath="name"
+                        ItemsSource="{Binding Projects}"
+                        Style="{StaticResource MHComboBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ProjectSelection}" CommandParameter="{Binding ElementName=Win}" />
+                            </i:EventTrigger>
+
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </Border>
+            </Grid>
+            <ListView
+                x:Name="Versions"
+                Margin="3"
+                ItemContainerStyle="{StaticResource MaterialDesignGridViewItem}"
+                ItemsSource="{Binding Versions}">
+
+                <ListView.View>
+                    <GridView>
+
+                        <GridViewColumn
+                            DisplayMemberBinding="{Binding version}"
+                            Header="Version"
+                            HeaderContainerStyle="{StaticResource {x:Type GridViewColumnHeader}}" />
+                        <GridViewColumn
+                            DisplayMemberBinding="{Binding description}"
+                            Header="Description"
+                            HeaderContainerStyle="{StaticResource {x:Type GridViewColumnHeader}}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Grid Height="50" Margin="3">
+                <Border CornerRadius="8" Style="{StaticResource MHBorderTextBox}">
+                    <ComboBox
+                        x:Name="Models"
+                        DisplayMemberPath="Title"
+                        ItemsSource="{Binding Documents}"
+                        Style="{StaticResource MHComboBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ModelSelection}" CommandParameter="{Binding ElementName=Win}" />
+                            </i:EventTrigger>
+
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </Border>
+
+            </Grid>
+            <Button
+                Height="50"
+                Command="{Binding GetData}"
+                CommandParameter="{Binding ElementName=Win}"
+                Style="{StaticResource MHButton}">
+                Test
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</Window>
