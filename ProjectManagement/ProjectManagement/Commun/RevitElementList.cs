@@ -9,6 +9,7 @@ namespace ProjectManagement.Commun
 {
    public class RevitElementList
     {
+        // Key is guid
         public static Dictionary<string,RevitElement> InModel;
         public static Dictionary<string, RevitElement> InCloud;
     }

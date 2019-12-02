@@ -108,12 +108,12 @@
         /// <returns>The <see cref="List{RevitElement}"/></returns>
         public List<RevitElement> GetRevitElementInCloud(Version version)
         {
-            RevitElementRoute route = new RevitElementRoute(ProjectCommun.CurrentProject._id);
+            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Ins.CurrentProject._id);
             RestRequest req = new RestRequest(route.url(), Method.GET);
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
             req.AddParameter("version", version.version);
-
+            
 
 
             IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
@@ -121,6 +121,21 @@
             RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content);
 
             return revitElements.data;
+        }
+        public void SendRevitElementToCloud ()
+        {
+            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Ins.CurrentProject._id);
+            RestRequest req = new RestRequest(route.url(), Method.POST);
+            req.AddHeader("Content-Type", "application/json");
+            req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
+
+            string body = JsonConvert.SerializeObject(RevitElementList.InModel);
+            req.RequestFormat = DataFormat.Json;
+
+            req.AddJsonBody(body);
+
+            IRestResponse res = Route.Client.Execute(req);
+
         }
     }
 }

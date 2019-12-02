@@ -5,7 +5,7 @@
 
     public class ParameterUtils
     {
-        public static string GetElementRevitParameters(Element e)
+        public static string SerializeRevitParameters(Element e)
         {
             string parameters = "";
             IList<Parameter> paraList = e.GetOrderedParameters();
@@ -14,13 +14,13 @@
             {
                 if(para.IsShared == false)
                 {
-                    parameters += string.Format("{0}={1}", para.Definition.Name, ParameterToString(para)) +";";
+                    parameters += string.Format("{0}:{1}={2}",para.Id, para.Definition.Name, ParameterToString(para)) +";";
                 }
             }
  
             return parameters;
         }
-        public static string GetElementSharedParameters(Element e)
+        public static string SerializeSharedParameters(Element e)
         {
             string parameters = "";
             IList<Parameter> paraList = e.GetOrderedParameters();
@@ -29,7 +29,7 @@
             {
                 if (para.IsShared == true)
                 {
-                    parameters += string.Format("{0}={1}", para.Definition.Name, ParameterToString(para)) + ";";
+                    parameters += string.Format("{0}:{1}={2}", para.Id, para.Definition.Name, ParameterToString(para)) + ";";
                 }
             }
 

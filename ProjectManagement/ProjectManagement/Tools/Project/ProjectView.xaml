@@ -92,6 +92,13 @@
                 Style="{StaticResource MHButton}">
                 Test
             </Button>
+            <Button
+                Height="50"
+                Command="{Binding SendData}"
+                CommandParameter="{Binding ElementName=Win}"
+                Style="{StaticResource MHButton}">
+                Test
+            </Button>
         </StackPanel>
 
     </Grid>

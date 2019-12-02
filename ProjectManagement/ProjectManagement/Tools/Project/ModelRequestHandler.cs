@@ -70,16 +70,16 @@
         private void GetRevitElementData(UIApplication app)
         {
             RevitElementList.InModel = new Dictionary<string, RevitElement>();
-            ProjectCommun.CurrentProject = new Project();
-            VersionCommun.CurrentVersion = new Models.Version();
+            
+           
 
             IList<Element> elements = FilterUtils.GetElementInProject(_doc);
             IList<Level> levels = ElementUtils.GetLevels(_doc);
             foreach (Element element in elements)
             {
                 string level = ElementUtils.GetElementLevel(levels, element);
-                string parameters = ParameterUtils.GetElementRevitParameters(element);
-                string sharedParameters = ParameterUtils.GetElementSharedParameters(element);
+                string parameters = ParameterUtils.SerializeRevitParameters(element);
+                string sharedParameters = ParameterUtils.SerializeSharedParameters(element);
                 string location = ElementUtils.SerializeLocation(element);
                 string boundingBox = ElementUtils.SerializeBoundingBox(element.get_BoundingBox(null));
                 string centroid = ElementUtils.SerializePoint(ElementUtils.GetCentroid(element));
@@ -88,7 +88,7 @@
 
                 RevitElement revitElement = new RevitElement()
                 {
-                    project = ProjectCommun.CurrentProject._id,
+                    project = ProjectProvider.Ins.CurrentProject._id,
                     version = VersionCommun.CurrentVersion._id,
                     guid = element.UniqueId,
                     name = element.Name,
@@ -101,6 +101,7 @@
                     location = location,
                     boundingBox = boundingBox,
                     centroid = centroid,
+                    volume = volume,
                     typeId = element.GetTypeId().ToString()
 
                 };

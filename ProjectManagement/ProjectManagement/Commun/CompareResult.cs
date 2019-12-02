@@ -9,9 +9,9 @@ namespace ProjectManagement.Commun
 {
    public class CompareResult
     {
-        public static IEnumerable<RevitElement> DeletedElements;
-        public static IEnumerable<RevitElement> ModifiedElements;
-        public static IEnumerable<RevitElement> NewElements;
-        public static IEnumerable<RevitElement> SameElements; 
+        public static IEnumerable<string> DeletedElements;
+        public static IEnumerable<string> ModifiedElements;
+        public static IEnumerable<string> NewElements;
+        public static IEnumerable<string> SameElements; 
     }
 }

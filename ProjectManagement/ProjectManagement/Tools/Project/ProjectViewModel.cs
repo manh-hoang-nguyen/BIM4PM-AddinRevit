@@ -19,7 +19,7 @@
         public ProjectModel Model { get; set; }
 
         public RelayCommand<Window> WindowLoaded { get; set; }
-
+        public RelayCommand<Window> SendData { get; set; }
         public User User
         {
             get => _user; set { _user = value; RaisePropertyChanged(); }
@@ -62,6 +62,7 @@
             ModelSelection = new RelayCommand<ProjectView>(OnModelSelection);
             ProjectSelection = new RelayCommand<ProjectView>(OnProjectSelection);
             GetData = new RelayCommand<ProjectView>(OnGetData);
+            SendData = new RelayCommand<Window>(OnSendData);
         }
 
         /// <summary>
@@ -96,9 +97,14 @@
 
             Model.GetParamterElement();
 
+             
+            win.Close();
            
         }
-
+        private void OnSendData(Window win)
+        {
+            Model.SendRevitElementToCloud();
+        }
         /// <summary>
         /// The OnModelSelection
         /// </summary>
@@ -114,15 +120,14 @@
         private async void OnProjectSelection(ProjectView win)
         {
             ProjectManagement.Models.Project selectedProject = win.Projects.SelectedItem as ProjectManagement.Models.Project;
-
-            ProjectCommun.CurrentProject = selectedProject;
-
+            ProjectProvider.Ins.CurrentProject = selectedProject;
+ 
             Task<List<ProjectManagement.Models.Version>> versionTask = Model.GetVersionAsync(selectedProject._id);
 
             List<ProjectManagement.Models.Version> versions = await versionTask;
 
             Versions = versions;
-
+           
             VersionCommun.CurrentVersion = versions[versions.Count - 1];
         }
     }

@@ -8,6 +8,7 @@ using ProjectManagement.Models;
 using System.Collections.Generic;
 using System.Threading;
 using ProjectManagement.Commun;
+using RestSharp;
 
 namespace ProjectManagement.CmdRevit
 {
@@ -20,8 +21,7 @@ namespace ProjectManagement.CmdRevit
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-           
-          
+            /*
             List<Comparison> data = new List<Comparison>();
             frm_SendData dialog = new frm_SendData();
             dialog.ShowDialog();
@@ -75,10 +75,11 @@ namespace ProjectManagement.CmdRevit
                 thread.Start();
 
                 Initialize(); //Empty list element changed
-                */
+                */ 
+                 
                 return Result.Succeeded;
-            }
-            else return Result.Cancelled;
+            //}
+            //else return Result.Cancelled;
         }
         void Initialize()
         {

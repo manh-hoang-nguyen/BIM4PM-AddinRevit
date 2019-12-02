@@ -147,7 +147,7 @@
     <Compile Include="CmdRevit\Utils\Compare.cs" />
     <Compile Include="CmdRevit\Utils\PanelAvailability.cs" />
     <Compile Include="Commun\CompareResult.cs" />
-    <Compile Include="Commun\ProjectCommun.cs" />
+    <Compile Include="Commun\ProjectProvider.cs" />
     <Compile Include="Commun\RevitElementList.cs" />
     <Compile Include="Commun\Route.cs" />
     <Compile Include="Commun\Commun.cs" />

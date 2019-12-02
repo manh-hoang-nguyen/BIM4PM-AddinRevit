@@ -7,6 +7,9 @@ using ProjectManagement.FormInterface;
 using System.Collections.Generic;
 using System;
 using ProjectManagement.Utils.RevitUtils;
+using Newtonsoft.Json;
+using RestSharp;
+using ProjectManagement.Commun;
 
 namespace ProjectManagement.CmdRevit
 {
@@ -15,6 +18,19 @@ namespace ProjectManagement.CmdRevit
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            
+           
+            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Ins.CurrentProject._id);
+            RestRequest req = new RestRequest(route.url(), Method.POST);
+            req.AddHeader("Content-Type", "application/json");
+            req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
+
+            string body = JsonConvert.SerializeObject(RevitElementList.InModel);
+            req.RequestFormat = DataFormat.Json;
+
+            req.AddJsonBody(body);
+
+            IRestResponse res = Route.Client.Execute(req);
             //    Thread thread = new Thread(new ThreadStart(() =>
             //    {
             //        // create and show the window
@@ -62,7 +78,7 @@ namespace ProjectManagement.CmdRevit
             // TaskDialog.Show("revit", xx);
             // double ind = 12;
 
-            TaskDialog.Show("KK", "KKKK");
+          
 
 
             return Result.Succeeded;
