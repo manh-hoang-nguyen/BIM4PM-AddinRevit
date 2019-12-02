@@ -1,0 +1,50 @@
+namespace TimeStamp
+{
+    class App : IExternalApplication
+    {
+        public Result OnStartup(UIControlledApplication a)
+        {
+            try
+            {
+                Assembly exe = Assembly.GetExecutingAssembly();
+//Assembly la gi: No la tap hop gom rat nhieu thu, nhung code en cours d'exécution
+
+
+                string dllpath = exe.Location; // tu assembly ta lay ra dc full path name cua file dll
+// thong thuong file dll se nam o muc addin, noi de khoi dong addin revit
+
+
+                string helpPath = Path.Combine(Path.GetDirectoryName(dllpath), "TimeStampHelp.html");
+//Path.GetDirectoryName(dllpath): chi lay ten folder chu dll
+                ContextualHelp help = new ContextualHelp(ContextualHelpType.ChmFile, helpPath);
+
+                //Create the panel for the TimeStamp
+                RibbonPanel TimeStampPanel = a.CreateRibbonPanel("Time Stamper");
+
+                //Add FSL Button
+                PushButtonData timeStampButton = new PushButtonData("TimeStampButton", "Stamp\r\nModel", dllpath, "TimeStamp.ModelTimeStamp");
+                timeStampButton.ToolTip = "Add Date and File information on every Revit model object.";
+                timeStampButton.LargeImage = Tools.GetEmbeddedImage("TimeStamp.Resources.TimeStamp_Large.png");
+                timeStampButton.Image = Tools.GetEmbeddedImage("TimeStamp.Resources.TimeStamp_Small.png");
+//LargeImage su dung mac dinh de hien thi
+//Small image chi hien thi khi di voi stackItem
+
+                timeStampButton.SetContextualHelp(help);
+                TimeStampPanel.AddItem(timeStampButton);
+
+                return Result.Succeeded;
+            }
+            catch
+            {
+                // Return Failure
+                return Result.Failed;
+            }
+            
+        }
+
+        public Result OnShutdown(UIControlledApplication a)
+        {
+            return Result.Succeeded;
+        }
+    }
+}

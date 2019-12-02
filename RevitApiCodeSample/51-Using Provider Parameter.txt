@@ -1,0 +1,33 @@
+// use the view filter
+
+      FilteredElementCollector collector
+        = new FilteredElementCollector(
+          doc, doc.ActiveView.Id );
+
+      // use the parameter filter.
+      // get the phase id "New construction"
+
+      ElementId idPhase = GetPhaseId(
+        "New Construction", doc );
+
+      ParameterValueProvider provider
+        = new ParameterValueProvider(
+          new ElementId( (int)
+            BuiltInParameter.PHASE_CREATED ) );
+
+      FilterNumericRuleEvaluator evaluator
+        = new FilterNumericEquals();
+
+      FilterElementIdRule rule
+        = new FilterElementIdRule(
+          provider, evaluator, idPhase );
+
+      ElementParameterFilter parafilter
+        = new ElementParameterFilter( rule );
+
+      collector.WherePasses( parafilter );
+
+      TaskDialog.Show( "Element Count",
+        "There are " + collector.Count().ToString()
+        + " elements in the current view created"
+        + " with phase New Construction" );

@@ -1,0 +1,14 @@
+ #region Retrieve all family names both standard and system
+    /// <summary>
+    /// Retrieve all family names both standard and system
+    /// </summary>
+    static IEnumerable<string> GetFamilyNames(
+      Document doc )
+    {
+      return new FilteredElementCollector( doc )
+        .OfClass( typeof( ElementType ) )
+        .Cast<ElementType>()
+        .Select<ElementType, string>( a => a.FamilyName )
+        .Distinct<string>();
+    }
+    #endregion // Retrieve all family names both standard and system

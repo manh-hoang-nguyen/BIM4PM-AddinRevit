@@ -1,0 +1,36 @@
+#region GetAllElementsUsingType
+    /// <summary>
+    /// Return the all elements that
+    /// use the given ElementType.
+    /// </summary>
+    static FilteredElementCollector
+      GetAllElementsUsingType(
+        Document doc,
+        ElementType et )
+    {
+      // Built-in parameter storing the type element id:
+
+      BuiltInParameter bip
+        = BuiltInParameter.ELEM_TYPE_PARAM;
+
+      ParameterValueProvider provider
+        = new ParameterValueProvider(
+          new ElementId( bip ) );
+
+      FilterNumericRuleEvaluator evaluator
+        = new FilterNumericEquals();
+
+      FilterRule rule = new FilterElementIdRule(
+        provider, evaluator, et.Id );
+
+      ElementParameterFilter filter
+        = new ElementParameterFilter( rule );
+
+      FilteredElementCollector collector
+        = new FilteredElementCollector( doc )
+          .WhereElementIsNotElementType()
+          .WherePasses( filter );
+
+      return collector;
+    }
+    #endregion // GetAllElementsUsingType

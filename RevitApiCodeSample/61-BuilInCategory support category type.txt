@@ -1,0 +1,189 @@
+#region Built-in categories supporting type parameters
+    static public BuiltInCategory[]
+      _bicAllowsBoundParametersAsType
+        = new BuiltInCategory[]
+        {
+          ///<summary>Analytical Links</summary>
+          BuiltInCategory.OST_LinksAnalytical,
+          ///<summary>Structural Connections</summary>
+          BuiltInCategory.OST_StructConnections,
+          ///<summary>Structural Fabric Areas</summary>
+          BuiltInCategory.OST_FabricAreas,
+          ///<summary>Structural Fabric Reinforcement</summary>
+          BuiltInCategory.OST_FabricReinforcement,
+          ///<summary>Rebar Shape</summary>
+          BuiltInCategory.OST_RebarShape,
+          ///<summary>Structural Path Reinforcement</summary>
+          BuiltInCategory.OST_PathRein,
+          ///<summary>Structural Area Reinforcement</summary>
+          BuiltInCategory.OST_AreaRein,
+          ///<summary>Structural Rebar</summary>
+          BuiltInCategory.OST_Rebar,
+          ///<summary>Pipe Placeholders</summary>
+          BuiltInCategory.OST_PlaceHolderPipes,
+          ///<summary>Duct Placeholders</summary>
+          BuiltInCategory.OST_PlaceHolderDucts,
+          ///<summary>Cable Tray Runs</summary>
+          BuiltInCategory.OST_CableTrayRun,
+          ///<summary>Conduit Runs</summary>
+          BuiltInCategory.OST_ConduitRun,
+          ///<summary>Conduits</summary>
+          BuiltInCategory.OST_Conduit,
+          ///<summary>Cable Trays</summary>
+          BuiltInCategory.OST_CableTray,
+          ///<summary>Conduit Fittings</summary>
+          BuiltInCategory.OST_ConduitFitting,
+          ///<summary>Cable Tray Fittings</summary>
+          BuiltInCategory.OST_CableTrayFitting,
+          ///<summary>Duct Linings</summary>
+          BuiltInCategory.OST_DuctLinings,
+          ///<summary>Duct Insulations</summary>
+          BuiltInCategory.OST_DuctInsulations,
+          ///<summary>Pipe Insulations</summary>
+          BuiltInCategory.OST_PipeInsulations,
+          ///<summary>Switch System</summary>
+          BuiltInCategory.OST_SwitchSystem,
+          ///<summary>Sprinklers</summary>
+          BuiltInCategory.OST_Sprinklers,
+          ///<summary>Lighting Devices</summary>
+          BuiltInCategory.OST_LightingDevices,
+          ///<summary>Fire Alarm Devices</summary>
+          BuiltInCategory.OST_FireAlarmDevices,
+          ///<summary>Data Devices</summary>
+          BuiltInCategory.OST_DataDevices,
+          ///<summary>Communication Devices</summary>
+          BuiltInCategory.OST_CommunicationDevices,
+          ///<summary>Security Devices</summary>
+          BuiltInCategory.OST_SecurityDevices,
+          ///<summary>Nurse Call Devices</summary>
+          BuiltInCategory.OST_NurseCallDevices,
+          ///<summary>Telephone Devices</summary>
+          BuiltInCategory.OST_TelephoneDevices,
+          ///<summary>Pipe Accessories</summary>
+          BuiltInCategory.OST_PipeAccessory,
+          ///<summary>Flex Pipes</summary>
+          BuiltInCategory.OST_FlexPipeCurves,
+          ///<summary>Pipe Fittings</summary>
+          BuiltInCategory.OST_PipeFitting,
+          ///<summary>Pipes</summary>
+          BuiltInCategory.OST_PipeCurves,
+          ///<summary>Piping Systems</summary>
+          BuiltInCategory.OST_PipingSystem,
+          ///<summary>Wires</summary>
+          BuiltInCategory.OST_Wire,
+          ///<summary>Flex Ducts</summary>
+          BuiltInCategory.OST_FlexDuctCurves,
+          ///<summary>Duct Accessories</summary>
+          BuiltInCategory.OST_DuctAccessory,
+          ///<summary>Duct Systems</summary>
+          BuiltInCategory.OST_DuctSystem,
+          ///<summary>Air Terminals</summary>
+          BuiltInCategory.OST_DuctTerminal,
+          ///<summary>Duct Fittings</summary>
+          BuiltInCategory.OST_DuctFitting,
+          ///<summary>Ducts</summary>
+          BuiltInCategory.OST_DuctCurves,
+          ///<summary>Mass</summary>
+          BuiltInCategory.OST_Mass,
+          ///<summary>Detail Items</summary>
+          BuiltInCategory.OST_DetailComponents,
+          ///<summary>Floors.Slab Edges</summary>
+          BuiltInCategory.OST_EdgeSlab,
+          ///<summary>Roofs.Gutters</summary>
+          BuiltInCategory.OST_Gutter,
+          ///<summary>Roofs.Fascias</summary>
+          BuiltInCategory.OST_Fascia,
+          ///<summary>Planting</summary>
+          BuiltInCategory.OST_Planting,
+          ///<summary>Structural Stiffeners</summary>
+          BuiltInCategory.OST_StructuralStiffener,
+          ///<summary>Specialty Equipment</summary>
+          BuiltInCategory.OST_SpecialityEquipment,
+          ///<summary>Topography</summary>
+          BuiltInCategory.OST_Topography,
+          ///<summary>Structural Trusses</summary>
+          BuiltInCategory.OST_StructuralTruss,
+          ///<summary>Structural Columns</summary>
+          BuiltInCategory.OST_StructuralColumns,
+          ///<summary>Structural Beam Systems</summary>
+          BuiltInCategory.OST_StructuralFramingSystem,
+          ///<summary>Structural Framing</summary>
+          BuiltInCategory.OST_StructuralFraming,
+          ///<summary>Structural Foundations</summary>
+          BuiltInCategory.OST_StructuralFoundation,
+          ///<summary>Site.Property Line Segments</summary>
+          BuiltInCategory.OST_SitePropertyLineSegment,
+          ///<summary>Site.Property Lines</summary>
+          BuiltInCategory.OST_SiteProperty,
+          ///<summary>Site.Pads</summary>
+          BuiltInCategory.OST_BuildingPad,
+          ///<summary>Site</summary>
+          BuiltInCategory.OST_Site,
+          ///<summary>Parking</summary>
+          BuiltInCategory.OST_Parking,
+          ///<summary>Plumbing Fixtures</summary>
+          BuiltInCategory.OST_PlumbingFixtures,
+          ///<summary>Mechanical Equipment</summary>
+          BuiltInCategory.OST_MechanicalEquipment,
+          ///<summary>Lighting Fixtures</summary>
+          BuiltInCategory.OST_LightingFixtures,
+          ///<summary>Furniture Systems</summary>
+          BuiltInCategory.OST_FurnitureSystems,
+          ///<summary>Electrical Fixtures</summary>
+          BuiltInCategory.OST_ElectricalFixtures,
+          ///<summary>Electrical Equipment</summary>
+          BuiltInCategory.OST_ElectricalEquipment,
+          ///<summary>Casework</summary>
+          BuiltInCategory.OST_Casework,
+          ///<summary>Railings.Terminations</summary>
+          BuiltInCategory.OST_RailingTermination,
+          ///<summary>Railings.Supports</summary>
+          BuiltInCategory.OST_RailingSupport,
+          ///<summary>Railings.Handrails</summary>
+          BuiltInCategory.OST_RailingHandRail,
+          ///<summary>Railings.Top Rails</summary>
+          BuiltInCategory.OST_RailingTopRail,
+          ///<summary>Stairs.Landings</summary>
+          BuiltInCategory.OST_StairsLandings,
+          ///<summary>Stairs.Runs</summary>
+          BuiltInCategory.OST_StairsRuns,
+          ///<summary>Curtain Systems</summary>
+          BuiltInCategory.OST_CurtaSystem,
+          ///<summary>Assemblies</summary>
+          BuiltInCategory.OST_Assemblies,
+          ///<summary>Levels</summary>
+          BuiltInCategory.OST_Levels,
+          ///<summary>Grids</summary>
+          BuiltInCategory.OST_Grids,
+          ///<summary>Walls.Wall Sweeps</summary>
+          BuiltInCategory.OST_Cornices,
+          ///<summary>Ramps</summary>
+          BuiltInCategory.OST_Ramps,
+          ///<summary>Curtain Wall Mullions</summary>
+          BuiltInCategory.OST_CurtainWallMullions,
+          ///<summary>Curtain Panels</summary>
+          BuiltInCategory.OST_CurtainWallPanels,
+          ///<summary>Generic Models</summary>
+          BuiltInCategory.OST_GenericModel,
+          ///<summary>Railings</summary>
+          BuiltInCategory.OST_StairsRailing,
+          ///<summary>Stairs</summary>
+          BuiltInCategory.OST_Stairs,
+          ///<summary>Columns</summary>
+          BuiltInCategory.OST_Columns,
+          ///<summary>Furniture</summary>
+          BuiltInCategory.OST_Furniture,
+          ///<summary>Ceilings</summary>
+          BuiltInCategory.OST_Ceilings,
+          ///<summary>Roofs</summary>
+          BuiltInCategory.OST_Roofs,
+          ///<summary>Floors</summary>
+          BuiltInCategory.OST_Floors,
+          ///<summary>Doors</summary>
+          BuiltInCategory.OST_Doors,
+          ///<summary>Windows</summary>
+          BuiltInCategory.OST_Windows,
+          ///<summary>Walls</summary>
+          BuiltInCategory.OST_Walls
+        };
+    #endregion // Built-in categories supporting type parameters

@@ -1,0 +1,84 @@
+//Get all element has material, not a view, level...
+
+
+
+[Transaction( TransactionMode.ReadOnly )]
+[Regeneration( RegenerationOption.Manual )]
+public class Lab2_2_ModelElements : IExternalCommand
+{
+  public Result Execute(
+    ExternalCommandData commandData,
+    ref string message,
+    ElementSet elements )
+  {
+    UIApplication app = commandData.Application;
+    Document doc = app.ActiveUIDocument.Document;
+ 
+    FilteredElementCollector collector
+      = new FilteredElementCollector( doc )
+        .WhereElementIsNotElementType();
+ 
+    List<string> a = new List<string>();
+ 
+    foreach( Element e in collector )
+    {
+      //  && null != e.Materials
+      //  && 0 < e.Materials.Size
+ 
+      if( null != e.Category
+        && e.Category.HasMaterialQuantities )
+      {
+        a.Add( string.Format(
+          "Category={0}; Name={1}; Id={2}",
+          e.Category.Name, e.Name, 
+          e.Id.IntegerValue ) );
+      }
+    }
+ 
+    LabUtils.InfoMsg( 
+      "Project contains {0} model element{1}{2}", a );
+ 
+    return Result.Failed;
+  }
+}
+
+
+
+
+private void GetAllCategories( 
+  List<Document> allDocuments )
+{
+  Dictionary<string, Category> categories 
+    = new Dictionary<string, Category>();
+ 
+  List<Element> elements = new List<Element>();
+ 
+  foreach( Document doc in allDocuments )
+  {
+    FilteredElementCollector collector 
+      = new FilteredElementCollector( doc );
+ 
+    collector
+      .WhereElementIsNotElementType()
+      .WhereElementIsViewIndependent()
+      .ToElements();
+ 
+    foreach( Element element in collector )
+    {
+      if( null != element.Category
+        && 0 < element.Parameters.Size
+        && (element.Category.HasMaterialQuantities 
+          || null != element.PhaseCreated) )
+      {
+        if( !categories.ContainsKey( 
+          element.Category.Name ) )
+        {
+          categories.Add( 
+            element.Category.Name, 
+            element.Category );
+        }
+        elements.Add( element );
+      }
+    }
+  }
+}

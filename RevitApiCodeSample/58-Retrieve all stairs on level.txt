@@ -1,0 +1,66 @@
+ #region Retrieve stairs on level
+    /// <summary>
+    /// Retrieve all stairs on a given level.
+    /// </summary>
+    FilteredElementCollector
+      GetStairsOnLevel(
+        Document doc,
+        Level level )
+    {
+      ElementId id = level.Id;
+
+      BuiltInCategory bic
+        = BuiltInCategory.OST_Stairs;
+
+      FilteredElementCollector collector
+        = new FilteredElementCollector( doc );
+
+      collector.OfCategory( bic );
+
+      // explicit iteration and manual
+      // checking of a property:
+
+      List<Element> stairs = new List<Element>();
+
+      foreach( Element e in collector )
+      {
+        if( e.LevelId.Equals( id ) )
+        {
+          stairs.Add( e );
+        }
+      }
+
+      // using LINQ:
+
+      IEnumerable<Element> stairsOnLevelLinq =
+        from e in collector
+        where e.LevelId.Equals( id )
+        select e;
+
+      // using an anonymous method:
+
+      IEnumerable<Element> stairsOnLevelAnon =
+        collector.Where<Element>( e
+          => e.LevelId.Equals( id ) );
+
+      // using a parameter filter:
+
+      BuiltInParameter bip
+        = BuiltInParameter.STAIRS_BASE_LEVEL_PARAM;
+
+      ParameterValueProvider provider
+        = new ParameterValueProvider(
+          new ElementId( bip ) );
+
+      FilterNumericRuleEvaluator evaluator
+        = new FilterNumericEquals();
+
+      FilterRule rule = new FilterElementIdRule(
+        provider, evaluator, id );
+
+      ElementParameterFilter filter
+        = new ElementParameterFilter( rule );
+
+      return collector.WherePasses( filter );
+    }
+    #endregion // Retrieve stairs on level

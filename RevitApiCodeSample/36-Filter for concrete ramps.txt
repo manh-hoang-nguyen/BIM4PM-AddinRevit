@@ -1,0 +1,41 @@
+#region Filter for concrete ramps
+    /// <summary>
+    /// Retrieve all ramps
+    /// </summary>
+    void f_ramps( Document doc )
+    {
+      FilteredElementCollector collector
+        = new FilteredElementCollector( doc )
+          .OfCategory( BuiltInCategory.OST_Ramps )
+          .WhereElementIsNotElementType();
+
+      foreach( Element e in collector )
+      {
+        Debug.Print( e.GetType().Name );
+      }
+    }
+
+    /// <summary>
+    /// Retrieve all concrete ramps
+    /// </summary>
+    IEnumerable<Element> findConcreteRamps( Document doc )
+    {
+      return new FilteredElementCollector( doc )
+        .WhereElementIsNotElementType()
+        .OfCategory( BuiltInCategory.OST_Ramps )
+        //.Where( e => e.Category.Id.IntegerValue.Equals( 
+        //  (int) BuiltInCategory.OST_Ramps ) )
+        .Where( e =>
+        {
+          ElementId id = e.GetValidTypes().First(
+            id2 => id2.Equals( e.GetTypeId() ) );
+
+          Material m = doc.GetElement( doc.GetElement( id )
+            .get_Parameter(
+              BuiltInParameter.RAMP_ATTR_MATERIAL )
+            .AsElementId() ) as Material;
+
+          return m.Name.Contains( "Concrete" );
+        } );
+    }
+    #endregion // Filter for concrete ramps

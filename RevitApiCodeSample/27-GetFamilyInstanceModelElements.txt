@@ -1,0 +1,28 @@
+IList<Element> GetFamilyInstanceModelElements( 
+  Document doc )
+{
+  ElementClassFilter familyInstanceFilter 
+    = new ElementClassFilter( 
+      typeof( FamilyInstance ) );
+
+  FilteredElementCollector familyInstanceCollector 
+    = new FilteredElementCollector( doc );
+
+  IList<Element> elementsCollection 
+    = familyInstanceCollector.WherePasses( 
+      familyInstanceFilter ).ToElements();
+
+  IList<Element> modelElements 
+    = new List<Element>();
+
+  foreach( Element e in elementsCollection )
+  {
+    if( ( null != e.Category )
+    && ( null != e.LevelId )
+    && ( null != e.get_Geometry( new Options() ) ) )
+    {
+      modelElements.Add( e );
+    }
+  }
+  return modelElements;
+}

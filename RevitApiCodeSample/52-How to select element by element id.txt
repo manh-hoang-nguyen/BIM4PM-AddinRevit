@@ -1,0 +1,49 @@
+//Select and highlight
+
+ICollection<ElementId> ids = new List<ElementId>();
+
+ids.Add(yourElement.Id);
+
+UIDocument uiDoc = new UIDocument(yourElement.Document);
+
+uiDoc.Selection.SetElementIds(ids); //--> Using this way to select element
+
+uiDoc.ShowElements(ids);
+
+
+
+
+
+private void ChangeSelection(UIDocument uidoc)
+{
+    // Get selected elements from current document.
+    ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
+
+    // Display current number of selected elements
+    TaskDialog.Show("Revit", "Number of selected elements: " + selectedIds.Count.ToString());
+
+    // Go through the selected items and filter out walls only.
+    ICollection<ElementId> selectedWallIds = new List<ElementId>();
+
+    foreach (ElementId id in selectedIds)
+    {
+        Element elements = uidoc.Document.GetElement(id);
+        if (elements is Wall)
+        {
+            selectedWallIds.Add(id);
+        }
+    }
+
+    // Set the created element set as current select element set.
+    uidoc.Selection.SetElementIds(selectedWallIds);
+
+    // Give the user some information.
+    if (0 != selectedWallIds.Count)
+    {
+        TaskDialog.Show("Revit", selectedWallIds.Count.ToString() + " Walls are selected!");
+    }
+    else
+    {
+        TaskDialog.Show("Revit","No Walls have been selected!");
+    }
+}

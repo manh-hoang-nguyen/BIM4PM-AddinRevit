@@ -1,0 +1,173 @@
+ #region Todd's sample code snippet
+    void f( Document doc )
+    {
+      Application app = doc.Application;
+
+      bool isInstanceBinding = false; // true = Instance, false = Type
+      bool bStatus = true;
+      string szBIC_Name = "OST_MechanicalEquipment";
+      Autodesk.Revit.DB.CategorySet catSet = app.Create.NewCategorySet();
+
+      if( isInstanceBinding )
+      {
+        BIC_AllowsBoundParametersAsInstance BIC_ToInsert;
+
+        if( Enum.TryParse<BIC_AllowsBoundParametersAsInstance>( szBIC_Name, out BIC_ToInsert ) )
+        {
+          catSet.Insert( doc.Settings.Categories.get_Item( (BuiltInCategory) BIC_ToInsert ) );
+        }
+        else
+        {
+          // Invalid Category
+          bStatus = false;
+        }
+        //else ?
+        {
+          BIC_AllowsBoundParametersAsType BIC_ToInsert2;
+
+          if( Enum.TryParse<BIC_AllowsBoundParametersAsType>( szBIC_Name, out BIC_ToInsert2 ) )
+          {
+            catSet.Insert( doc.Settings.Categories.get_Item( (BuiltInCategory) BIC_ToInsert2 ) );
+          }
+          else
+          {
+            // Invalid Category
+            bStatus = false;
+          }
+        }
+
+        if( bStatus )
+        {
+          Autodesk.Revit.DB.Binding binding = isInstanceBinding
+            ? app.Create.NewTypeBinding( catSet ) as Autodesk.Revit.DB.Binding
+            : app.Create.NewInstanceBinding( catSet ) as Autodesk.Revit.DB.Binding;
+
+          //BuiltInParameterGroup parameterGroup;
+          Definition def = null;
+
+          doc.ParameterBindings.Insert( def, binding );
+        }
+        else
+        {
+          // Notify User Invalid Category was given....
+        }
+
+        // test for enum equlity
+
+        string szMessage = string.Empty;
+
+        // Without cast
+        if( BuiltInCategory.OST_MechanicalEquipment.Equals( BIC_AllowsBoundParametersAsType.OST_MechanicalEquipment ) )
+        {
+          szMessage = "We are Equal";
+        }
+        else
+        {
+          // we get here
+          szMessage = "We are not Equal";
+        }
+        //MessageBox.Show( szMessage );
+
+        // With cast
+        if( BuiltInCategory.OST_MechanicalEquipment.Equals( (BuiltInCategory) BIC_AllowsBoundParametersAsType.OST_MechanicalEquipment ) )
+        {
+          // we get here
+          szMessage = "We are Equal";
+        }
+        else
+        {
+          szMessage = "We are not Equal";
+        }
+        //MessageBox.Show( szMessage );
+      }
+    }
+    #endregion // Todd's sample code snippet
+
+    static readonly Dictionary<BuiltInCategory, BuiltInCategory>
+      _bicSupportsTypeParameters
+        = _bicAllowsBoundParametersAsType
+          .ToDictionary<BuiltInCategory, BuiltInCategory>(
+            c => c );
+
+    static readonly Dictionary<BuiltInCategory, BuiltInCategory>
+      _bicSupportsInstanceParameters
+        = _bicAllowsBoundParametersAsInstance
+          .ToDictionary<BuiltInCategory, BuiltInCategory>(
+            c => c );
+
+    /// <summary>
+    /// Return true if the given built-in 
+    /// category supports type parameters.
+    /// </summary>
+    static bool BicSupportsTypeParameters(
+      BuiltInCategory bic )
+    {
+      return _bicSupportsTypeParameters.ContainsKey(
+        bic );
+    }
+
+    /// <summary>
+    /// Return true if the given built-in 
+    /// category supports instance parameters.
+    /// </summary>
+    static bool BicSupportsInstanceParameters(
+      BuiltInCategory bic )
+    {
+      return _bicSupportsInstanceParameters.ContainsKey(
+        bic );
+    }
+
+    static string SupportsOrNotString( bool b )
+    {
+      return b
+        ? "supports"
+        : "does not support";
+    }
+
+    public Result Execute(
+      ExternalCommandData revit,
+      ref string message,
+      ElementSet elements )
+    {
+      UIApplication uiapp = revit.Application;
+      UIDocument uidoc = uiapp.ActiveUIDocument;
+      Document doc = uidoc.Document;
+
+      int nCategories = 0;
+      int nSupportType = 0;
+      int nSupportInstance = 0;
+      bool bType, bInstance;
+
+      foreach( BuiltInCategory bic in
+        Enum.GetValues( typeof( BuiltInCategory ) ) )
+      {
+        bType = BicSupportsTypeParameters( bic );
+        bInstance = BicSupportsInstanceParameters( bic );
+
+        ++nCategories;
+        nSupportType += bType ? 1 : 0;
+        nSupportInstance += bInstance ? 1 : 0;
+
+        Debug.Print( "{0} {1} instance and {2} type parameters",
+          bic,
+          SupportsOrNotString( bInstance ),
+          SupportsOrNotString( bType ) );
+      }
+
+      string caption = "Categories supporting type "
+        + "and instance parameters";
+
+      string msg = string.Format(
+        "Tested {0} built-in categories "
+        + "in total, {1} supporting instance and {2} "
+        + "supporting type parameters.", nCategories,
+        nSupportInstance, nSupportType );
+
+      Debug.Print( "\n" + caption + ":\n" + msg );
+
+      TaskDialog.Show( caption, msg );
+
+      return Result.Succeeded;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+   private CategorySet CreateCategoryList(Document doc, Application app)
+        {
+            CategorySet myCategorySet = app.Create.NewCategorySet();
+            Categories categories = doc.Settings.Categories;
+            Category materialCat = categories.get_Item(BuiltInCategory.OST_Materials);
+
+            foreach (Category c in categories)
+            {
+                if (c.AllowsBoundParameters && c.CategoryType == CategoryType.Model && c != materialCat)
+                {
+                    myCategorySet.Insert(c);
+                }
+            }
+
+            return myCategorySet;
+        }
+
+
+//version simple
+
+private CategorySet CreateCategoryList(
+    Document doc, 
+    Autodesk.Revit.ApplicationServices.Application app)
+{
+    CategorySet myCategorySet = app.Create.NewCategorySet();
+    Categories categories = doc.Settings.Categories;
+
+    foreach (Category c in categories)
+    {
+        if (c.AllowsBoundParameters 
+        && c.CategoryType == CategoryType.Model)
+        {
+            myCategorySet.Insert(c);
+        }
+    }
+
+    return myCategorySet;
+}

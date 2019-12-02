@@ -1,0 +1,71 @@
+private void AddSharedParameters(Application app, Document doc, CategorySet myCategorySet)
+        {
+            //Save the previous shared param file path
+            string previousSharedParam = app.SharedParametersFilename;
+
+            //Extract shared param to a txt file
+            string tempPath = System.IO.Path.GetTempPath();
+            string SPPath = Path.Combine(tempPath, "FileProperties.txt");
+
+            if (!File.Exists(SPPath))
+            {
+                //extract the familly
+                List<string> files = new List<string>();
+                files.Add("FileProperties.txt");
+                Tools.ExtractEmbeddedResource(tempPath, "TimeStamp.Resources", files);
+            }
+
+            //set the shared param file
+            app.SharedParametersFilename = SPPath;
+
+            //Retrive shared parameters
+            DefinitionFile myDefinitionFile = app.OpenSharedParameterFile();
+
+            DefinitionGroup definitionGroup = myDefinitionFile.Groups.get_Item("FileProperties");
+
+            foreach (Definition paramDef in definitionGroup.Definitions)
+            {
+                // Get the BingdingMap of current document.
+                BindingMap bindingMap = doc.ParameterBindings;
+
+                //the parameter does not exist
+                if (!bindingMap.Contains(paramDef))
+                {                
+                    //Create an instance of InstanceBinding
+                    InstanceBinding instanceBinding = app.Create.NewInstanceBinding(myCategorySet);
+
+                    bindingMap.Insert(paramDef, instanceBinding, BuiltInParameterGroup.PG_IDENTITY_DATA);
+                }
+                //the parameter is not added to the correct categories
+                else if (bindingMap.Contains(paramDef))
+                {
+                    InstanceBinding currentBinding = bindingMap.get_Item(paramDef) as InstanceBinding;
+                    currentBinding.Categories = myCategorySet;
+                    bindingMap.ReInsert(paramDef,currentBinding, BuiltInParameterGroup.PG_IDENTITY_DATA);
+                }
+            }
+
+            //SetAllowVaryBetweenGroups for these parameters
+            string[] parameterNames = { "BIM42_Date", "BIM42_Version", "BIM42_File", "BIM42_Discipline" };
+
+            DefinitionBindingMapIterator definitionBindingMapIterator = doc.ParameterBindings.ForwardIterator();
+
+            definitionBindingMapIterator.Reset();
+
+            while (definitionBindingMapIterator.MoveNext())
+            {
+                InternalDefinition paramDef = definitionBindingMapIterator.Key as InternalDefinition;
+                if (paramDef != null)
+                {
+                    if (parameterNames.Contains(paramDef.Name))
+                    {
+                        paramDef.SetAllowVaryBetweenGroups(doc, true);
+                    }
+                }
+            }
+
+            //Reset to the previous shared parameters text file
+            app.SharedParametersFilename = previousSharedParam;
+            File.Delete(SPPath);
+
+        }

@@ -1,0 +1,36 @@
+// Loop through all pre-selected elements:
+
+      foreach( ElementId id in uidoc.Selection.GetElementIds() )
+      {
+        Element e = doc.GetElement( id );
+
+        string s = string.Empty;
+
+        // set this variable to false to analyse the element's own parameters,
+        // i.e. instance parameters for a family instance, and set it to true
+        // to analyse a family instance's type parameters:
+
+        bool analyseTypeParameters = false;
+
+        if( analyseTypeParameters )
+        {
+          if( e is FamilyInstance )
+          {
+            FamilyInstance inst = e as FamilyInstance;
+            if( null != inst.Symbol )
+            {
+              e = inst.Symbol;
+              s = " type";
+            }
+          }
+          else if( e is Wall )
+          {
+            Wall wall = e as Wall;
+            if( null != wall.WallType )
+            {
+              e = wall.WallType;
+              s = " type";
+            }
+          }
+          // ... add support for other types if desired ...
+        }

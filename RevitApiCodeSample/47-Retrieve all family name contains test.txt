@@ -1,0 +1,34 @@
+ #region Retrieve generic family symbols whose name contains "test"
+    /// <summary>
+    /// Retrieve generic family symbols whose name contains "test"
+    /// </summary>
+    static FilteredElementCollector
+      GetGenericFamilySymbolsNamedTest(
+        Document doc )
+    {
+      // Set up the parameter filter for the symbol name
+
+      ElementId id = new ElementId( BuiltInParameter
+        .ALL_MODEL_TYPE_NAME );
+
+      ParameterValueProvider provider
+        = new ParameterValueProvider( id );
+
+      FilterStringRuleEvaluator evaluator
+        = new FilterStringContains();
+
+      FilterRule rule = new FilterStringRule(
+        provider, evaluator, "test", false );
+
+      ElementParameterFilter filter
+        = new ElementParameterFilter( rule );
+
+      FilteredElementCollector genericSymbolsNamedTest
+        = new FilteredElementCollector( doc )
+          .OfClass( typeof( FamilySymbol ) )
+          .OfCategory( BuiltInCategory.OST_GenericModel )
+          .WherePasses( filter );
+
+      return genericSymbolsNamedTest;
+    }
+    #endregion // Retrieve generic family symbols whose name contains "test"

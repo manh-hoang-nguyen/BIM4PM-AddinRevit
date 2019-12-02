@@ -1,0 +1,97 @@
+ #region Lab4_4_1_CreatePerDocParameters
+  /// <summary>
+  /// Add and bind a visible and an invisible per-doc parameter.
+  /// </summary>
+  [Transaction( TransactionMode.Manual )]
+  public class Lab4_4_1_CreatePerDocParameters : IExternalCommand
+  {
+    public Result Execute(
+      ExternalCommandData commandData,
+      ref string message,
+      ElementSet elements )
+    {
+      UIApplication app = commandData.Application;
+      Document doc = app.ActiveUIDocument.Document;
+
+      if( doc.IsFamilyDocument )
+      {
+        message = "This command can only be used in a project, not in a family file.";
+        return Result.Failed;
+      }
+
+      using( Transaction tx = new Transaction( doc ) )
+      {
+        tx.Start( "Create per doc Parameters" );
+        // get the current shared params definition file
+        DefinitionFile sharedParamsFile = LabUtils.GetSharedParamsFile( app.Application );
+        if( null == sharedParamsFile )
+        {
+          message = "Error getting the shared params file.";
+          return Result.Failed;
+        }
+        // get or create the shared params group
+        DefinitionGroup sharedParamsGroup = LabUtils.GetOrCreateSharedParamsGroup(
+          sharedParamsFile, LabConstants.ParamGroupName );
+
+        if( null == sharedParamsGroup )
+        {
+          message = "Error getting the shared params group.";
+          return Result.Failed;
+        }
+        // visible param
+        Definition docParamDefVisible = LabUtils.GetOrCreateSharedParamsDefinition(
+          sharedParamsGroup, ParameterType.Integer, LabConstants.ParamNameVisible, true );
+
+        if( null == docParamDefVisible )
+        {
+          message = "Error creating visible per-doc parameter.";
+          return Result.Failed;
+        }
+        // invisible param
+        Definition docParamDefInvisible = LabUtils.GetOrCreateSharedParamsDefinition(
+          sharedParamsGroup, ParameterType.Integer, LabConstants.ParamNameInvisible, false );
+
+        if( null == docParamDefInvisible )
+        {
+          message = "Error creating invisible per-doc parameter.";
+          return Result.Failed;
+        }
+        // bind the param
+        try
+        {
+          CategorySet catSet = app.Application.Create.NewCategorySet();
+
+          catSet.Insert( doc.Settings.Categories.get_Item(
+            BuiltInCategory.OST_ProjectInformation ) );
+
+          Binding binding = app.Application.Create.NewInstanceBinding( catSet );
+          doc.ParameterBindings.Insert( docParamDefVisible, binding );
+          doc.ParameterBindings.Insert( docParamDefInvisible, binding );
+        }
+        catch( Exception e )
+        {
+          message = "Error binding shared parameter: " + e.Message;
+          return Result.Failed;
+        }
+        // set the initial values
+        // get the singleton project info element
+        Element projInfoElem = LabUtils.GetProjectInfoElem( doc );
+
+        if( null == projInfoElem )
+        {
+          message = "No project info element found. Aborting command...";
+          return Result.Failed;
+        }
+
+        // For simplicity, access params by name rather than by GUID
+        // and simply the first best one found under that name:
+
+        projInfoElem.LookupParameter( LabConstants.ParamNameVisible ).Set( 55 );
+        projInfoElem.LookupParameter( LabConstants.ParamNameInvisible ).Set( 0 );
+
+        tx.Commit();
+      }
+      return Result.Succeeded;
+    }
+  }
+  #endregion // Lab4_4_1_CreatePerDocParameters

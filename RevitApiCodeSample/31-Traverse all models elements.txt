@@ -1,0 +1,88 @@
+
+    #region Traverse all model elements top down Levels > Category > Family > Type > Instance
+    void TraverseInstances( Document doc )
+    {
+      FilteredElementCollector levels
+        = new FilteredElementCollector( doc )
+          .OfClass( typeof( Level ) );
+
+      foreach( Level level in levels )
+      {
+        // Now what?
+        // We could set up new filtered element 
+        // collectors for each level, but it would
+        // get complex and we would start repeating
+        // ourselves...
+      }
+
+      // Get all family instances and use those to
+      // set up dictionaries for all the required
+      // mappings in one fell swoop. In the end, we
+      // will need the following mappings:
+      // - level to all categories it hosts instances of
+      // - for each level and category, all families
+      // - family to its types
+      // - family type to instances
+
+      FilteredElementCollector instances
+        = new FilteredElementCollector( doc )
+          .OfClass( typeof( FamilyInstance ) );
+
+      // Top level map.
+
+      Dictionary<ElementId, // level
+        List<ElementId>> // categories
+          mapLevelToCategories = new
+          Dictionary<ElementId,
+            List<ElementId>>();
+
+      // What we really need is something like this.
+      // It will probably simplify things to implement
+      // a custom kind of dictionary for this to add 
+      // new entries very simply.
+
+      Dictionary<ElementId, // level
+        Dictionary<ElementId, // category
+          Dictionary<ElementId, // family
+            Dictionary<ElementId, // type
+              ElementId>>>> // instance
+                map = new Dictionary<ElementId,
+                  Dictionary<ElementId,
+                    Dictionary<ElementId,
+                      Dictionary<ElementId,
+                        ElementId>>>>();
+
+      foreach( FamilyInstance inst in instances )
+      {
+        Category cat = inst.Category;
+        Level lev = doc.GetElement( inst.LevelId ) as Level;
+        FamilySymbol sym = inst.Symbol;
+        Family fam = sym.Family;
+
+        Debug.Assert( null != cat, "expected valid category" );
+        Debug.Assert( null != lev, "expected valid level" );
+        Debug.Assert( null != sym, "expected valid symbol" );
+        Debug.Assert( null != fam, "expected valid family" );
+
+        if( map.ContainsKey( lev.Id ) )
+        {
+          mapLevelToCategories[ lev.Id ].Add( cat.Id );
+        }
+        else
+        {
+          // First time we encounter this level, 
+          // so start a new level.
+
+          List<ElementId> categoriesOnLevel
+            = new List<ElementId>( 1 );
+
+          categoriesOnLevel.Add( cat.Id );
+
+          mapLevelToCategories.Add( lev.Id,
+            categoriesOnLevel );
+        }
+
+        // Sort into families and types per level and category...
+      }
+    }
+    #endregion // Traverse all model elements top down Levels > Category > Family > Type > Instance

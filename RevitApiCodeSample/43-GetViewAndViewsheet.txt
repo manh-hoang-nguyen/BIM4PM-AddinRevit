@@ -1,0 +1,50 @@
+public static void GetViewsAndDrawingSheets1(
+      Document doc,
+      List<View> views,
+      List<ViewSheet> viewSheets )
+    {
+      FilteredElementCollector coll
+        = new FilteredElementCollector( doc );
+
+      coll.OfClass( typeof( View ) );
+
+      foreach( Element e in coll )
+      {
+        if( e is View )
+        {
+          View view = e as View;
+          if( null != view.CropBox )
+            views.Add( view );
+        }
+        else if( e is ViewSheet )
+        {
+          viewSheets.Add( e as ViewSheet );
+        }
+      }
+    }
+
+
+ public static void GetViewsAndDrawingSheets(
+      Document doc,
+      List<View> views,
+      List<ViewSheet> viewSheets )
+    {
+      FilteredElementCollector coll
+        = new FilteredElementCollector( doc );
+
+      coll.OfClass( typeof( View ) );
+
+      foreach( Element e in coll )
+      {
+        if( e is View )
+        {
+          View view = e as View;
+          if( !view.IsTemplate )
+            views.Add( view );
+        }
+        else if( e is ViewSheet )
+        {
+          viewSheets.Add( e as ViewSheet );
+        }
+      }
+    }

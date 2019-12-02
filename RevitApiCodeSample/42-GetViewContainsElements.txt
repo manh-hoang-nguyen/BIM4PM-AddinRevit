@@ -1,0 +1,37 @@
+ FilteredElementCollector GetViews( Document doc )
+    {
+      return new FilteredElementCollector( doc )
+        .OfClass( typeof( View ) );
+    }
+
+    public static List<View> GetElementViews(
+      List<Element> a,
+      List<View> views )
+    {
+      List<View> returnViews = new List<View>();
+      foreach( View view in views )
+      {
+        FilteredElementCollector coll
+          = new FilteredElementCollector(
+            view.Document, view.Id );
+
+        coll = coll.WhereElementIsNotElementType();
+
+        List<Element> elementList = coll.ToList();
+
+        foreach( Element e1 in a )
+        {
+          Element e2 = elementList.Where(
+            x => x.Id == e1.Id )
+            .FirstOrDefault();
+
+          if( e2 != null
+            && null == returnViews.Where(
+              x => x.Id == view.Id ).FirstOrDefault() )
+          {
+            returnViews.Add( view );
+          }
+        }
+      }
+      return returnViews;
+    }

@@ -1,0 +1,48 @@
+ 
+ #region 2.2 List all model elements:
+FilteredElementCollector collector
+          = new FilteredElementCollector( doc )
+            .WhereElementIsElementType();
+
+
+
+
+IList<Element> found
+          = collector
+            .WhereElementIsNotElementType()
+            .WhereElementIsViewIndependent()
+            .WherePasses( new LogicalOrFilter(
+              new ElementIsElementTypeFilter( false ),
+              new ElementIsElementTypeFilter( true ) ) )
+            .ToElements();
+
+
+
+FilteredElementCollector collector
+          = new FilteredElementCollector( doc );
+
+        collector
+          .WhereElementIsNotElementType()
+          .WhereElementIsViewIndependent()
+          .ToElements();
+
+
+
+FilteredElementCollector walls = new FilteredElementCollector( doc );
+      walls.OfClass( typeof( Wall ) );
+
+      List<string> a = new List<string>();
+
+      foreach( Wall wall in walls )
+      {
+        a.Add( string.Format( "Id={0}; Kind={1}; Type={2}",
+          wall.Id.IntegerValue,
+          wall.WallType.Kind.ToString(),
+          wall.WallType.Name ) );
+      }
+
+
+
+ FilteredElementCollector doors = new FilteredElementCollector( doc );
+      doors.OfCategory( BuiltInCategory.OST_Doors );
+      doors.OfClass( typeof( FamilyInstance ) );

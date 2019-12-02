@@ -1,0 +1,12 @@
+#region Retrieve linked documents
+    IEnumerable<Document> GetLinkedDocuments(
+      Document doc )
+    {
+      return new FilteredElementCollector( doc )
+        .OfCategory( BuiltInCategory.OST_RvtLinks )
+        .WhereElementIsNotElementType()
+        .Cast<RevitLinkInstance>()
+        .Select<RevitLinkInstance, Document>(
+          link => link.GetLinkDocument() );
+    }
+    #endregion // Retrieve linked documents

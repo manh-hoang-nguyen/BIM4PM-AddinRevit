@@ -1,0 +1,74 @@
+public void ModelTimeStamp()
+{
+    Document doc = this.ActiveUIDocument.Document;
+
+    using (Transaction tx = new Transaction(doc))
+    {
+
+        tx.Start("Model TimeStamp");
+
+        //Create a list of category
+        CategorySet myCategories = CreateCategoryList(doc, this.Application);
+
+        //Retrive all model elements
+        FilteredElementCollector collector = new FilteredElementCollector(doc);
+        IList<ElementFilter> categoryFilters = new List<ElementFilter>();
+
+        foreach (Category category in myCategories)
+        {
+            categoryFilters.Add(new ElementCategoryFilter(category.Id));
+        }
+
+        ElementFilter filter = new LogicalOrFilter(categoryFilters);
+
+        IList<Element> elementList = collector
+        .WherePasses(filter)
+        .WhereElementIsNotElementType().ToElements();
+
+        //Add the value to all element
+        if (elementList.Count > 0)
+        {
+            foreach (Element e in elementList)
+            {
+                WriteOnParam("Date", e, DateTime.Now.ToShortDateString());
+                WriteOnParam("Version", e, "First Release");
+                WriteOnParam("FileName", e, "SubContractors Model");
+                WriteOnParam("Trade", e, "HVAC");
+            }
+        }
+
+        tx.Commit();
+    }
+
+}
+private void WriteOnParam(string paramName, Element e, string value)
+{
+    IList<Parameter> parameters = e.GetParameters(paramName);
+    if (parameters.Count != 0)
+    {
+        Parameter p = parameters.FirstOrDefault();
+        if (!p.IsReadOnly)
+        {
+            p.Set(value);
+        }
+    }
+}
+
+private CategorySet CreateCategoryList(
+    Document doc, 
+    Autodesk.Revit.ApplicationServices.Application app)
+{
+    CategorySet myCategorySet = app.Create.NewCategorySet();
+    Categories categories = doc.Settings.Categories;
+
+    foreach (Category c in categories)
+    {
+        if (c.AllowsBoundParameters 
+        && c.CategoryType == CategoryType.Model)
+        {
+            myCategorySet.Insert(c);
+        }
+    }
+
+    return myCategorySet;
+}

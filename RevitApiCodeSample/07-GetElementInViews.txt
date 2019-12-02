@@ -1,0 +1,2 @@
+FilteredElementCollector allElementsInView = new FilteredElementCollector(document, document.ActiveView.Id);
+IList elementsInView = (IList)allElementsInView.ToElements();

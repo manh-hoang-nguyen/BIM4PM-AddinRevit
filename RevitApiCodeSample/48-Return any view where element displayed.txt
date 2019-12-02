@@ -1,0 +1,19 @@
+ private View _get2DViewForElement( Element element )
+    {
+      FilteredElementCollector collector;
+      ICollection<ElementId> elements_in_view;
+
+      foreach( View view in
+        views )
+      {
+        collector = new FilteredElementCollector(
+          doc, view.Id )
+            .WhereElementIsNotElementType();
+
+        elements_in_view = collector.ToElementIds();
+
+        if( elements_in_view.Contains( element.Id ) )
+          return view;
+      }
+
+      return null;

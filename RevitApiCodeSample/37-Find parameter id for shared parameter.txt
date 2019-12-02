@@ -1,0 +1,87 @@
+ #region Find parameter id for shared parameter element filter
+    /// <summary>
+    /// Return a list of all elements with the 
+    /// specified value in their shared parameter with 
+    /// the given name oand group. They are retrieved
+    /// using a parameter filter, and the required 
+    /// parameter id is found by temporarily adding 
+    /// the shared parameter to the project info.
+    /// </summary>
+    static IList<Element> GetElementsMatchingParameter(
+      Document doc,
+      string paramName,
+      string paramGroup,
+      string paramValue )
+    {
+      IList<Element> elems = new List<Element>();
+
+      // Determine if definition for parameter binding exists
+
+      Definition definition = null;
+      BindingMap bm = doc.ParameterBindings;
+      DefinitionBindingMapIterator it = bm.ForwardIterator();
+      while( it.MoveNext() )
+      {
+        Definition def = it.Key;
+        if( def.Name.Equals( paramName ) )
+        {
+          definition = def;
+          break;
+        }
+      }
+      if( definition == null )
+      {
+        return elems; // parameter binding not defined
+      }
+
+      using( Transaction tx = new Transaction( doc ) )
+      {
+        tx.Start( "Set temporary parameter" );
+
+        // Temporarily set project information element 
+        // parameter in order to determine param.Id
+
+        FilteredElementCollector collectorPI
+          = new FilteredElementCollector( doc );
+
+        collectorPI.OfCategory(
+          BuiltInCategory.OST_ProjectInformation );
+
+        Element projInfoElem
+          = collectorPI.FirstElement();
+
+        // using http://thebuildingcoder.typepad.com/blog/2012/04/adding-a-category-to-a-shared-parameter-binding.html
+
+        Parameter param = null;
+
+        // param = HelperParams.GetOrCreateElemSharedParam(
+        //   projInfoElem, paramName, paramGroup,
+        //   ParameterType.Text, false, true );
+
+        if( param != null )
+        {
+          ElementId paraId = param.Id;
+
+          tx.RollBack(); // discard project element change
+
+          ParameterValueProvider provider
+            = new ParameterValueProvider( paraId );
+
+          FilterRule rule = new FilterStringRule(
+            provider, new FilterStringEquals(),
+            paramValue, true );
+
+          ElementParameterFilter filter
+            = new ElementParameterFilter( rule );
+
+          FilteredElementCollector collector
+            = new FilteredElementCollector(
+              doc, doc.ActiveView.Id );
+
+          elems = collector.WherePasses( filter )
+            .ToElements();
+        }
+      }
+      return elems;
+    }
+    #endregion // Find parameter id for shared parameter element filter

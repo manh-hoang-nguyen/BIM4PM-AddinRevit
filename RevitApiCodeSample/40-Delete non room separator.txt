@@ -1,0 +1,20 @@
+ #region Delete non-room-separating curve elements
+    // for https://forums.autodesk.com/t5/revit-api-forum/deleting-lines-that-are-not-assigned-to-the-lt-room-separation/m-p/8765491
+    /// <summary>
+    /// Delete all non-room-separating curve elements
+    /// </summary>
+    void DeleteNonRoomSeparators( Document doc )
+    {
+      ElementCategoryFilter non_room_separator
+        = new ElementCategoryFilter(
+          BuiltInCategory.OST_RoomSeparationLines,
+          true );
+
+      FilteredElementCollector a
+        = new FilteredElementCollector( doc )
+          .OfClass( typeof( CurveElement ) )
+          .WherePasses( non_room_separator );
+
+      doc.Delete( a.ToElementIds() );
+    }
+    #endregion // Filter for non-room-separating curve elements

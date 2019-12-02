@@ -1,0 +1,104 @@
+#region Lab4_3_2_ExportSharedParamToExcel
+  /// <summary>
+  /// Export all target element ids and their FireRating param values to Excel.
+  /// </summary>
+  [Transaction( TransactionMode.ReadOnly )]
+  public class Lab4_3_2_ExportSharedParamToExcel : IExternalCommand
+  {
+    public Result Execute(
+      ExternalCommandData commandData,
+      ref string message,
+      ElementSet elements )
+    {
+      UIApplication uiapp = commandData.Application;
+      Application app = uiapp.Application;
+      Document doc = uiapp.ActiveUIDocument.Document;
+
+      Category cat = doc.Settings.Categories.get_Item(
+        Lab4_3_1_CreateAndBindSharedParam.Target );
+
+      // Launch Excel (same as in Lab 4_2, so we really 
+      // should have better created some utils...)
+
+      //X.Application excel = new X.ApplicationClass(); // 2019
+      X.Application excel = new X.Application(); // 2020
+      if( null == excel )
+      {
+        LabUtils.ErrorMsg( "Failed to get or start Excel." );
+        return Result.Failed;
+      }
+      excel.Visible = true;
+      X.Workbook workbook = excel.Workbooks.Add( Missing.Value );
+      X.Worksheet worksheet;
+      //while( 1 < workbook.Sheets.Count )
+      //{
+      //  worksheet = workbook.Sheets.get_Item( 0 ) as X.Worksheet;
+      //  worksheet.Delete();
+      //}
+      worksheet = excel.ActiveSheet as X.Worksheet;
+      worksheet.Name = "Revit " + cat.Name;
+      worksheet.Cells[1, 1] = "ID";
+      worksheet.Cells[1, 2] = "Level";
+      worksheet.Cells[1, 3] = "Tag";
+      worksheet.Cells[1, 4] = LabConstants.SharedParamsDefFireRating;
+      worksheet.get_Range( "A1", "Z1" ).Font.Bold = true;
+
+      List<Element> elems = LabUtils.GetTargetInstances( doc,
+        Lab4_3_1_CreateAndBindSharedParam.Target );
+
+      // Get Shared param Guid
+
+      Guid paramGuid = LabUtils.SharedParamGUID( app,
+        LabConstants.SharedParamsGroupAPI, 
+        LabConstants.SharedParamsDefFireRating );
+
+      if( paramGuid.Equals( Guid.Empty ) )
+      {
+        LabUtils.ErrorMsg( "No Shared param found in the file - aborting..." );
+        return Result.Failed;
+      }
+
+      // Loop through all elements and export each to an Excel row
+
+      int row = 2;
+      foreach( Element e in elems )
+      {
+        worksheet.Cells[row, 1] = e.Id.IntegerValue; // ID
+
+        // Level:
+
+        //worksheet.Cells[row, 2] = e.Level.Name; // 2013
+        //worksheet.Cells[row, 2] = doc.GetElement( e.LevelId ).Name; // 2014
+
+        // When attaching a shared parameter to Material 
+        // elements, no valid level is defined, of course:
+
+        ElementId levelId = e.LevelId;
+        string levelName 
+          = ElementId.InvalidElementId == levelId
+            ? "N/A" 
+            : doc.GetElement( levelId ).Name;
+        worksheet.Cells[row, 2] = levelName;
+
+        // Tag:
+
+        Parameter tagParameter = e.get_Parameter( 
+          BuiltInParameter.ALL_MODEL_MARK );
+        if( null != tagParameter )
+        {
+          worksheet.Cells[row, 3] = tagParameter.AsString();
+        }
+
+        // FireRating:
+
+        Parameter parameter = e.get_Parameter( paramGuid );
+        if( null != parameter )
+        {
+          worksheet.Cells[row, 4] = parameter.AsDouble();
+        }
+        ++row;
+      }
+      return Result.Succeeded;
+    }
+  }
+  #endregion // Lab4_3_2_ExportSharedParamToExcel

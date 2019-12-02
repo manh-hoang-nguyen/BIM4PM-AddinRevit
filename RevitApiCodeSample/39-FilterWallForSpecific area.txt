@@ -1,0 +1,48 @@
+   #region Filter for walls in a specific area
+    // from RevitAPI.chm description of BoundingBoxIntersectsFilter Class
+    // case 1260682 [Find walls in a specific area]
+    void f2()
+    {
+      // Use BoundingBoxIntersects filter to find
+      // elements with a bounding box that intersects
+      // the given outline.
+
+      // Create a Outline, uses a minimum and maximum
+      // XYZ point to initialize the outline.
+
+      Outline myOutLn = new Outline(
+        XYZ.Zero, new XYZ( 100, 100, 100 ) );
+
+      // Create a BoundingBoxIntersects filter with
+      // this Outline
+
+      BoundingBoxIntersectsFilter filter
+        = new BoundingBoxIntersectsFilter( myOutLn );
+
+      // Apply the filter to the elements in the
+      // active document.  This filter excludes all
+      // objects derived from View and objects
+      // derived from ElementType
+
+      FilteredElementCollector collector
+        = new FilteredElementCollector( _doc );
+
+      IList<Element> elements =
+        collector.WherePasses( filter ).ToElements();
+
+      // Find all walls which don't intersect with
+      // BoundingBox: use an inverted filter to match
+      // elements.  Use shortcut command OfClass()
+      // to find walls only
+
+      BoundingBoxIntersectsFilter invertFilter
+        = new BoundingBoxIntersectsFilter( myOutLn,
+          true ); // inverted filter
+
+      collector = new FilteredElementCollector( _doc );
+
+      IList<Element> notIntersectWalls
+        = collector.OfClass( typeof( Wall ) )
+          .WherePasses( invertFilter ).ToElements();
+    }
+    #endregion // Filter for walls in a specific area

@@ -1,0 +1,37 @@
+List<string> GetParameters( Document doc, Element element )
+    {
+      List<string> _parameters = new List<string>();
+      foreach( Parameter param in element.Parameters )
+      {
+        if( param == null ) continue;
+        string _name = param.Definition.Name;
+        switch( param.StorageType )
+        {
+          case Autodesk.Revit.Parameters.StorageType.Double:
+            _parameters.Add( _name + " : " + param.AsDouble().ToString() );
+            break;
+          case Autodesk.Revit.Parameters.StorageType.Integer:
+            if( param.Definition.ParameterType == ParameterType.YesNo )
+            {
+              if( param.AsInteger() == 0 ) _parameters.Add( _name + " : " + "false" );
+              else _parameters.Add( _name + " : " + "true" );
+            }
+            else
+            {
+              _parameters.Add( _name + " : " + param.AsInteger().ToString() );
+            }
+            break;
+          case Autodesk.Revit.Parameters.StorageType.String:
+            _parameters.Add( _name + " : " + param.AsString() );
+            break;
+          case Autodesk.Revit.Parameters.StorageType.ElementId:
+            ElementId id = param.AsElementId();
+            if( id.Value >= 0 ) _parameters.Add( _name + " : " + doc.GetElement( ref id ).Name );
+            else _parameters.Add( _name + " : " + id.Value.ToString() );
+            break;
+          case Autodesk.Revit.Parameters.StorageType.None:
+            _parameters.Add( _name + " : " + "none" );
+            break;
+        }
+      }
+      return _parameters;

@@ -1,0 +1,46 @@
+  #region Retrieve openings in wall
+    /// <summary>
+    /// Retrieve all openings in a given wall.
+    /// </summary>
+    void GetOpeningsInWall(
+      Document doc,
+      Wall wall )
+    {
+      ElementId id = wall.Id;
+
+      BuiltInCategory bic
+        = BuiltInCategory.OST_SWallRectOpening;
+
+      FilteredElementCollector collector
+        = new FilteredElementCollector( doc );
+
+      collector.OfClass( typeof( Opening ) );
+      collector.OfCategory( bic );
+
+      // explicit iteration and manual
+      // checking of a property:
+
+      List<Element> openings = new List<Element>();
+
+      foreach( Opening e in collector )
+      {
+        if( e.Host.Id.Equals( id ) )
+        {
+          openings.Add( e );
+        }
+      }
+
+      // using LINQ:
+
+      IEnumerable<Opening> openingsOnLevelLinq =
+        from e in collector.Cast<Opening>()
+        where e.Host.LevelId.Equals( id )
+        select e;
+
+      // using an anonymous method:
+
+      IEnumerable<Opening> openingsOnLevelAnon =
+        collector.Cast<Opening>().Where<Opening>( e
+          => e.Host.Id.Equals( id ) );
+    }
+    #endregion // Retrieve openings in wall

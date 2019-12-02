@@ -1,0 +1,62 @@
+#region Lab4_4_2_IncrementPerDocParameters
+  /// <summary>
+  /// Increment the invisible per-doc param.
+  /// </summary>
+  [Transaction( TransactionMode.Manual )]
+  public class Lab4_4_2_IncrementPerDocParameters : IExternalCommand
+  {
+    public Result Execute(
+      ExternalCommandData commandData,
+      ref string message,
+      ElementSet elements )
+    {
+      UIApplication app = commandData.Application;
+      Document doc = app.ActiveUIDocument.Document;
+
+      if( doc.IsFamilyDocument )
+      {
+        message = "This command can only be used in a project, not in a family file.";
+        return Result.Failed;
+      }
+
+      // get the singleton project info element
+      Element projInfoElem = LabUtils.GetProjectInfoElem( doc );
+      if( null == projInfoElem )
+      {
+        message = "No project info elem found. Aborting command...";
+        return Result.Failed;
+      }
+
+      // For simplicity, access invisible param by name rather than by GUID:
+
+      try
+      {
+        Parameter param = projInfoElem.LookupParameter( LabConstants.ParamNameInvisible );
+
+        // report OLD value
+
+        int iOldValue = param.AsInteger();
+        LabUtils.InfoMsg( "OLD value = " + iOldValue.ToString() );
+
+        using( Transaction tx = new Transaction( doc ) )
+        {
+          tx.Start( "Set Parameter Value" );
+
+          // set and report NEW value
+
+          param.Set( iOldValue + 1 );
+          LabUtils.InfoMsg( "NEW value = " + param.AsInteger().ToString() );
+
+          tx.Commit();
+        }
+      }
+      catch( System.Exception e )
+      {
+        message = "Failed: " + e.Message;
+        return Result.Failed;
+      }
+      return Result.Succeeded;
+    }
+  }
+  #endregion // Lab4_4_2_IncrementPerDocParameters
+}

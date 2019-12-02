@@ -1,0 +1,83 @@
+class SheetData
+{
+  public bool IsPlaceholder { get; set; }
+  public string Name { get; set; }
+  public string SheetNumber { get; set; }
+ 
+  public SheetData( ViewSheet v )
+  {
+    IsPlaceholder = v.IsPlaceholder;
+    Name = v.Name;
+    SheetNumber = v.SheetNumber;
+  }
+}
+Obviously this data holder is rather overly simplistic, but you can easily add other items of interest to you to it.
+
+I implemented a new Building Coder sample command which performs the steps outlined above making use of this data container class:
+
+[Transaction( TransactionMode.ReadOnly )]
+[Regeneration( RegenerationOption.Manual )]
+class CmdSheetData : IExternalCommand
+{
+  public Result Execute(
+    ExternalCommandData commandData,
+    ref string message,
+    ElementSet elements )
+  {
+    UIApplication app = commandData.Application;
+    Document doc = app.ActiveUIDocument.Document;
+ 
+    // retrieve all sheets
+ 
+    FilteredElementCollector a
+      = new FilteredElementCollector( doc );
+ 
+    a.OfCategory( BuiltInCategory.OST_Sheets );
+    a.OfClass( typeof( ViewSheet ) );
+ 
+    // create a collection of all relevant data
+ 
+    List<SheetData> data = new List<SheetData>();
+ 
+    foreach( ViewSheet v in a )
+    {
+      // create some data for each sheet and add 
+      // to some serializable collection called Data
+      SheetData item = new SheetData( v );
+      data.Add( item );
+    }
+ 
+    // write out data collection to xml
+ 
+    XmlTextWriter w = new XmlTextWriter( 
+      "C:/SheetData.xml", null );
+ 
+    w.Formatting = Formatting.Indented;
+    w.WriteStartDocument();
+    w.WriteComment( string.Format(
+      " SheetData from {0} on {1} by Jeremy ",
+      doc.PathName, DateTime.Now ) );
+ 
+    w.WriteStartElement( "ViewSheets" );
+ 
+    foreach( SheetData item in data )
+    {
+      w.WriteStartElement( "ViewSheet" );
+ 
+      w.WriteElementString( "IsPlaceholder", 
+        item.IsPlaceholder.ToString() );
+ 
+      w.WriteElementString( "Name", item.Name );
+ 
+      w.WriteElementString( "SheetNumber", 
+        item.SheetNumber );
+ 
+      w.WriteEndElement();
+    }
+    w.WriteEndElement();
+    w.WriteEndDocument();
+    w.Close();
+ 
+    return Result.Succeeded;
+  }
+}

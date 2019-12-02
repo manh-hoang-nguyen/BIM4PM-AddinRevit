@@ -1,0 +1,37 @@
+private void GetAllCategories( 
+  List<Document> allDocuments )
+{
+  Dictionary<string, Category> categories 
+    = new Dictionary<string, Category>();
+ 
+  List<Element> elements = new List<Element>();
+ 
+  foreach( Document doc in allDocuments )
+  {
+    FilteredElementCollector collector 
+      = new FilteredElementCollector( doc );
+ 
+    collector
+      .WhereElementIsNotElementType()
+      .WhereElementIsViewIndependent()
+      .ToElements();
+ 
+    foreach( Element element in collector )
+    {
+      if( null != element.Category
+        && 0 < element.Parameters.Size
+        && (element.Category.HasMaterialQuantities 
+          || null != element.PhaseCreated) )
+      {
+        if( !categories.ContainsKey( 
+          element.Category.Name ) )
+        {
+          categories.Add( 
+            element.Category.Name, 
+            element.Category );
+        }
+        elements.Add( element );
+      }
+    }
+  }
+}

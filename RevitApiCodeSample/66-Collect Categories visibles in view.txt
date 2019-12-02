@@ -1,0 +1,74 @@
+public CategoryCollector( IList<ViewPlan> views )
+      : base( new CategoryEqualityComparer() )
+    {
+      _nViews = views.Count;
+      _nElements = 0;
+      _nElementsWithCategorMaterialQuantities = 0;
+ 
+      if( 0 < _nViews )
+      {
+        Document doc = views[0].Document;
+ 
+        FilteredElementCollector a;
+ 
+        foreach( View v in views )
+        {
+          a = new FilteredElementCollector( doc, v.Id )
+            .WhereElementIsViewIndependent();
+ 
+          foreach( Element e in a )
+          {
+            ++_nElements;
+ 
+            Category cat = e.Category;
+ 
+            if( null != cat
+              && cat.HasMaterialQuantities )
+            {
+              ++_nElementsWithCategorMaterialQuantities;
+ 
+              if( !ContainsKey( cat ) )
+              {
+                Add( cat, 0 );
+              }
+              ++this[cat];
+            }
+          }
+        }
+      }
+
+
+//Using LINQ
+doc = uidoc.Document;
+
+//Create collector to collect all elements on active view
+FilteredElementCollector collector = new FilteredElementCollector(doc, doc.ActiveView.Id);
+
+//get distinct categories of elements in the active view
+var categories =
+                collector                    
+                    .ToElements()
+			.Where(x=> x.Category != null && x.Category.HasMaterialQuantities) //Add by Duy
+                    .Select(x => x.Category)
+                    .Distinct(new CategoryComparer())
+                    .ToList();
+
+
+class CategoryComparer : IEqualityComparer<Category>
+    {
+        #region Implementation of IEqualityComparer<in Category>
+
+        public bool Equals(Category x, Category y)
+        {          
+            if (x == null || y == null) return false;
+
+            return x.Id.Equals(y.Id);
+        }
+
+        public int GetHashCode(Category obj)
+        {
+            return obj.Id.IntegerValue;
+        }
+
+        #endregion
+    }

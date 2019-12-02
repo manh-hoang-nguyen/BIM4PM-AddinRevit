@@ -1,0 +1,27 @@
+ public void TestViewInfo()
+    {
+        UIDocument uidoc = this.ActiveUIDocument;
+        Document doc = uidoc.Document;
+        
+        // Get selected elements from current document.;
+        ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
+        
+
+//If selection != null
+        string s = "You Picked:" + "\n";
+
+                foreach (ElementId selectedid in selectedIds)
+                {
+                    View e = doc.GetElement(selectedid) as View;                        
+                            
+                    s += " View id = " + e.Id + "\n";
+                    
+                    s += " View name = " + e.Name + "\n";
+            
+                    s +=   "\n";                
+                }
+
+                {
+                    TaskDialog.Show("Basic Element Info", s);
+                }                     
+    }

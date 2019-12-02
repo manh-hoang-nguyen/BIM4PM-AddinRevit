@@ -1,0 +1,230 @@
+#region More parameter filter samples
+    // 383_param_filter.htm
+
+    void f1( Document doc )
+    {
+      FilteredElementCollector collector
+        = new FilteredElementCollector( doc );
+
+      ICollection<Element> levels
+        = collector.OfClass( typeof( Level ) )
+          .ToElements();
+
+      for( int i = 0; i < levels.Count; i++ )
+      {
+        ElementId levelId = levels.ElementAt( i ).Id;
+
+        ElementLevelFilter levelFilter
+          = new ElementLevelFilter( levelId );
+
+        collector = new FilteredElementCollector( doc );
+
+        ICollection<Element> allOnLevel
+          = collector.WherePasses( levelFilter )
+            .ToElements();
+
+        // . . .
+      }
+    }
+
+
+ void f2( Document doc, Level level )
+    {
+      FilteredElementCollector collector
+        = new FilteredElementCollector( doc );
+
+      collector.OfCategory(
+        BuiltInCategory.OST_StructuralFraming );
+
+      collector.OfClass( typeof( FamilyInstance ) );
+
+      BuiltInParameter bip = BuiltInParameter
+        .INSTANCE_REFERENCE_LEVEL_PARAM;
+
+      ParameterValueProvider provider
+        = new ParameterValueProvider(
+          new ElementId( bip ) );
+
+      FilterNumericRuleEvaluator evaluator
+        = new FilterNumericGreater();
+
+      ElementId idRuleValue = level.Id;
+
+      FilterElementIdRule rule
+        = new FilterElementIdRule(
+          provider, evaluator, idRuleValue );
+
+      ElementParameterFilter filter
+        = new ElementParameterFilter( rule );
+
+      collector.WherePasses( filter );
+    }
+
+
+
+    [Transaction( TransactionMode.ReadOnly )]
+    public class RevitCommand : IExternalCommand
+    {
+      public Result Execute(
+        ExternalCommandData commandData,
+        ref string messages,
+        ElementSet elements )
+      {
+        UIApplication app = commandData.Application;
+        Document doc = app.ActiveUIDocument.Document;
+
+        ElementId id = new ElementId(
+          BuiltInParameter.ELEM_ROOM_NUMBER );
+
+        ParameterValueProvider provider
+          = new ParameterValueProvider( id );
+
+        FilterStringRuleEvaluator evaluator
+          = new FilterStringEquals();
+
+        string sRoomNumber = "1";
+
+        FilterRule rule = new FilterStringRule(
+          provider, evaluator, sRoomNumber, false );
+
+        ElementParameterFilter filter
+          = new ElementParameterFilter( rule );
+
+        FilteredElementCollector collector
+          = new FilteredElementCollector( doc );
+
+        string s = string.Empty;
+
+        foreach( Element e in collector )
+        {
+          s += e.Name + e.Category.Name.ToString() + "\n";
+
+        }
+        System.Windows.Forms.MessageBox.Show( s );
+
+        return Result.Succeeded;
+      }
+    }
+
+
+
+
+    void f3( Document doc )
+    {
+      FilteredElementCollector collector
+        = new FilteredElementCollector( doc );
+
+      collector.OfClass( typeof( Level ) );
+      ElementId id = new ElementId(
+        BuiltInParameter.DATUM_TEXT );
+
+      ParameterValueProvider provider
+        = new ParameterValueProvider( id );
+
+      FilterStringRuleEvaluator evaluator
+        = new FilterStringContains();
+
+      FilterRule rule = new FilterStringRule(
+        provider, evaluator, "Level", false );
+
+      ElementParameterFilter filter
+        = new ElementParameterFilter( rule );
+    }
+
+
+void f4( Document doc )
+    {
+      // Use numeric evaluator and integer rule to test ElementId parameter
+      // Filter levels whose id is greater than specified id value
+
+      BuiltInParameter testParam
+        = BuiltInParameter.ID_PARAM;
+
+      ParameterValueProvider pvp
+        = new ParameterValueProvider(
+          new ElementId( (int) testParam ) );
+
+      FilterNumericRuleEvaluator fnrv
+        = new FilterNumericGreater();
+
+      // filter elements whose Id is greater than 99
+
+      ElementId ruleValId = new ElementId( 99 );
+
+      FilterRule paramFr = new FilterElementIdRule(
+        pvp, fnrv, ruleValId );
+
+      ElementParameterFilter epf
+        = new ElementParameterFilter( paramFr );
+
+      FilteredElementCollector collector
+        = new FilteredElementCollector( doc );
+
+      collector.OfClass( typeof( ViewPlan ) )
+        .WherePasses( epf ); // only deal with ViewPlan
+
+      // Use numeric evaluator and integer rule to test bool parameter
+      // Filter levels whose crop view is false
+
+      int ruleValInt = 0;
+
+      testParam = BuiltInParameter.VIEWER_CROP_REGION;
+
+      pvp = new ParameterValueProvider(
+        new ElementId( (int) testParam ) );
+
+      fnrv = new FilterNumericEquals();
+
+      paramFr = new FilterIntegerRule(
+        pvp, fnrv, ruleValInt );
+
+      epf = new ElementParameterFilter( paramFr );
+
+      collector = new FilteredElementCollector( doc );
+
+      collector.OfClass( typeof( ViewPlan ) )
+        .WherePasses( epf ); // only deal with ViewPlan
+
+      // Use numeric evaluator and double rule to test double parameter
+      // Filter levels whose top offset is greater than specified value
+
+      double ruleValDb = 10;
+
+      testParam =
+        BuiltInParameter.VIEWER_BOUND_OFFSET_TOP;
+
+      pvp = new ParameterValueProvider(
+        new ElementId( (int) testParam ) );
+
+      fnrv = new FilterNumericGreater();
+
+      paramFr = new FilterDoubleRule(
+        pvp, fnrv, ruleValDb, double.Epsilon );
+
+      collector = new FilteredElementCollector( doc );
+
+      collector.OfClass( typeof( ViewPlan ) )
+        .WherePasses( epf ); // only deal with ViewPlan
+
+      // Use string evaluator and string rule to test string parameter
+      // Filter all elements whose view name contains level
+
+      String ruleValStr = "Level";
+
+      testParam = BuiltInParameter.VIEW_NAME;
+
+      pvp = new ParameterValueProvider(
+        new ElementId( (int) testParam ) );
+
+      FilterStringRuleEvaluator fnrvStr
+        = new FilterStringContains();
+
+      paramFr = new FilterStringRule(
+        pvp, fnrvStr, ruleValStr, false );
+
+      collector = new FilteredElementCollector( doc );
+
+      collector.OfClass( typeof( ViewPlan ) )
+        .WherePasses( epf ); // only deal with ViewPlan
+    }
+    #endregion // More parameter filter samples

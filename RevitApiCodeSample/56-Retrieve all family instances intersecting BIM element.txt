@@ -1,0 +1,182 @@
+   #region Retrieve family instances intersecting BIM element
+    /// <summary>
+    /// Retrieve all family instances intersecting a
+    /// given BIM element, e.g. all columns 
+    /// intersecting a wall.
+    /// </summary>
+    void GetInstancesIntersectingElement( Element e )
+    {
+      #region Joe's code
+#if JOE_CODE
+// Find intersections between family instances and a selected element  
+
+Reference Reference = uidoc.Selection.PickObject( 
+ObjectType.Element, "Select element that will "
++ "be checked for intersection with all family "
++ "instances" );
+
+Element e = doc.GetElement( reference );
+
+GeometryElement geomElement = e.get_Geometry( 
+new Options() );
+
+Solid solid = null;
+foreach( GeometryObject geomObj in geomElement )
+{
+solid = geomObj as Solid;
+if( solid = !null ) break;
+}
+
+FilteredElementCollector collector 
+= new FilteredElementCollector( doc )
+  .OfClass( typeof( FamilyInstance ) )
+  .WherePasses( new ElementIntersectsSolidFilter( 
+    solid ) );
+
+TaskDialog.Show( "Revit", collector.Count() + 
+"Family instances intersect with selected element (" 
++ element.Category.Name + "ID:" + element.Id + ")" );
+#endif // JOE_CODE
+      #endregion // Joe's code
+
+      // Test this in these SDK sample models:
+      // C:\a\lib\revit\2015\SDK\Samples\FindReferencesByDirection\FindColumns\FindColumns-Basic.rvt
+      // C:\a\lib\revit\2015\SDK\Samples\FindReferencesByDirection\FindColumns\FindColumns-TestCases.rvt
+
+      Document doc = e.Document;
+
+      Solid solid = e.get_Geometry( new Options() )
+        .OfType<Solid>()
+        .Where<Solid>( s => null != s && !s.Edges.IsEmpty )
+        .FirstOrDefault();
+
+      FilteredElementCollector intersectingInstances
+        = new FilteredElementCollector( doc )
+          .OfClass( typeof( FamilyInstance ) )
+          .WherePasses( new ElementIntersectsSolidFilter(
+            solid ) );
+
+      int n1 = intersectingInstances.Count<Element>();
+
+      intersectingInstances
+        = new FilteredElementCollector( doc )
+          .OfClass( typeof( FamilyInstance ) )
+          .WherePasses( new ElementIntersectsElementFilter(
+            e ) );
+
+      int n = intersectingInstances.Count<Element>();
+
+      Debug.Assert( n.Equals( n1 ),
+        "expected solid intersection to equal element intersection" );
+
+      string result = string.Format(
+        "{0} family instance{1} intersect{2} the "
+        + "selected element {3}{4}",
+        n, Util.PluralSuffix( n ),
+        (1 == n ? "s" : ""),
+        Util.ElementDescription( e ),
+        Util.DotOrColon( n ) );
+
+      string id_list = 0 == n
+        ? string.Empty
+        : string.Join( ", ",
+            intersectingInstances
+              .Select<Element, string>(
+                x => x.Id.IntegerValue.ToString() ) )
+          + ".";
+
+      Util.InfoMsg2( result, id_list );
+    }
+
+    /// <summary>
+    /// Retrieve all beam family instances 
+    /// intersecting two columns, cf.
+    /// http://forums.autodesk.com/t5/revit-api/check-to-see-if-beam-exists/m-p/6223562
+    /// </summary>
+    FilteredElementCollector
+      GetBeamsIntersectingTwoColumns(
+        Element column1,
+        Element column2 )
+    {
+      Document doc = column1.Document;
+
+      if( column2.Document.GetHashCode() != doc.GetHashCode() )
+      {
+        throw new ArgumentException(
+          "Expected two columns from same document." );
+      }
+
+      FilteredElementCollector intersectingStructuralFramingElements
+        = new FilteredElementCollector( doc )
+          .OfClass( typeof( FamilyInstance ) )
+          .OfCategory( BuiltInCategory.OST_StructuralFraming )
+          .WherePasses( new ElementIntersectsElementFilter( column1 ) )
+          .WherePasses( new ElementIntersectsElementFilter( column2 ) );
+
+      int n = intersectingStructuralFramingElements.Count<Element>();
+
+      string result = string.Format(
+        "{0} structural framing family instance{1} "
+        + "intersect{2} the two beams{3}",
+        n, Util.PluralSuffix( n ),
+        (1 == n ? "s" : ""),
+        Util.DotOrColon( n ) );
+
+      string id_list = 0 == n
+        ? string.Empty
+        : string.Join( ", ",
+            intersectingStructuralFramingElements
+              .Select<Element, string>(
+                x => x.Id.IntegerValue.ToString() ) )
+          + ".";
+
+      Util.InfoMsg2( result, id_list );
+
+      return intersectingStructuralFramingElements;
+    }
+
+    /// <summary>
+    /// Dummy placeholder function to return solid from element, cf. 
+    /// https://thebuildingcoder.typepad.com/blog/2012/06/real-world-concrete-corner-coordinates.html
+    /// </summary>
+    Solid GetSolid( Element e )
+    {
+      return null;
+    }
+
+    /// <summary>
+    /// Collect the element ids of all elements in the 
+    /// linked documents intersecting the given element.
+    /// </summary>
+    /// <param name="e">Target element</param>
+    /// <param name="links">Linked documents</param>
+    /// <param name="ids">Return intersecting element ids</param>
+    /// <returns>Number of intersecting elements found</returns>
+    int GetIntersectingLinkedElementIds(
+      Element e,
+      IList<RevitLinkInstance> links,
+      List<ElementId> ids )
+    {
+      int count = ids.Count();
+      Solid solid = GetSolid( e );
+
+      foreach( RevitLinkInstance i in links )
+      {
+        Transform transform = i.GetTransform(); // GetTransform or GetTotalTransform or what?
+        if( !transform.AlmostEqual( Transform.Identity ) )
+        {
+          solid = SolidUtils.CreateTransformed(
+            solid, transform.Inverse );
+        }
+        ElementIntersectsSolidFilter filter
+          = new ElementIntersectsSolidFilter( solid );
+
+        FilteredElementCollector intersecting
+          = new FilteredElementCollector( i.GetLinkDocument() )
+            .WherePasses( filter );
+
+        ids.AddRange( intersecting.ToElementIds() );
+      }
+      return ids.Count - count;
+    }
+    #endregion // Retrieve family instances intersecting BIM element

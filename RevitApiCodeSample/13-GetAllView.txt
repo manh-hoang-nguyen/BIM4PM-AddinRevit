@@ -1,0 +1,14 @@
+List<string> viewTypenames = new List<string>();
+            
+            // collect view type
+            List<Element> elements = new FilteredElementCollector(document).OfClass(typeof(View)).ToList();
+            
+            foreach (Element element in elements)
+            {
+                // view
+                View view = element as View;
+                // view typename
+                viewTypenames.Add(view.ViewType.ToString());
+            }
+
+//viewTypenames.Distinct().OrderBy(name => name).ToList()

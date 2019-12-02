@@ -1,0 +1,23 @@
+ private void WriteOnParam(string paramId, Element e, string value, bool overrideValues)
+        {
+            IList<Parameter> parameters = e.GetParameters(paramId);
+            if (parameters.Count != 0)
+            {
+                Parameter p = parameters.FirstOrDefault();
+                if (!p.IsReadOnly)
+                {
+                    if (overrideValues)
+                    {
+                        p.Set(value);
+                    }
+                    else
+                    {
+                        string paramValue = p.AsString();
+                        if (String.IsNullOrEmpty(paramValue))
+                        {
+                            p.Set(value);
+                        }
+                    }
+                }
+            }
+        }

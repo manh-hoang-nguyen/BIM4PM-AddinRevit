@@ -1,0 +1,72 @@
+class EventControllerWPF : IExternalApplication
+    {
+        // class instance
+        public static EventControllerWPF Instance;
+        // ModelessForm instance
+        private UserControl defaultControl;
+        public System.Windows.Window Window = new System.Windows.Window();
+
+        public Result OnStartup(UIControlledApplication application)
+        {
+
+            defaultControl = null;
+            return Result.Succeeded;
+        }
+
+        public Result OnShutdown(UIControlledApplication application)
+        {
+            if (Window != null)
+            {
+                Window.Close();
+            }
+
+            return Result.Succeeded;
+
+        }
+
+
+        public void ShowForm(UIApplication uiapp)
+        {
+            if (defaultControl == null)
+            {
+                if(Instance == null)
+                {
+                    Instance = this;
+                }
+
+                // A new handler to handle request posting by the dialog
+                ExternalRevitFileSelecter handler = new ExternalRevitFileSelecter();
+
+                // External Event for the dialog to use (to post requests)
+                ExternalEvent exEvent = ExternalEvent.Create(handler);
+
+
+                // We give the objects to the new dialog;
+                // The dialog becomes the owner responsible for disposing them, eventually.
+                defaultControl = new DefaultControl(exEvent, handler);
+                this.Window.Content = defaultControl;
+                BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/ProjectName;component/Resources/ProjectName.ico"));
+                this.Window.Icon = pb1Image;
+                this.Window.Title = "Project Name";
+                this.Window.Show();
+                
+                // When application runs, make push button disable
+                App.Pushbutton.Enabled = false;
+                
+                // Add an event to to trigger a method
+                // when user close the application
+                // so that we could enable the pushbutton again
+                this.Window.Closed += OnProjectNameClosed;
+                
+
+
+            }
+        }
+
+        // When application closes, enable the Pushbutton again
+        private void OnProjectNameClosed(object sender, EventArgs e)
+        {
+        
+            App.Pushbutton.Enabled = true;
+        }
+    }
