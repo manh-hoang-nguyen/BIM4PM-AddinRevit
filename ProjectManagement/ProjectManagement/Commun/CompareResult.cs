@@ -10,8 +10,8 @@ namespace ProjectManagement.Commun
    public class CompareResult
     {
         public static IEnumerable<string> DeletedElements;
-        public static IEnumerable<string> ModifiedElements;
+        public static IList<string> ModifiedElements;
         public static IEnumerable<string> NewElements;
-        public static IEnumerable<string> SameElements; 
+        public static IList<string> SameElements; 
     }
 }

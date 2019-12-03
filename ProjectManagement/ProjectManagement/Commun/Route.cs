@@ -9,8 +9,8 @@ namespace ProjectManagement.Commun
 {
   public class Route
     {
-        //public static RestClient Client = new RestClient("https://manhhoang-api.herokuapp.com");
-        public static RestClient Client = new RestClient(" http://localhost:5000");
+        public static RestClient Client = new RestClient("https://manhhoang-api.herokuapp.com");
+        //public static RestClient Client = new RestClient(" http://localhost:5000");
 
         public static string Login = "api/v1/auth/login";
         public static string GetMe = "/api/v1/auth/me";

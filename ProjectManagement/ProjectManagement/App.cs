@@ -8,6 +8,8 @@ using ProjectManagement.FormInterface;
 using System;
 using System.Reflection;
 using ProjectManagement.Tools.Project;
+using ProjectManagement.Tools;
+using Autodesk.Revit.DB.Events;
 #endregion Namespaces
 
 namespace ProjectManagement
@@ -33,6 +35,7 @@ namespace ProjectManagement
 
         public static ModelRequestHandler ModelHandler { get; set; }
         public static ExternalEvent ModelEvent { get; set; }
+        public static PaletteMainView PaletteWindow { get; set; }
 
         public Result OnStartup(UIControlledApplication uicapp)
         {
@@ -116,28 +119,11 @@ namespace ProjectManagement
             #endregion Methods
 
             #region Events
-
-            //foreach (Autodesk.Windows.RibbonTab tab in Autodesk.Windows.ComponentManager.Ribbon.Tabs)
-            //{
-            //    if (tab.Id == "Modify")
-            //    {
-            //        if (_subscribed)
-            //        {
-            //            tab.PropertyChanged -=PanelProprety.PanelEvent;
-            //            _subscribed = false;
-            //        }
-            //        else
-            //        {
-            //            tab.PropertyChanged += PanelProprety.PanelEvent;
-            //            _subscribed = true;
-            //        }
-            //        break;
-            //    }
-            //}
-
+ 
             uicapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(onViewActivated); //for panel proprety
-          
 
+            uicapp.ControlledApplication.DocumentOpened -= OnDocumentOpened;
+            uicapp.ControlledApplication.DocumentCreated += OnDocumentCreated;
             #endregion Events
 
             return Result.Succeeded;
@@ -155,20 +141,15 @@ namespace ProjectManagement
             PanelProprety._uiDoc = new UIDocument(_doc);
         }
 
-        /* void PanelEvent(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-         {
-             if (e.PropertyName == "Title")
-             {
-                 Selection selection = _uiDoc.Selection;
-                 ICollection<ElementId> ids = _uiDoc.Selection.GetElementIds();
+        private static void OnDocumentCreated(object sender, DocumentCreatedEventArgs args)
+        {
+            PaletteUtilities.LaunchCommunicator();
+        }
+        private static void OnDocumentOpened(object source, DocumentOpenedEventArgs args)
+        {
+            PaletteUtilities.LaunchCommunicator();
+        }
 
-                 int n = ids.Count;
-                 if (n != 0)
-                 {
-                 }
-             }
-         }*/
-       
         private void DockablePanelActivated()
         {
              

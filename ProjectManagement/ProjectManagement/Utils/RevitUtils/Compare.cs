@@ -13,38 +13,40 @@
         /// <summary>
         /// The Execute
         /// </summary>
-        public static void Execute()
+        public static void Execute(bool withPara)
         {
+            
             CompareResult.ModifiedElements = new List<string>();
-           
-            var same = RevitElementList.InCloud.Count == RevitElementList.InModel.Count && RevitElementList.InCloud.Keys.SequenceEqual(RevitElementList.InModel.Keys);
-            var keysDictionary1HasThat2DoesNot = RevitElementList.InCloud.Keys.Except(RevitElementList.InModel.Keys);
-            var keysDictionary2HasThat1DoesNot = RevitElementList.InModel.Keys.Except(RevitElementList.InCloud.Keys);
-            var EleToCompareGuid = RevitElementList.InModel.Keys.Except(keysDictionary2HasThat1DoesNot);
+            CompareResult.SameElements = new List<string>();
+            CompareResult.DeletedElements = new List<string>();
+            CompareResult.NewElements = new List<string>(); 
+            
+            CompareResult.DeletedElements = RevitElementList.InCloud.Keys.Except(RevitElementList.InModel.Keys);
+            CompareResult.NewElements = RevitElementList.InModel.Keys.Except(RevitElementList.InCloud.Keys);
 
-            IList<string> sameEle = new List<string>();
-
-            IList<string> modifiedEle = new List<string>();
-           
+            var EleToCompareGuid = RevitElementList.InModel.Keys.Except(CompareResult.NewElements);
+ 
             foreach ( string guid in EleToCompareGuid)
             {
                 RevitElement current = RevitElementList.InModel[guid];
                 RevitElement previous = RevitElementList.InCloud[guid];
                 bool geometryIsSame = CompareGeometry(current, previous);
                 bool revitParameterIsSame = CompareRevitParameter(current, previous);
-               bool sharedParameterIsSame = CompareSharedParameter(current, previous);
-                
-               if(geometryIsSame && revitParameterIsSame && sharedParameterIsSame)
+                bool sharedParameterIsSame = CompareSharedParameter(current, previous);
+
+                if (withPara == false)
                 {
-                    sameEle.Add(guid);
+                    if (geometryIsSame) CompareResult.SameElements.Add(guid);  
+                    else CompareResult.ModifiedElements.Add(guid); 
                 }
                 else
                 {
-                    modifiedEle.Add(guid);
+                    if (geometryIsSame && revitParameterIsSame && sharedParameterIsSame) CompareResult.SameElements.Add(guid);
+                    else CompareResult.ModifiedElements.Add(guid);
                 }
             }
              
-            MessageBox.Show("Same" + sameEle.Count.ToString() + "\n" + "modified" + modifiedEle.Count.ToString());
+           
         }
 
         private static bool CompareGeometry(RevitElement current, RevitElement previous)

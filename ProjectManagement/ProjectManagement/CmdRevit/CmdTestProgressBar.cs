@@ -48,7 +48,7 @@
             
         */
 
-            
+            /*
             //* Set time out
             //https://stackoverflow.com/questions/48968193/restsharp-the-operation-has-timed-out/49677943
             //https://stackoverflow.com/questions/46584175/restsharp-timeout-not-working
@@ -75,9 +75,9 @@
                 string messagex = "Opps! There has been an error while uploading your model. " + res.ErrorException.Message;
                 throw new Exception(messagex);
             }
-          
+          */
             
-            //ProjectManagement.Utils.RevitUtils.Compare.Execute(); 
+           // ProjectManagement.Utils.RevitUtils.Compare.Execute(); 
             return Result.Succeeded;
         }
 
