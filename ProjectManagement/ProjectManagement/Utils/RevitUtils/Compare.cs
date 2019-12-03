@@ -2,9 +2,11 @@
 {
     using ProjectManagement.Commun;
     using ProjectManagement.Models;
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows;
 
     public class Compare
     {
@@ -20,15 +22,29 @@
             var keysDictionary2HasThat1DoesNot = RevitElementList.InModel.Keys.Except(RevitElementList.InCloud.Keys);
             var EleToCompareGuid = RevitElementList.InModel.Keys.Except(keysDictionary2HasThat1DoesNot);
 
+            IList<string> sameEle = new List<string>();
+
+            IList<string> modifiedEle = new List<string>();
+           
             foreach ( string guid in EleToCompareGuid)
             {
                 RevitElement current = RevitElementList.InModel[guid];
                 RevitElement previous = RevitElementList.InCloud[guid];
                 bool geometryIsSame = CompareGeometry(current, previous);
                 bool revitParameterIsSame = CompareRevitParameter(current, previous);
-                bool sharedParameterIsSame = CompareSharedParameter(current, previous);
-               
+               bool sharedParameterIsSame = CompareSharedParameter(current, previous);
+                
+               if(geometryIsSame && revitParameterIsSame && sharedParameterIsSame)
+                {
+                    sameEle.Add(guid);
+                }
+                else
+                {
+                    modifiedEle.Add(guid);
+                }
             }
+             
+            MessageBox.Show("Same" + sameEle.Count.ToString() + "\n" + "modified" + modifiedEle.Count.ToString());
         }
 
         private static bool CompareGeometry(RevitElement current, RevitElement previous)
@@ -46,7 +62,7 @@
         {
             bool result = false;
 
-            if (current.parameters == previous.parameters) result = true;
+            if (current.parameters.ToLower() == previous.parameters.ToLower()) result = true;
 
             return result;
         }

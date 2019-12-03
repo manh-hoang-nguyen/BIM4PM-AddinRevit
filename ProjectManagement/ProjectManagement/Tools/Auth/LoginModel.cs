@@ -24,7 +24,7 @@
             RestRequest req = new RestRequest(Route.Login, Method.POST);
 
             string body = "{\"email\":\"" + email + "\",\"" + "password" + "\":\"" + password + "\"}";
-
+            req.RequestFormat = DataFormat.Json;
 
             req.AddJsonBody(body);
 

@@ -1,92 +1,91 @@
-﻿using System.Threading;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.ApplicationServices;
-using ProjectManagement.FormInterface;
-using System.Collections.Generic;
-using System;
-using ProjectManagement.Utils.RevitUtils;
-using Newtonsoft.Json;
-using RestSharp;
-using ProjectManagement.Commun;
-
-namespace ProjectManagement.CmdRevit
+﻿namespace ProjectManagement.CmdRevit
 {
+    using Autodesk.Revit.Attributes;
+    using Autodesk.Revit.DB;
+    using Autodesk.Revit.UI;
+    using Newtonsoft.Json;
+    using ProjectManagement.Commun;
+    using RestSharp;
+    using System;
+
     [Transaction(TransactionMode.ReadOnly)]
     public class CmdTestProgressBar : IExternalCommand
     {
+        /// <summary>
+        /// The Execute
+        /// </summary>
+        /// <param name="commandData">The commandData<see cref="ExternalCommandData"/></param>
+        /// <param name="message">The message<see cref="string"/></param>
+        /// <param name="elements">The elements<see cref="ElementSet"/></param>
+        /// <returns>The <see cref="Result"/></returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            /*
+            var uiapp = commandData.Application;
+            var uidoc = uiapp.ActiveUIDocument;
+            var doc = uidoc.Document;
+             
+            Selection selection = uidoc.Selection;
+            ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
+            string xx = "";
+            ICollection<Element> col = new FilteredElementCollector(doc).OfClass(typeof(Wall)).ToElements();
+            foreach (Element e in col)
+            {
+              
+                foreach (Parameter para in e.GetOrderedParameters())
+                {
+
+                    if (para.IsShared == true)
+                    {
+                        var xxx = doc.GetElement(para.Id);
+                        var sharedParameterElement = doc.GetElement(para.Id) as SharedParameterElement;
+                        xx += sharedParameterElement.Name + " : " + sharedParameterElement.GetDefinition().Visible.ToString() + "\n";
+
+                    }
+                }
+            }
+            TaskDialog.Show("revit", xx);
             
-           
+        */
+
+            
+            //* Set time out
+            //https://stackoverflow.com/questions/48968193/restsharp-the-operation-has-timed-out/49677943
+            //https://stackoverflow.com/questions/46584175/restsharp-timeout-not-working
             RevitElementRoute route = new RevitElementRoute(ProjectProvider.Ins.CurrentProject._id);
             RestRequest req = new RestRequest(route.url(), Method.POST);
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
 
-            string body = JsonConvert.SerializeObject(RevitElementList.InModel);
+            string body = JsonConvert.SerializeObject(RevitElementList.InModel.Values);
             req.RequestFormat = DataFormat.Json;
 
             req.AddJsonBody(body);
-
+            
+            Route.Client.Timeout = Int32.MaxValue;
             IRestResponse res = Route.Client.Execute(req);
-            //    Thread thread = new Thread(new ThreadStart(() =>
-            //    {
-            //        // create and show the window
-            //        frm_ProgressBar frm_ProgressBar = new frm_ProgressBar();
-            //        frm_ProgressBar.Show();
+            if (res.StatusCode.ToString() == "OK")
+            {
+                 TaskDialog.Show("Success", "Operation is finished");
+                return Result.Succeeded;
+            }
 
-            //        // start the Dispatcher processing  
-            //        System.Windows.Threading.Dispatcher.Run();
-            //    }));
-
-            //    // set the apartment state  
-            //    thread.SetApartmentState(ApartmentState.STA);
-
-            //    // make the thread a background thread  
-            //    thread.IsBackground = true;
-
-            //    thread.Start();
-
-            // UIDocument UIdoc = commandData.Application.ActiveUIDocument;
-            // Application app = commandData.Application.Application;
-            // Document doc = UIdoc.Document;
-            // Settings settings = doc.Settings;
-            //var xxk= doc.SiteLocation;
-            // var l = doc.Phases;
-            // var x = doc.ProjectLocations;
-            // string xx = "";
-            // //foreach (Category item in categories)
-            // //{
-
-            // //    xx += item.Name +" "+ item.Parent + Environment.NewLine;
-            // //}
-            // //TaskDialog.Show("revit", xx);
-            // Reference reference = UIdoc.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element);
-            // Element element = UIdoc.Document.GetElement(reference);
-            //// ProjectManagement.Utils.RevitUtils.ParameterUtils.GetAllParametersElement(element);
-            // //foreach (KeyValuePair<string, string> entry in ProjectManagement.Utils.RevitUtils.ParameterUtils.GetAllParametersElement(element))
-            // //{
-            // //    xx += entry.Key + " : " + entry.Value + Environment.NewLine;
-            // //}
-            // foreach(Parameter p in element.GetOrderedParameters())
-            // {
-            //    if( p.IsShared)
-            //     xx += p.Definition.Name +" : "+ ParameterUtils.ParameterToString(p)  + Environment.NewLine;
-            // }
-            // TaskDialog.Show("revit", xx);
-            // double ind = 12;
-
+            if (res.ErrorException != null)
+            {
+                string messagex = "Opps! There has been an error while uploading your model. " + res.ErrorException.Message;
+                throw new Exception(messagex);
+            }
           
-
-
+            
+            //ProjectManagement.Utils.RevitUtils.Compare.Execute(); 
             return Result.Succeeded;
         }
-        void Progre()
-        {
 
+        /// <summary>
+        /// The Progre
+        /// </summary>
+        internal void Progre()
+        {
         }
     }
 }
-

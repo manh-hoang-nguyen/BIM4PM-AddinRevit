@@ -14,7 +14,20 @@
             {
                 if(para.IsShared == false)
                 {
-                    parameters += string.Format("{0}:{1}={2}",para.Id, para.Definition.Name, ParameterToString(para)) +";";
+                    string val = null;
+                    switch (para.StorageType)
+                    {
+                        case StorageType.String:
+                            val = para.AsString();
+                            break;
+
+                        default:
+                            val = para.AsValueString();
+                            break;
+                    }
+
+                    if (val == null) val = "(n/a)";
+                    parameters += string.Format("{0}:{1}={2}",para.Id, para.Definition.Name, val) + ";";
                 }
             }
  
@@ -27,8 +40,10 @@
 
             foreach (Parameter para in e.GetOrderedParameters())
             {
+               
                 if (para.IsShared == true)
                 {
+                    
                     parameters += string.Format("{0}:{1}={2}", para.Id, para.Definition.Name, ParameterToString(para)) + ";";
                 }
             }

@@ -110,7 +110,7 @@
 
 
             }
-            Compare.Execute();
+            
         }
 
         /// <summary>
