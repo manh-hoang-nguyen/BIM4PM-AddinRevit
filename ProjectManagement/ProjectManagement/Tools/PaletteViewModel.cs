@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using ProjectManagement.Tools.Auth;
+using ProjectManagement.FormInterface;
 
 namespace ProjectManagement.Tools
 {
@@ -19,12 +20,12 @@ namespace ProjectManagement.Tools
 
         public PaletteViewModel()
         {
-            
-            //TabItems.Add(new TabItem
-            //{
-            //    Content = new LoginView { DataContext = new LoginViewModel(App._app) },
-            //    Header = "Connect"
-            //});
+
+            TabItems.Add(new TabItem
+            {
+                Content = new UserControl1()  ,
+                Header = "Connect"
+            });
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Reflection;
 using ProjectManagement.Tools.Project;
 using ProjectManagement.Tools;
 using Autodesk.Revit.DB.Events;
+using System.Threading;
 #endregion Namespaces
 
 namespace ProjectManagement
@@ -122,7 +123,7 @@ namespace ProjectManagement
  
             uicapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(onViewActivated); //for panel proprety
 
-            uicapp.ControlledApplication.DocumentOpened -= OnDocumentOpened;
+            uicapp.ControlledApplication.DocumentOpened += OnDocumentOpened;
             uicapp.ControlledApplication.DocumentCreated += OnDocumentCreated;
             #endregion Events
 
@@ -143,11 +144,20 @@ namespace ProjectManagement
 
         private static void OnDocumentCreated(object sender, DocumentCreatedEventArgs args)
         {
-            PaletteUtilities.LaunchCommunicator();
+            new Thread(() => PaletteUtilities.LaunchCommunicator())
+            {
+                Priority = ThreadPriority.BelowNormal,
+                IsBackground = true
+            }.Start();
+           
         }
         private static void OnDocumentOpened(object source, DocumentOpenedEventArgs args)
         {
-            PaletteUtilities.LaunchCommunicator();
+            new Thread(() => PaletteUtilities.LaunchCommunicator())
+            {
+                Priority = ThreadPriority.BelowNormal,
+                IsBackground = true
+            }.Start();
         }
 
         private void DockablePanelActivated()

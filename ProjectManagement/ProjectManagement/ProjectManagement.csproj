@@ -265,6 +265,9 @@
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\Project\ProjectViewModel.cs" />
+    <Compile Include="UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\CastReponseAPI.cs" />
     <Compile Include="Utils\ProgressBar\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
@@ -386,6 +389,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tools\Project\ProjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

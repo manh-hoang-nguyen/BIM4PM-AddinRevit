@@ -45,8 +45,9 @@
                     else CompareResult.ModifiedElements.Add(guid);
                 }
             }
-             
-           
+            int i = CompareResult.ModifiedElements.Count;
+
+
         }
 
         private static bool CompareGeometry(RevitElement current, RevitElement previous)

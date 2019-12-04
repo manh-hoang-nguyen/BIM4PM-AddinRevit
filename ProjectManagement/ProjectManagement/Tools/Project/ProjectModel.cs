@@ -2,6 +2,7 @@
 {
     using Autodesk.Revit.DB;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
     using ProjectManagement.Commun;
     using ProjectManagement.Models;
     using ProjectManagement.Utils.RevitUtils;
@@ -117,8 +118,11 @@
 
 
             IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
+            var format = "YYYY-mm-ddTHH:MM:ss"; // your datetime format
+            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format };
 
-            RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content);
+
+            RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content, dateTimeConverter);
 
             return revitElements.data;
         }
