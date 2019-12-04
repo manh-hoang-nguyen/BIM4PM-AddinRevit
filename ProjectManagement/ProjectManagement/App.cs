@@ -11,6 +11,9 @@ using ProjectManagement.Tools.Project;
 using ProjectManagement.Tools;
 using Autodesk.Revit.DB.Events;
 using System.Threading;
+using System.ComponentModel;
+using ProjectManagement.Commun;
+using System.Linq;
 #endregion Namespaces
 
 namespace ProjectManagement
@@ -18,7 +21,11 @@ namespace ProjectManagement
     internal class App : IExternalApplication
     {
         public static App Instance { get; private set; }
-        private DockablePaneId _dpid;
+        public static ModelRequestHandler ModelHandler { get; set; }
+        public static ExternalEvent ModelEvent { get; set; }
+        public static PaletteMainView PaletteWindow { get; set; }
+        public static DocumentSet DocumentSet { get; set; }
+ 
         public static string _projectName;
         internal static App _app = null;
         private RibbonItem _button;
@@ -30,19 +37,19 @@ namespace ProjectManagement
 
         private PanelProprety _panelProprety = null;
         public static UIControlledApplication _uicapp = null;
-        private static bool _subscribed = false;
-        private UIDocument _uiDoc;
+        
         private Document _doc;
 
-        public static ModelRequestHandler ModelHandler { get; set; }
-        public static ExternalEvent ModelEvent { get; set; }
-        public static PaletteMainView PaletteWindow { get; set; }
+         
 
         public Result OnStartup(UIControlledApplication uicapp)
         {
-            Instance = this;
+            //Instance = this;
             ModelHandler = new ModelRequestHandler();
             ModelEvent = ExternalEvent.Create(ModelHandler);
+            PaletteUtilities.RegisterPalette(uicapp);
+
+           
             _uicapp = uicapp;
            
             // Obtenir le chemin du dll assembly
@@ -125,6 +132,7 @@ namespace ProjectManagement
 
             uicapp.ControlledApplication.DocumentOpened += OnDocumentOpened;
             uicapp.ControlledApplication.DocumentCreated += OnDocumentCreated;
+            uicapp.ControlledApplication.DocumentClosing += OnDocumentClosing;
             #endregion Events
 
             return Result.Succeeded;
@@ -144,22 +152,24 @@ namespace ProjectManagement
 
         private static void OnDocumentCreated(object sender, DocumentCreatedEventArgs args)
         {
-            new Thread(() => PaletteUtilities.LaunchCommunicator())
-            {
-                Priority = ThreadPriority.BelowNormal,
-                IsBackground = true
-            }.Start();
-           
+             
+                ProjectViewModel.Documents.Add(args.Document);
+            
+            
+          
         }
         private static void OnDocumentOpened(object source, DocumentOpenedEventArgs args)
         {
-            new Thread(() => PaletteUtilities.LaunchCommunicator())
-            {
-                Priority = ThreadPriority.BelowNormal,
-                IsBackground = true
-            }.Start();
+             
+                ProjectViewModel.Documents.Add(args.Document);
+            
+          
         }
-
+        private static void OnDocumentClosing(object source, DocumentClosingEventArgs args)
+        {
+           var docToRemove = ProjectViewModel.Documents.Where(x => x.Title == args.Document.Title);
+           if(docToRemove !=null) ProjectViewModel.Documents.Remove(docToRemove.FirstOrDefault());
+        }
         private void DockablePanelActivated()
         {
              
@@ -188,6 +198,8 @@ namespace ProjectManagement
 
         public Result OnShutdown(UIControlledApplication a)
         {
+            a.ControlledApplication.DocumentOpened -= OnDocumentOpened;
+            a.ControlledApplication.DocumentCreated -= OnDocumentCreated;
             return Result.Succeeded;
         }
 

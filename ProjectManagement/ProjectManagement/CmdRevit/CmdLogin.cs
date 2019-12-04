@@ -46,7 +46,7 @@ namespace ProjectManagement.CmdRevit
             */
             LoginView loginView = new LoginView()
             {
-                DataContext = new LoginViewModel(uiapp)
+                DataContext = new LoginViewModel(  uiapp)
             };
             loginView.ShowDialog();
             return Result.Succeeded;

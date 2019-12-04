@@ -23,7 +23,7 @@ namespace ProjectManagement.Tools
 
             TabItems.Add(new TabItem
             {
-                Content = new UserControl1()  ,
+                Content = new ProjectView() { DataContext = new ProjectViewModel()}  ,
                 Header = "Connect"
             });
         }

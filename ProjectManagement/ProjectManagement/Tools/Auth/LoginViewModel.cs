@@ -3,6 +3,7 @@
     using Autodesk.Revit.UI;
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
+    using ProjectManagement.Commun;
     using ProjectManagement.Tools.Project;
     using System.Threading;
     using System.Windows;
@@ -64,7 +65,7 @@
         {
             get => _password; set { _password = value; RaisePropertyChanged(); }
         }
-
+       
         public LoginViewModel(UIApplication uiapp)
         {
             _uiapp = uiapp;
@@ -82,11 +83,7 @@
         private void OnAuthenticated(Window win)
         {
             win.Close();
-            ProjectView project = new ProjectView
-            {
-                DataContext = new ProjectViewModel(_uiapp)
-            };
-            project.Show();
+            
         }
 
         /// <summary>
@@ -95,7 +92,7 @@
         /// <param name="Window">The Window<see cref="Window"/></param>
         private void OnWindowLoaded(LoginView win)
         {
-            //ProgressBar.Visibility = Visibility.Hidden;
+             
             VisibilityProgressBar = Visibility.Hidden;
             VisibilityAuthenticated = Visibility.Hidden;
             VisibilityNotAuthenticated = Visibility.Hidden;
@@ -142,6 +139,7 @@
                     VisibilityProgressBar = Visibility.Hidden;
                     VisibilityNotAuthenticated = Visibility.Hidden;
                     VisibilityAuthenticated = Visibility.Visible;
+                    AuthProvider.Instance.IsAuthenticated = true;
                 }
                 else
                 {
@@ -149,6 +147,7 @@
                     VisibilityProgressBar = Visibility.Hidden;
                     VisibilityNotAuthenticated = Visibility.Visible;
                     VisibilityAuthenticated = Visibility.Hidden;
+                    AuthProvider.Instance.IsAuthenticated = false;
                 }
             });
 
