@@ -73,7 +73,7 @@ namespace ProjectManagement.CmdRevit
         }
         void getComment()
         {
-            foreach (History item in HistoryList.HistoryInDatabase)
+            foreach (Historyx item in HistoryList.HistoryInDatabase)
             { 
                 Comment comment = new Comment()
                 {

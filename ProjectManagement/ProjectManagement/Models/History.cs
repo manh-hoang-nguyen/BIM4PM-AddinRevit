@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProjectManagement.Models
 {
-    public class History
+    public class Historyx
     {
         public string _id { get; set; }
         public string projectId { get; set; }

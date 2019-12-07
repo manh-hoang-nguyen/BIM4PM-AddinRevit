@@ -3,6 +3,12 @@
     using System;
     using System.Collections.Generic;
 
+    public class Member
+    {
+        public string _id { get; set; }
+        public User user { get; set; }
+        public string role { get; set; }
+    }
     public class Project
     {
         public string _id { get; set; }
@@ -13,7 +19,7 @@
 
         public string owner { get; set; }
 
-        public List<string> members { get; set; }
+        public List<Member> members { get; set; }
 
         public DateTime createdAt { get; set; }
 
@@ -27,5 +33,11 @@
         public bool success { get; set; }
 
         public List<Project> data { get; set; }
+    }
+    public class SingleProjectRes
+    {
+        public bool success { get; set; }
+
+        public Project data { get; set; }
     }
 }

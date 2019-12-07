@@ -131,7 +131,7 @@ namespace ProjectManagement.FormInterface
                                           where e1.guid == Guid
                                           select e1).FirstOrDefault();
 
-                            History x = (from e1 in HistoryList.HistoryInDatabase
+                            Historyx x = (from e1 in HistoryList.HistoryInDatabase
                                           where e1.guid == Guid
                                           select e1).FirstOrDefault();
                             for (int i = 1; i <= x.modifications.Count(); i++)

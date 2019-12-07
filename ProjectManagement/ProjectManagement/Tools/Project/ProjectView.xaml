@@ -6,10 +6,10 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:ProjectManagement.Tools.Project"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:progressBar="clr-namespace:ProjectManagement.Resources.UI.ProgressBar.CircularProgressBar"
     x:Name="Win"
-    
-     d:DesignWidth="450"
     d:DesignHeight="800"
+    d:DesignWidth="450"
     mc:Ignorable="d">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -20,8 +20,13 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <UserControl.Resources>
+
         <ResourceDictionary>
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ProjectManagement;component/Resources/UI/ProgressBar/ProgressBarResource.xaml" />
                 <ResourceDictionary Source="/ProjectManagement;component/Resources/ResourceDictionary.xaml" />
                 <ResourceDictionary Source="/ProjectManagement;component/Resources/ComboBoxResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -29,6 +34,10 @@
 
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
         <StackPanel>
             <TextBlock Style="{StaticResource MHHeader1}" Text="Welcome!" />
             <TextBlock Style="{StaticResource MHHeader1}" Text="{Binding Path=User.name.lastName}" />
@@ -37,13 +46,13 @@
                     <ComboBox
                         x:Name="Projects"
                         DisplayMemberPath="name"
+                        IsEnabled="{Binding CbProjectIsEnable, FallbackValue=true}"
                         ItemsSource="{Binding Projects}"
                         Style="{StaticResource MHComboBox}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding ProjectSelection}" CommandParameter="{Binding ElementName=Win}" />
                             </i:EventTrigger>
-
                         </i:Interaction.Triggers>
                     </ComboBox>
                 </Border>
@@ -51,6 +60,7 @@
             <ListView
                 x:Name="Versions"
                 Margin="3"
+                IsEnabled="False"
                 ItemContainerStyle="{StaticResource MaterialDesignGridViewItem}"
                 ItemsSource="{Binding Versions}">
 
@@ -73,33 +83,76 @@
                     <ComboBox
                         x:Name="Models"
                         DisplayMemberPath="Title"
-                        ItemsSource="{Binding Documents}"
+                        IsEnabled="{Binding CbModelIsEnable, FallbackValue=true}"
                         Style="{StaticResource MHComboBox}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding ModelSelection}" CommandParameter="{Binding ElementName=Win}" />
                             </i:EventTrigger>
-
                         </i:Interaction.Triggers>
                     </ComboBox>
                 </Border>
 
             </Grid>
-            <Button
-                Height="50"
-                Command="{Binding GetData}"
-                CommandParameter="{Binding ElementName=Win}"
-                Style="{StaticResource MHButton}">
-                Test
-            </Button>
-            <Button
-                Height="50"
-                Command="{Binding SendData}"
-                CommandParameter="{Binding ElementName=Win}"
-                Style="{StaticResource MHButton}">
-                Test
-            </Button>
+
+
         </StackPanel>
+        <Grid Grid.Row="1">
+            <StackPanel Margin="3" Orientation="Horizontal">
+                <TextBlock Margin="0,0,3,0" Text="Want to see your model is up to date?" />
+                <TextBlock
+                    Cursor="Hand"
+                    FontStyle="Oblique"
+                    Foreground="Blue"
+                    Text="Click me"
+                    TextDecorations="Underline">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown">
+                            <i:InvokeCommandAction Command="{Binding Compare}" CommandParameter="{Binding ElementName=Win}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBlock>
+
+                <Ellipse
+                    Name="EllipseUpToDate"
+                    Width="10"
+                    Height="10"
+                    Margin="3,4,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+
+            <StackPanel
+                Margin="10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal">
+
+
+                <Border
+                    Background="WhiteSmoke"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    CornerRadius="2">
+                    <Button
+                        Margin="1"
+                        BorderThickness="0"
+                        Command="{Binding Connect}"
+                        CommandParameter="{Binding ElementName=Win}"
+                        Content="Connect"
+                        IsEnabled="{Binding BtnConnectIsEnable, FallbackValue=false}" />
+                </Border>
+
+                <Button
+                    Command="{Binding Disconnect}"
+                    CommandParameter="{Binding ElementName=Win}"
+                    IsEnabled="{Binding BtnDisconnectIsEnable, FallbackValue=false}"
+                    Style="{StaticResource MHButton1}">
+                    Disconnect
+                </Button>
+            </StackPanel>
+        </Grid>
+
 
     </Grid>
 </UserControl>

@@ -22,7 +22,7 @@ namespace ProjectManagement.CmdRevit
             string tabName = "BIMNG-Project Management";
             Utils.PanelAvailability.HideAll(tabName);
 
-            HistoryList.HistoryInDatabase = new List<History>();
+            HistoryList.HistoryInDatabase = new List<Historyx>();
             HistoryList.CommentInDatabase = new List<Comment>();
           
             ModificationTracker.deletedElement = new List<ElementId>();
@@ -30,8 +30,7 @@ namespace ProjectManagement.CmdRevit
             ModificationTracker.modifiedElement = new List<ElementId>();
             UserData.authentication.token = null;
             UserData.authentication.userId = null;
-            VersionCommun.CurrentVersion = null;
-            VersionCommun.VersionInDatabase = null;
+            
             ComparisonList.ComparisonInDatabase= new List<Comparison>();
             ComparisonList.ComparisonInModel = new List<Comparison>();
             GuidList.guidInModel= new List<string>();

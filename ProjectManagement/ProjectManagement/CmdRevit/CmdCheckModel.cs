@@ -121,10 +121,10 @@ namespace ProjectManagement.CmdRevit
                         var convertedJson_delete = JsonConvert.SerializeObject(GuidList.guid_deletedElement, Formatting.Indented);
                         //Send data to server
                         string jsNew = "{\"projectId\":\""+UserData.idProjectActive
-                                        +"\",\"version\":\""+ VersionCommun.CurrentVersion 
+                                        +"\",\"version\":\""+ ProjectProvider.Instance.CurrentVersion.version 
                                         +"\",\"data\":" +convertedJson_new+"}";
                         string jsModif = "{\"projectId\":\"" + UserData.idProjectActive
-                                        + "\",\"version\":\"" + VersionCommun.CurrentVersion
+                                        + "\",\"version\":\"" + ProjectProvider.Instance.CurrentVersion.version
                                         + "\",\"data\":" + convertedJson_modif + "}";
 
                         string jsDel = "{\"projectId\":\"" + UserData.idProjectActive + "\",\"data\":"+convertedJson_delete+"}";

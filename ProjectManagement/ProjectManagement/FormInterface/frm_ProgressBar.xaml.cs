@@ -64,7 +64,7 @@ namespace ProjectManagement.FormInterface
                     string jsonNew = JsonConvert.SerializeObject(comparison, Formatting.Indented);
 
                     string jsNewx = "{\"projectId\":\"" + UserData.idProjectActive
-                           + "\",\"version\":\"" + VersionCommun.CurrentVersion
+                           + "\",\"version\":\"" + ProjectProvider.Instance.CurrentVersion.version
                            + "\",\"data\":[" + jsonNew + "]}";
                     ComparisonController.PostComparison_NewElement(jsNewx);
 

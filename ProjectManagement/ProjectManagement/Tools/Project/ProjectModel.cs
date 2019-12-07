@@ -5,14 +5,16 @@
     using Newtonsoft.Json.Converters;
     using ProjectManagement.Commun;
     using ProjectManagement.Models;
-    using ProjectManagement.Utils.RevitUtils;
     using RestSharp;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Threading.Tasks;
+    using System.Windows;
+    using DataFormat = RestSharp.DataFormat;
 
     public class ProjectModel
     {
-        public static List<Document> Documents { get; set; }
+        
 
         public ProjectModel()
         {
@@ -26,7 +28,7 @@
         {
             RestRequest req = new RestRequest(Route.GetMe, Method.GET);
             req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
+            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
 
             Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
 
@@ -44,7 +46,7 @@
         {
             RestRequest req = new RestRequest(Route.UserProjects, Method.GET);
             req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
+            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
             Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
             var res = await resTask;
             ProjectRes Project = JsonConvert.DeserializeObject<ProjectRes>(res.Content);
@@ -61,7 +63,7 @@
             string url = string.Format("{0}/{1}/versions", Route.UserProjects, id);
             RestRequest req = new RestRequest(url, Method.GET);
             req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
+            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
             Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
             var res = await resTask;
             VersionRes Version = JsonConvert.DeserializeObject<VersionRes>(res.Content);
@@ -74,13 +76,21 @@
         /// <returns>The <see cref="UserRes"/></returns>
         public UserRes getUser()
         {
-            RestRequest req = new RestRequest(Route.GetMe, Method.GET);
-            req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
-            IRestResponse<UserRes> resTask = Route.Client.Execute<UserRes>(req);
-            UserRes account = JsonConvert.DeserializeObject<UserRes>(resTask.Content);
+            try
+            {
+                RestRequest req = new RestRequest(Route.GetMe, Method.GET);
+                req.AddHeader("Content-Type", "application/json");
+                req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+                IRestResponse<UserRes> resTask = Route.Client.Execute<UserRes>(req);
+                UserRes account = JsonConvert.DeserializeObject<UserRes>(resTask.Content);
 
-            return resTask.Data;
+                return resTask.Data;
+            }
+            catch (System.Exception e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -99,7 +109,6 @@
         {
             App.ModelHandler.Request.Make(RequestId.Element);
             App.ModelEvent.Raise();
-         
         }
 
         /// <summary>
@@ -109,37 +118,50 @@
         /// <returns>The <see cref="List{RevitElement}"/></returns>
         public List<RevitElement> GetRevitElementInCloud(Version version)
         {
-            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Ins.CurrentProject._id);
+            if (ProjectProvider.Instance.CurrentProject == null)
+            {
+                MessageBox.Show("Select a project please");
+                return new List<RevitElement>();
+            }
+            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
             RestRequest req = new RestRequest(route.url(), Method.GET);
             req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
+            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
             req.AddParameter("version", version.version);
-            
+
 
 
             IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
-            var format = "YYYY-mm-ddTHH:MM:ss"; // your datetime format
-            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format };
+            string format = "0000-12-31T23:50:39.000Z"; // your datetime format
+            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
 
 
             RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content, dateTimeConverter);
 
             return revitElements.data;
         }
-        public void SendRevitElementToCloud ()
+
+        /// <summary>
+        /// The SendRevitElementToCloud
+        /// </summary>
+        public void SendRevitElementToCloud()
         {
-            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Ins.CurrentProject._id);
+            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
+            if (ProjectProvider.Instance.CurrentProject._id == null)
+            {
+                MessageBox.Show("Select a project please");
+                return;
+            }
             RestRequest req = new RestRequest(route.url(), Method.POST);
             req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
+            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
 
-            string body = JsonConvert.SerializeObject(RevitElementList.InModel);
+            string body = JsonConvert.SerializeObject(ModelProvider.Instance.DicRevitElements);
             req.RequestFormat = DataFormat.Json;
 
             req.AddJsonBody(body);
 
             IRestResponse res = Route.Client.Execute(req);
-
         }
     }
 }

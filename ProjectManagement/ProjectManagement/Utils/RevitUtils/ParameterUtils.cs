@@ -5,6 +5,11 @@
 
     public class ParameterUtils
     {
+        /// <summary>
+        /// The SerializeRevitParameters
+        /// </summary>
+        /// <param name="e">The e<see cref="Element"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string SerializeRevitParameters(Element e)
         {
             string parameters = "";
@@ -12,27 +17,80 @@
 
             foreach (Parameter para in e.GetOrderedParameters())
             {
-                if(para.IsShared == false)
+                if (para.IsShared == false)
                 {
                     string val = null;
-                    switch (para.StorageType)
+                    //exclude geometryParameters
+                    if (para.Definition.ParameterGroup == BuiltInParameterGroup.PG_CONSTRAINTS
+                        || para.Definition.ParameterGroup == BuiltInParameterGroup.PG_GEOMETRY)
                     {
-                        case StorageType.String:
-                            val = para.AsString();
-                            break;
+                        if (para.StorageType != StorageType.Double)
+                        {
+                            switch (para.StorageType)
+                            {
+                                case StorageType.String:
+                                    val = para.AsString();
+                                    break;
 
-                        default:
-                            val = para.AsValueString();
-                            break;
+                                default:
+                                    val = para.AsValueString();
+                                    break;
+                            }
+                        }
                     }
+                    else
+                    {
+                        switch (para.StorageType)
+                        {
+                            case StorageType.String:
+                                val = para.AsString();
+                                break;
+
+                            default:
+                                val = para.AsValueString();
+                                break;
+                        }
+                    } 
 
                     if (val == null) val = "(n/a)";
-                    parameters += string.Format("{0}:{1}={2}",para.Id, para.Definition.Name, val) + ";";
+                    parameters += string.Format("{0}:{1}={2}", para.Id, para.Definition.Name, val) + ";";
                 }
             }
- 
+
             return parameters;
         }
+
+        /// <summary>
+        /// get all parameter in group parameter constraints and geometry
+        /// </summary>
+        /// <param name="e">The e<see cref="Element"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public static string SerializeGeoParameters(Element e)
+        {
+            string parameters = "";
+            IList<Parameter> paraList = e.GetOrderedParameters();
+
+            foreach (Parameter para in e.GetOrderedParameters())
+            {
+                if (para.IsShared == false
+                    && para.StorageType == StorageType.Double
+                    && (para.Definition.ParameterGroup == BuiltInParameterGroup.PG_CONSTRAINTS 
+                    || para.Definition.ParameterGroup == BuiltInParameterGroup.PG_GEOMETRY))
+                {
+                    string val = para.AsDouble().ToString();
+
+                    parameters += string.Format("{0}:{1}={2}", para.Id, para.Definition.Name, val) + ";";
+                }
+            }
+
+            return parameters;
+        }
+
+        /// <summary>
+        /// The SerializeSharedParameters
+        /// </summary>
+        /// <param name="e">The e<see cref="Element"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string SerializeSharedParameters(Element e)
         {
             string parameters = "";
@@ -40,16 +98,17 @@
 
             foreach (Parameter para in e.GetOrderedParameters())
             {
-               
+
                 if (para.IsShared == true)
                 {
-                    
+
                     parameters += string.Format("{0}:{1}={2}", para.Id, para.Definition.Name, ParameterToString(para)) + ";";
                 }
             }
 
             return parameters;
         }
+
         /// <summary>
         /// Helper function: return a string form of a given parameter.
         /// </summary>
@@ -84,7 +143,7 @@
                     ElementId idVal = param.AsElementId();
                     val = idVal.IntegerValue.ToString();
                     break;
-                 
+
                 case StorageType.None:
                     break;
             }
@@ -100,7 +159,7 @@
         {
             //Key is parameter name, value is paramter value
             Dictionary<string, string> dic = new Dictionary<string, string>();
-             
+
             IList<Parameter> parameters = e.GetOrderedParameters();
             List<string> param_values = new List<string>(parameters.Count);
             foreach (Parameter p in parameters)

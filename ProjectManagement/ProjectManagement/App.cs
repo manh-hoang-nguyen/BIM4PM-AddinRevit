@@ -1,47 +1,54 @@
-#region Namespaces
-
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Events;
-using ProjectManagement.FormInterface;
-using System;
-using System.Reflection;
-using ProjectManagement.Tools.Project;
-using ProjectManagement.Tools;
-using Autodesk.Revit.DB.Events;
-using System.Threading;
-using System.ComponentModel;
-using ProjectManagement.Commun;
-using System.Linq;
-#endregion Namespaces
-
 namespace ProjectManagement
 {
+    using Autodesk.Revit.Attributes;
+    using Autodesk.Revit.DB;
+    using Autodesk.Revit.DB.Events;
+    using Autodesk.Revit.UI;
+    using Autodesk.Revit.UI.Events;
+    using ProjectManagement.Commun;
+    using ProjectManagement.FormInterface;
+    using ProjectManagement.Models;
+    using ProjectManagement.Tools;
+    using ProjectManagement.Tools.Project;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading;
+
     internal class App : IExternalApplication
     {
         public static App Instance { get; private set; }
+
         public static ModelRequestHandler ModelHandler { get; set; }
+
         public static ExternalEvent ModelEvent { get; set; }
+
         public static PaletteMainView PaletteWindow { get; set; }
+
         public static DocumentSet DocumentSet { get; set; }
- 
+       
+
         public static string _projectName;
+
         internal static App _app = null;
+
         private RibbonItem _button;
 
         /// <summary>
         /// Provide access to singleton class instance.
         /// </summary>
-        
-
         private PanelProprety _panelProprety = null;
+
         public static UIControlledApplication _uicapp = null;
-        
+
         private Document _doc;
 
-         
-
+        /// <summary>
+        /// The OnStartup
+        /// </summary>
+        /// <param name="uicapp">The uicapp<see cref="UIControlledApplication"/></param>
+        /// <returns>The <see cref="Result"/></returns>
         public Result OnStartup(UIControlledApplication uicapp)
         {
             //Instance = this;
@@ -49,9 +56,9 @@ namespace ProjectManagement
             ModelEvent = ExternalEvent.Create(ModelHandler);
             PaletteUtilities.RegisterPalette(uicapp);
 
-           
+
             _uicapp = uicapp;
-           
+
             // Obtenir le chemin du dll assembly
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
@@ -84,10 +91,9 @@ namespace ProjectManagement
             string logo = null;
             string commentaireBouton = "Get Data";
 
-            #region Buttons
 
             //************* Panel Authen***********
- 
+
             rbAuth.AddSeparator();
             button.Ajouter(rbAuth, "Logout", logo, "ProjectManagement.CmdRevit.CmdLogout", thisAssemblyPath, "Log out of server");
             button.Ajouter(rbAuth, "progessbar", logo, "ProjectManagement.CmdRevit.CmdTestProgressBar", thisAssemblyPath, "");
@@ -110,38 +116,93 @@ namespace ProjectManagement
             button.Ajouter(ribbonPanel, "Send Data", logo, "ProjectManagement.CmdRevit.CmdSendData", thisAssemblyPath, commentaireBouton);
             ribbonPanel.AddSeparator();
             button.Ajouter(ribbonPanel, "DeletedElement", logo, "ProjectManagement.CmdRevit.CmdSendDeletedElement", thisAssemblyPath, commentaireBouton);
-           
 
-            button.Ajouter(rib_panelProprety, "Afficher", logo, "ProjectManagement.ShowDockableWindow", thisAssemblyPath, "Afficher pallette de propriétés");
+
+            button.Ajouter(rbAuth, "Afficher", logo, "ProjectManagement.ShowDockableWindow", thisAssemblyPath, "Afficher pallette de propriétés");
             Separateur.Ajouter(rib_panelProprety);
             button.Ajouter(rib_panelProprety, "Masquer", logo, "ProjectManagement.HideDockableWindow", thisAssemblyPath, "Masquer pallette de propriétés");
-           
+
             rib_panelProprety.AddSeparator();
             button.Ajouter(rib_panelProprety, "Modification Watcher", logo, "ProjectManagement.CmdRevit.CmdModificationWatcher", thisAssemblyPath, "Masquer pallette de propriétés");
-            #endregion Buttons
 
-            #region Methods
 
             DockablePanelActivated(); //Method for dockable panel
 
-            #endregion Methods
 
-            #region Events
- 
+
             uicapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(onViewActivated); //for panel proprety
 
             uicapp.ControlledApplication.DocumentOpened += OnDocumentOpened;
             uicapp.ControlledApplication.DocumentCreated += OnDocumentCreated;
             uicapp.ControlledApplication.DocumentClosing += OnDocumentClosing;
-            #endregion Events
+            uicapp.ControlledApplication.DocumentSaved += OnDocumentSave;
+            uicapp.ControlledApplication.DocumentSynchronizedWithCentral += OnDocumentSynchronized;
+            uicapp.ControlledApplication.DocumentChanged += OnDocumentChanged;
 
             return Result.Succeeded;
         }
 
+        private void OnDocumentChanged(object sender, DocumentChangedEventArgs args)
+        {
+            if (ModelProvider.Instance.CurrentModel == null 
+                || ModelProvider.Instance.DicRevitElements == null)
+                return;
+
+            if(args.GetDocument().Title == ModelProvider.Instance.CurrentModel.Title)
+            {
+                List<ElementId> elementIds = new List<ElementId>();
+                
+                foreach (ElementId id in args.GetAddedElementIds())
+                {
+                    Element e = ModelProvider.Instance.CurrentModel.GetElement(id);
+                    
+                    
+                    RevitElement revitElement = new RevitElement(  e);
+
+                 if(ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
+                      ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId); 
+                 else
+                      ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
+                }
+                foreach (ElementId id in args.GetDeletedElementIds())
+                {
+                    Element e = ModelProvider.Instance.CurrentModel.GetElement(id);
+
+                    RevitElement revitElement = new RevitElement(  e);
+
+                    if (ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
+                    {
+                        ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId);
+                        
+                    }
+                }
+                foreach (ElementId id in args.GetModifiedElementIds())
+                {
+                    
+                    Element e = ModelProvider.Instance.CurrentModel.GetElement(id);
+
+                    RevitElement revitElement = new RevitElement (e);
+
+                    if (ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
+                    {
+                        ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId);
+                        ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
+                    }    
+                }
+            }
+        }
+
+        private void OnDocumentSynchronized(object sender, DocumentSynchronizedWithCentralEventArgs args)
+        {
+            
+        }
+
         //void Application_ViewActivated( object sender, ViewActivatedEventArgs e)
-
-        #region Events
-
+        /// <summary>
+        /// The onViewActivated
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="ViewActivatedEventArgs"/></param>
         private void onViewActivated(object sender, ViewActivatedEventArgs e)
         {
             _doc = e.Document;
@@ -150,37 +211,63 @@ namespace ProjectManagement
             PanelProprety._uiDoc = new UIDocument(_doc);
         }
 
+        /// <summary>
+        /// The OnDocumentSave
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="DocumentSavedEventArgs"/></param>
+        private void OnDocumentSave(object sender, DocumentSavedEventArgs args)
+        {
+            
+        }
+
+        /// <summary>
+        /// The OnDocumentCreated
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="args">The args<see cref="DocumentCreatedEventArgs"/></param>
         private static void OnDocumentCreated(object sender, DocumentCreatedEventArgs args)
         {
-             
-                ProjectViewModel.Documents.Add(args.Document);
-            
-            
-          
+
+          ModelProvider.Instance.Models.Add(args.Document);
         }
+
+        /// <summary>
+        /// When DocumentOpened, update list model
+        /// </summary>
+        /// <param name="source">The source<see cref="object"/></param>
+        /// <param name="args">The args<see cref="DocumentOpenedEventArgs"/></param>
         private static void OnDocumentOpened(object source, DocumentOpenedEventArgs args)
         {
-             
-                ProjectViewModel.Documents.Add(args.Document);
-            
-          
+
+            ModelProvider.Instance.Models.Add(args.Document);
         }
+
+        /// <summary>
+        /// When DocumentClosing, update list models and disconnect to projects if models is current models
+        /// </summary>
+        /// <param name="source">The source<see cref="object"/></param>
+        /// <param name="args">The args<see cref="DocumentClosingEventArgs"/></param>
         private static void OnDocumentClosing(object source, DocumentClosingEventArgs args)
         {
-           var docToRemove = ProjectViewModel.Documents.Where(x => x.Title == args.Document.Title);
-           if(docToRemove !=null) ProjectViewModel.Documents.Remove(docToRemove.FirstOrDefault());
+            var docToRemove = ModelProvider.Instance.Models.Where(x => x.Title == args.Document.Title);
+            if (docToRemove != null) ModelProvider.Instance.Models.Remove(docToRemove.FirstOrDefault());
+
+            if (args.Document.Title == ModelProvider.Instance.CurrentModel.Title) AuthProvider.Instance.Disconnect();
         }
+
+        /// <summary>
+        /// The DockablePanelActivated
+        /// </summary>
         private void DockablePanelActivated()
         {
-             
-            PanelProprety panelPropreties = new PanelProprety();
-            _panelProprety = panelPropreties;
 
-            
+            PanelProprety panelPropreties = new PanelProprety();
+            _panelProprety = panelPropreties; 
             DockablePaneId paneId = new DockablePaneId(new Guid("{D7C963CE-B7CA-426A-8D51-6E8254D21157}"));
             _uicapp.RegisterDockablePane(paneId, "Historiques", (IDockablePaneProvider)panelPropreties);
-            
         }
+
         /* cach 2 tao voi event
         private void OnApplicationInitialized(object sender, Autodesk.Revit.DB.Events.ApplicationInitializedEventArgs e)
         {
@@ -193,9 +280,11 @@ namespace ProjectManagement
             _uicapp.RegisterDockablePane(_dpid, "Historiquesfff", MainDockableWindow as IDockablePaneProvider);
         }
         */
-
-        #endregion Events
-
+        /// <summary>
+        /// The OnShutdown
+        /// </summary>
+        /// <param name="a">The a<see cref="UIControlledApplication"/></param>
+        /// <returns>The <see cref="Result"/></returns>
         public Result OnShutdown(UIControlledApplication a)
         {
             a.ControlledApplication.DocumentOpened -= OnDocumentOpened;
@@ -203,26 +292,29 @@ namespace ProjectManagement
             return Result.Succeeded;
         }
 
-        #region Méthodes
-
+        /// <summary>
+        /// The TextChangedButton
+        /// </summary>
         public void TextChangedButton()
         {
-            string s = _button.ItemText; 
+            string s = _button.ItemText;
             _button.ItemText = s.Equals("Login") ? ("Vous êtes connecté au projet" + Environment.NewLine + _projectName) : "Login";
         }
-
-        #endregion Méthodes
     }
-
-    #region Command
 
     [Transaction(TransactionMode.ReadOnly)]
     public class ShowDockableWindow : IExternalCommand
     {
+        /// <summary>
+        /// The Execute
+        /// </summary>
+        /// <param name="commandData">The commandData<see cref="ExternalCommandData"/></param>
+        /// <param name="message">The message<see cref="string"/></param>
+        /// <param name="elements">The elements<see cref="ElementSet"/></param>
+        /// <returns>The <see cref="Result"/></returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            DockablePaneId dpid = new DockablePaneId(
-              new Guid("{D7C963CE-B7CA-426A-8D51-6E8254D21157}"));
+            DockablePaneId dpid = new DockablePaneId(new Guid(Properties.Resources.PaletteGuid));
 
             DockablePane dp = commandData.Application
               .GetDockablePane(dpid);
@@ -236,6 +328,13 @@ namespace ProjectManagement
     [Transaction(TransactionMode.ReadOnly)]
     public class HideDockableWindow : IExternalCommand
     {
+        /// <summary>
+        /// The Execute
+        /// </summary>
+        /// <param name="commandData">The commandData<see cref="ExternalCommandData"/></param>
+        /// <param name="message">The message<see cref="string"/></param>
+        /// <param name="elements">The elements<see cref="ElementSet"/></param>
+        /// <returns>The <see cref="Result"/></returns>
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             DockablePaneId dpid = new DockablePaneId(
@@ -248,6 +347,4 @@ namespace ProjectManagement
             return Result.Succeeded;
         }
     }
-
-    #endregion Command
 }

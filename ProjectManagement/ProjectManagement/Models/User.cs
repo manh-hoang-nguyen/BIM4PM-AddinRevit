@@ -21,6 +21,10 @@ namespace ProjectManagement.Models
     {
         public string firstName { get; set; }
         public string lastName { get; set; }
+        public string fullName()
+        {
+            return firstName + lastName;
+        }
     }
     public class UserRes
     {

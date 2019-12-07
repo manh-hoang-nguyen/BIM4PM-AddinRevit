@@ -9,13 +9,11 @@
     xmlns:progressBar="clr-namespace:ProjectManagement.Resources.UI.ProgressBar.CircularProgressBar"
     xmlns:utils="clr-namespace:ProjectManagement.Utils.ProgressBar"
     x:Name="Win"
-    Title="LoginWindow"
+    Title="Login"
     Width="380"
     Height="170"
-    
-    Background="Transparent"
     ResizeMode="NoResize"
-     
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -46,7 +44,7 @@
         </Grid.RowDefinitions>
         <Border Grid.RowSpan="2" CornerRadius="10">
             <Border.Background>
-                <SolidColorBrush Color="WhiteSmoke" />
+                <SolidColorBrush />
             </Border.Background>
         </Border>
 
@@ -59,12 +57,12 @@
         <StackPanel
             Grid.Row="1"
             VerticalAlignment="Center"
-            Visibility="{Binding VisibilityAuthenticated, FallbackValue=Hidden}"> 
+            Visibility="{Binding VisibilityAuthenticated, FallbackValue=Hidden}">
             <Button
                 HorizontalAlignment="Center"
-                Content="OK"
                 Command="{Binding Authenticated}"
                 CommandParameter="{Binding ElementName=Win}"
+                Content="OK"
                 Style="{StaticResource MHButton}" />
         </StackPanel>
         <WrapPanel
@@ -73,7 +71,7 @@
             Visibility="{Binding VisibilityNotAuthenticated, FallbackValue=Hidden}">
 
             <TextBlock HorizontalAlignment="Center" Text="Emai or password is not correct" />
-        </WrapPanel> 
+        </WrapPanel>
         <StackPanel
             Grid.Row="1"
             HorizontalAlignment="Center"
@@ -93,9 +91,12 @@
                 CommandParameter="{Binding ElementName=Win}"
                 Content="Cancel"
                 Style="{StaticResource MHButton}" />
-        </StackPanel> 
-        <StackPanel Name="VisiblityLoginWindow" Visibility="{Binding VisiblityLoginWindow}" VerticalAlignment="Center">
-            <StackPanel   Margin="3" HorizontalAlignment="Center"> 
+        </StackPanel>
+        <StackPanel
+            Name="VisiblityLoginWindow"
+            VerticalAlignment="Center"
+            Visibility="{Binding VisiblityLoginWindow}">
+            <StackPanel Margin="3" HorizontalAlignment="Center">
 
                 <Grid
                     Width="300"
@@ -121,23 +122,26 @@
                     Height="30"
                     Background="Transparent">
                     <Border Style="{StaticResource MHBorderTextBox}" />
-                    
+
                     <PasswordBox
                         x:Name="PasswordBox"
                         VerticalAlignment="Center"
                         Background="Transparent"
                         BorderThickness="0" />
-                </Grid> 
-            </StackPanel> 
+                </Grid>
+            </StackPanel>
 
         </StackPanel>
         <StackPanel
-            Visibility="{Binding VisiblityLoginWindow}"
             Grid.Row="1"
             Margin="3"
             HorizontalAlignment="Center"
-            Orientation="Horizontal">
-            <CheckBox x:Name="cBSave" Content="Save user name and password" VerticalAlignment="Center"></CheckBox>
+            Orientation="Horizontal"
+            Visibility="{Binding VisiblityLoginWindow}">
+            <CheckBox
+                x:Name="cBSave"
+                VerticalAlignment="Center"
+                Content="Save user name and password" />
             <Button
                 Command="{Binding Login}"
                 CommandParameter="{Binding ElementName=Win}"

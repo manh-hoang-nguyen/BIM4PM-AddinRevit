@@ -8,12 +8,11 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using System.Windows;
 
     public class ModelRequestHandler : IExternalEventHandler
     {
         public ModelRequest Request { get; set; } = new ModelRequest();
-
-        public Document _doc { get; set; }
 
         /// <summary>
         /// The Execute
@@ -69,46 +68,21 @@
         /// <param name="app">The app<see cref="UIApplication"/></param>
         private void GetRevitElementData(UIApplication app)
         {
-            RevitElementList.InModel = new Dictionary<string, RevitElement>();
-            
-           
-
-            IList<Element> elements = FilterUtils.GetElementInProject(_doc);
-            IList<Level> levels = ElementUtils.GetLevels(_doc);
-            foreach (Element element in elements)
+            if (ModelProvider.Instance.CurrentModel == null)
             {
-                string level = ElementUtils.GetElementLevel(levels, element);
-                string parameters = ParameterUtils.SerializeRevitParameters(element);
-                string sharedParameters = ParameterUtils.SerializeSharedParameters(element);
-                string location = ElementUtils.SerializeLocation(element);
-                string boundingBox = ElementUtils.SerializeBoundingBox(element.get_BoundingBox(null));
-                string centroid = ElementUtils.SerializePoint(ElementUtils.GetCentroid(element));
-                string volume = ElementUtils.GetAllSolidVolume(element).ToString();
-
-
-                RevitElement revitElement = new RevitElement()
+                MessageBox.Show("Select Revit model please!");
+                return;
+            }
+            ModelProvider.Instance.Update();
+            
+            if(ProjectProvider.Instance.DicRevitElements != null && ProjectProvider.Instance.DicRevitElements.Count == 0)
+            {
+                MessageBox.Show("You do not have data in cloud yet. Do your first commit.");
+                Synchronize.SyncView syncView = new Synchronize.SyncView
                 {
-                    project = ProjectProvider.Ins.CurrentProject._id,
-                    version = VersionCommun.CurrentVersion._id,
-                    guid = element.UniqueId,
-                    name = element.Name,
-                    elementId = element.Id.IntegerValue,
-                    category = element.Category.Name,
-                    level = level,
-                    parameters = parameters,
-                    sharedParameters = sharedParameters,
-                    worksetId = element.WorksetId.ToString(),
-                    location = location,
-                    boundingBox = boundingBox,
-                    centroid = centroid,
-                    volume = volume,
-                    typeId = element.GetTypeId().ToString()
-
+                    DataContext = new Synchronize.SyncViewModel()
                 };
-
-                RevitElementList.InModel.Add(revitElement.guid,revitElement);
-
-
+                syncView.ShowDialog();
             }
             
         }

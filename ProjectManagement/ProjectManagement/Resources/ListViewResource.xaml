@@ -73,7 +73,7 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource Self}, Path=(wpf:DataGridAssist.ColumnHeaderPadding)}" />
         <Setter Property="Foreground" Value="{DynamicResource MaterialDesignColumnHeader}" />
-        
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GridViewColumnHeader">

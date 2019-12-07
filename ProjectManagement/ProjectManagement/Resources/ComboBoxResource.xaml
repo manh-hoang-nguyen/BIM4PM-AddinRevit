@@ -53,7 +53,7 @@
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="MinWidth" Value="150"/>
-        <Setter Property="MinHeight" Value="35"/>
+        <Setter Property="MinHeight" Value="30"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">

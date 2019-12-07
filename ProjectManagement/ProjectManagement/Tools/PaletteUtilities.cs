@@ -42,7 +42,7 @@ namespace ProjectManagement.Tools
         }
 
         /// <summary>
-        /// Due to all asynch stuff some data might not be available right away so we use this callback to instantiate the Communicator.
+        /// Due to all asynch stuff some data might not be available right away so we use this callback to instantiate the Palette.
         /// </summary>
         public static void LaunchCommunicator()
         {

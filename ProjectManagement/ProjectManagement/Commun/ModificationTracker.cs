@@ -18,11 +18,6 @@ namespace ProjectManagement.Commun
         public static List<ElementId> deletedElement = new List<ElementId>();
         public static List<ElementId> newElement = new List<ElementId>();
         public static List<ElementId> modifiedElement = new List<ElementId>();
-
-       
- 
-        
-
-       
+         
     }
 }

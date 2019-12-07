@@ -250,35 +250,35 @@
         /// <param name="levles">The levles<see cref="IList{Level}"/></param>
         /// <param name="e">The e<see cref="Element"/></param>
         /// <returns>The <see cref="string"/></returns>
-        public static string GetElementLevel(IList<Level> levles, Element e)
+        public static string GetElementLevel(IList<Level> levels, Element e)
         {
             string level = "";
 
+            if (e.get_BoundingBox(null) == null) return level = "No Level";
+            double x = e.get_BoundingBox(null).Min.Z;
             //Get level element
             if (e.LevelId.ToString() == "-1")
             {
-                level = levles[0].Name;
-                for (int i = 0; i < levles.Count; i++)
+                level = levels[0].Name;
+                for (int i = 0; i < levels.Count; i++)
                 {
-                    try
-                    {
-                        double x = e.get_BoundingBox(null).Min.Z;
-                        if (x >= levles[i].ProjectElevation)
-                            level = levles[i].Name;
-                    }
-                    catch
-                    {
-                        level = "No Level";
-                    }
+                     
+                        
+                        if (x >= levels[i].ProjectElevation)
+                            level = levels[i].Name;
+                        else
+                        {
+                            break;
+                        }
+                  
                 }
             }
             else
             {
-                foreach (Level lv in levles)
-                {
-                    if (lv.Id == e.LevelId)
-                        level = lv.Name;
-                }
+                
+                level = (from lv in levels
+                         where e.LevelId == lv.Id
+                         select lv.Name).FirstOrDefault();
             }
 
             return level;
@@ -336,13 +336,9 @@
             foreach (Level lv in new FilteredElementCollector(doc).OfClass(typeof(Level)))
             {
                 levles.Add(lv);
-            }
+            } 
 
-
-            levles.OrderBy(a => a.Elevation).Select(a => a.Name).ToList();
-
-            /*
-            //Sap xep level theo thu tu tang dan
+            //Order by elevation
             Level tmp;//bien trung gian
             for (int i = 0; i < levles.Count; i++)
             {
@@ -358,7 +354,7 @@
                     }
                 }
             }
-            */
+            
             return levles;
         }
     }

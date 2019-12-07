@@ -1,33 +1,44 @@
 ﻿namespace ProjectManagement.Tools.Project
 {
     using Autodesk.Revit.DB;
-    using Autodesk.Revit.UI;
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
-    using ProjectManagement.Utils;
     using ProjectManagement.Commun;
     using ProjectManagement.Models;
+    using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
-    using ProjectManagement.Utils.RevitUtils;
-    using System.Collections.ObjectModel;
     using System.Windows.Controls;
+    using System.Windows.Media;
 
     public class ProjectViewModel : ViewModelBase
     {
-        private UIApplication _uiapp;
+        public RelayCommand<ProjectView> WindowLoaded { get; set; }
+
+        public RelayCommand<UserControl> SendData { get; set; }
+
+        public RelayCommand<ProjectView> Connect { get; set; }
+
+        public RelayCommand<ProjectView> Disconnect { get; set; }
+
+        public RelayCommand<ProjectView> ModelSelection { get; set; }
+
+        public RelayCommand<ProjectView> ProjectSelection { get; set; }
+
+        public RelayCommand<ProjectView> Compare { get; set; }
 
         public ProjectModel Model { get; set; }
 
-        public RelayCommand<ProjectView> WindowLoaded { get; set; }
-        public RelayCommand<UserControl> SendData { get; set; }
         public User User
         {
             get => _user; set { _user = value; RaisePropertyChanged(); }
         }
-        public static ObservableCollection<Document> Documents = new ObservableCollection<Document>();
+
        
+
         public List<Models.Project> Projects
         {
             get => _projects; set { _projects = value; RaisePropertyChanged(); }
@@ -35,105 +46,180 @@
 
         private List<Models.Project> _projects;
 
-        public List<Version> Versions
+        public List<Models.Version> Versions
         {
             get => _versions; set { _versions = value; RaisePropertyChanged(); }
         }
 
-        private List<Version> _versions;
+        private List<Models.Version> _versions;
 
         private User _user;
 
-        public RelayCommand<ProjectView> GetData { get; set; }
+        private bool cbProjectIsEnable;
 
-        public RelayCommand<ProjectView> ModelSelection { get; set; }
+        public bool CbProjectIsEnable
+        {
+            get => cbProjectIsEnable; set { cbProjectIsEnable = value; RaisePropertyChanged(); }
+        }
 
-        public RelayCommand<ProjectView> ProjectSelection { get; set; }
+        private bool cbModelIsEnable;
+
+        public bool CbModelIsEnable
+        {
+            get => cbModelIsEnable; set { cbModelIsEnable = value; RaisePropertyChanged(); }
+        }
+
+        private bool btnConnectIsEnable;
+
+        public bool BtnConnectIsEnable
+        {
+            get => btnConnectIsEnable; set { btnConnectIsEnable = value; RaisePropertyChanged(); }
+        }
+
+        private bool btnDisconnectIsEnable;
+
+        public bool BtnDisconnectIsEnable
+        {
+            get => btnDisconnectIsEnable; set { btnDisconnectIsEnable = value; RaisePropertyChanged(); }
+        }
 
         public ProjectViewModel()
         {
-            //_uiapp = uiapp;
+
+            CbProjectIsEnable = true;
+            CbModelIsEnable = true;
             Model = new ProjectModel();
             WindowLoaded = new RelayCommand<ProjectView>(OnWindowLoaded);
-            ModelSelection = new RelayCommand<ProjectView>(OnModelSelection);
+
             ProjectSelection = new RelayCommand<ProjectView>(OnProjectSelection);
-            GetData = new RelayCommand<ProjectView>(OnGetData);
+            ModelSelection = new RelayCommand<ProjectView>(OnModelSelection);
+            Connect = new RelayCommand<ProjectView>(OnConnect);
+            Disconnect = new RelayCommand<ProjectView>(OnDisconnect);
             SendData = new RelayCommand<UserControl>(OnSendData);
+            Compare = new RelayCommand<ProjectView>(OnCompare);
+        }
+
+        private void OnCompare(ProjectView view)
+        {
+            if (ModelProvider.Instance.DicRevitElements == null || ProjectProvider.Instance.DicRevitElements == null) {
+                MessageBox.Show("You have to connect first!");
+                return;
+            } 
+            else CompareProvider.Instance.Execute();
+
+            if (CompareProvider.Instance.IsUpToDate()) {
+                MessageBox.Show("Your model is up to date");
+                view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.Green);
+            }
+            else
+            {
+                MessageBox.Show("Your model is not up to date");
+                view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.Red);
+            }
         }
 
         /// <summary>
-        /// The OnWindowLoaded
+        /// The when select project, set current project
         /// </summary>
-        /// <param name="win">The win<see cref="UserControl"/></param>
-        private async void OnWindowLoaded(ProjectView win)
+        /// <param name="view">The view<see cref="ProjectView"/></param>
+        private void OnModelSelection(ProjectView view)
+        {
+            if (view.Projects.SelectedItem != null) BtnConnectIsEnable = true;
+            ModelProvider.Instance.CurrentModel = view.Models.SelectedItem as Document;
+        }
+
+        /// <summary>
+        /// Disconnect to current project
+        /// </summary>
+        /// <param name="view">The view<see cref="ProjectView"/></param>
+        private void OnDisconnect(ProjectView view)
+        {
+            AuthProvider.Instance.Disconnect();
+            BtnDisconnectIsEnable = false;
+            BtnConnectIsEnable = true;
+            CbProjectIsEnable = true;
+            CbModelIsEnable = true;
+            view.Projects.SelectedItem = null;
+            view.Models.SelectedItem = null;
+            view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.White);
+        }
+
+        /// <summary>
+        /// TWhen load window, load user and user's projects too
+        /// </summary>
+        /// <param name="view">The view<see cref="ProjectView"/></param>
+        private async void OnWindowLoaded(ProjectView view)
         {
             Task<User> userTask = Model.GetUser();
-            Task<List<ProjectManagement.Models.Project>> projects = Model.GetUserProjectsAsync();
-             
-            win.Models.ItemsSource = Documents;
+            Task<List<ProjectManagement.Models.Project>> projects = Model.GetUserProjectsAsync(); 
+            view.Models.ItemsSource = ModelProvider.Instance.Models;
             User = await userTask;
             Projects = await projects;
+
+            BtnDisconnectIsEnable = false;
+            BtnConnectIsEnable = false;
+            CbProjectIsEnable = true;
+            CbModelIsEnable = true;
+            view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.White);
         }
 
         /// <summary>
         /// Get data from database and model
         /// </summary>
-        /// <param name="win">The win<see cref="ProjectView"/></param>
-        private void OnGetData(ProjectView win)
+        /// <param name="view">The view<see cref="ProjectView"/></param>
+        private void OnConnect(ProjectView view)
         {
-            RevitElementList.InCloud = new Dictionary<string, RevitElement>();
-            foreach (RevitElement e in Model.GetRevitElementInCloud(VersionCommun.CurrentVersion))
+            BtnConnectIsEnable = false;
+            if (ProjectProvider.Instance.CurrentVersion == null) return;
+             
+            Thread thread = new Thread(() =>
             {
-                RevitElementList.InCloud.Add(e.guid, e);
-            }
-            
-            Document doc = win.Models.SelectedItem as Document;
+                ProjectProvider.Instance.DicRevitElements = new Dictionary<string, RevitElement>();
+                foreach (RevitElement e in Model.GetRevitElementInCloud(ProjectProvider.Instance.CurrentVersion))
+                {
+                    ProjectProvider.Instance.DicRevitElements.Add(e.guid, e);
+                }
 
-            App.ModelHandler._doc = doc;
+                BtnDisconnectIsEnable = true;
+                CbModelIsEnable = false;
+                CbProjectIsEnable = false;
+            });
+            thread.Start();
+             
 
             Model.GetParamterElement();
-
-             
-           // win.Close();
-           
         }
+
+        /// <summary>
+        /// The OnSendData
+        /// </summary>
+        /// <param name="win">The win<see cref="UserControl"/></param>
         private void OnSendData(UserControl win)
         {
             Model.SendRevitElementToCloud();
         }
-        /// <summary>
-        /// The OnModelSelection
-        /// </summary>
-        /// <param name="win">The win<see cref="ProjectView"/></param>
-        private void OnModelSelection(ProjectView win)
-        {
-        }
 
         /// <summary>
-        /// The OnProjectSelection
+        /// When select project, set provider of current project and current version of project too
         /// </summary>
-        /// <param name="win">The win<see cref="ProjectView"/></param>
-        private async void OnProjectSelection(ProjectView win)
+        /// <param name="view">The view<see cref="ProjectView"/></param>
+        private   void OnProjectSelection(ProjectView view)
         {
-            try
+
+            if (view.Projects.SelectedItem != null)
             {
-                ProjectManagement.Models.Project selectedProject = win.Projects.SelectedItem as ProjectManagement.Models.Project;
-                ProjectProvider.Ins.CurrentProject = selectedProject;
-
-                Task<List<ProjectManagement.Models.Version>> versionTask = Model.GetVersionAsync(selectedProject._id);
-
-                List<ProjectManagement.Models.Version> versions = await versionTask;
-
-                Versions = versions;
-
-                VersionCommun.CurrentVersion = versions[versions.Count - 1];
+                Project selectedProject = view.Projects.SelectedItem as Project;
+                ProjectProvider.Instance.CurrentProject = selectedProject;
+                 
+                Versions = ProjectProvider.Instance.Versions;
+                 
+                if (view.Models.SelectedItem != null) BtnConnectIsEnable = true;
             }
-            catch (System.Exception)
+            else
             {
-
-                MessageBox.Show("No version created");
+                ProjectProvider.Instance.CurrentVersion = null;
+                BtnConnectIsEnable = false;
             }
-          
         }
     }
 }

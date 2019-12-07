@@ -3,14 +3,16 @@
     using System.Windows;
     using System.Windows.Controls;
 
-    /// <summary>
-    /// Logique d'interaction pour ProjectView.xaml
-    /// </summary>
-    public partial class ProjectView: UserControl 
+    public partial class ProjectView : UserControl
     {
         public ProjectView()
         {
             InitializeComponent();
+        }
+
+        private void TextBlock_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            MessageBox.Show("ckeii");
         }
     }
 }

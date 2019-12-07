@@ -16,7 +16,7 @@ namespace ProjectManagement.Controllers
 {
     public class HistoryController
     {
-        public static List<History> GetHistory()
+        public static List<Historyx> GetHistory()
         {
             
             string json;
@@ -28,7 +28,7 @@ namespace ProjectManagement.Controllers
             {
                 JavaScriptSerializer xx = new JavaScriptSerializer { MaxJsonLength = Int32.MaxValue };
 
-                List<History> data = xx.Deserialize<List<History>>(json);
+                List<Historyx> data = xx.Deserialize<List<Historyx>>(json);
 
                 return data;
             }

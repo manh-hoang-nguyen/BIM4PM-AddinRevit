@@ -10,7 +10,7 @@
     public class FilterUtils
     {
         /// <summary>
-        /// The GetElementInProject
+        /// The Get all element which have parameters and material
         /// </summary>
         /// <param name="doc">The doc<see cref="Document"/></param>
         /// <param name="isActiveView">The isActiveView<see cref="bool"/></param>

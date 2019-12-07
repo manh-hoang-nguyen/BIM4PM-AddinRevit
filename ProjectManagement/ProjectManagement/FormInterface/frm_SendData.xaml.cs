@@ -24,7 +24,7 @@ namespace ProjectManagement.FormInterface
         public frm_SendData()
         {
             InitializeComponent();
-            for (int i = 1; i > VersionCommun.VersionInDatabase.Count; i++) cbxSelectProject.Items.Add(i);
+            for (int i = 1; i > ProjectProvider.Instance.Versions.Count; i++) cbxSelectProject.Items.Add(i);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -45,8 +45,8 @@ namespace ProjectManagement.FormInterface
             //}
             CmdRevit.CmdSendData.auteur = auteur.Text;
             CmdRevit.CmdSendData.comment = ddd;
-            if (version.IsChecked == true) CmdRevit.CmdSendData.version = (VersionCommun.VersionInDatabase.Count+1).ToString();
-            else CmdRevit.CmdSendData.version = VersionCommun.VersionInDatabase.Count.ToString();
+            if (version.IsChecked == true) CmdRevit.CmdSendData.version = (ProjectProvider.Instance.Versions.Count+1).ToString();
+            else CmdRevit.CmdSendData.version = ProjectProvider.Instance.Versions.Count.ToString();
             Close();
         }
 

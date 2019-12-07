@@ -4,10 +4,10 @@ using System.Collections.Generic;
 namespace ProjectManagement.Commun
 
 {   
-   public static class TokenUser
-    {
-        public static Token token ;
-    }
+   //public static class TokenUser
+   // {
+   //     public static Token token ;
+   // }
     public static class JsonPost
     {
         public static List<JsonToPostComparison> PostComparison_NewElement=new List<JsonToPostComparison>();
@@ -43,7 +43,7 @@ namespace ProjectManagement.Commun
     }
     public static class HistoryList
     {
-        public static List<History> HistoryInDatabase;
+        public static List<Historyx> HistoryInDatabase;
         public static List<Comment> CommentInDatabase = new List<Comment>();
 
     }

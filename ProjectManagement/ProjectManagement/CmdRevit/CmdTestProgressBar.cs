@@ -5,6 +5,7 @@
     using Autodesk.Revit.UI;
     using Newtonsoft.Json;
     using ProjectManagement.Commun;
+    using ProjectManagement.Tools.Synchronize;
     using RestSharp;
     using System;
 
@@ -48,45 +49,45 @@
             
         */
 
-            /*
-            
+
+
             //* Set time out
             //https://stackoverflow.com/questions/48968193/restsharp-the-operation-has-timed-out/49677943
             //https://stackoverflow.com/questions/46584175/restsharp-timeout-not-working
-            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Ins.CurrentProject._id);
-            RestRequest req = new RestRequest(route.url(), Method.POST);
-            req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
+            /* RevitElementRoute route = new RevitElementRoute(ProjectProvider.Ins.CurrentProject._id);
+             RestRequest req = new RestRequest(route.url(), Method.POST);
+             req.AddHeader("Content-Type", "application/json");
+             req.AddHeader("Authorization", "Bearer " + TokenUser.token.token);
 
-            string body = JsonConvert.SerializeObject(RevitElementList.InModel.Values);
-            req.RequestFormat = DataFormat.Json;
+             string body = JsonConvert.SerializeObject(RevitElementList.InModel.Values);
+             req.RequestFormat = DataFormat.Json;
 
-            req.AddJsonBody(body);
-            
-            Route.Client.Timeout = Int32.MaxValue;
-            IRestResponse res = Route.Client.Execute(req);
-            if (res.StatusCode.ToString() == "OK")
+             req.AddJsonBody(body);
+
+             Route.Client.Timeout = Int32.MaxValue;
+             IRestResponse res = Route.Client.Execute(req);
+             if (res.StatusCode.ToString() == "OK")
+             {
+                  TaskDialog.Show("Success", "Operation is finished");
+                 return Result.Succeeded;
+             }
+
+             if (res.ErrorException != null)
+             {
+                 string messagex = "Opps! There has been an error while uploading your model. " + res.ErrorException.Message;
+                 throw new Exception(messagex);
+             }
+           */
+
+            //CompareProvider.Instance.Execute();
+            SyncView view = new SyncView
             {
-                 TaskDialog.Show("Success", "Operation is finished");
-                return Result.Succeeded;
-            }
-
-            if (res.ErrorException != null)
-            {
-                string messagex = "Opps! There has been an error while uploading your model. " + res.ErrorException.Message;
-                throw new Exception(messagex);
-            }
-          
-            */
-            ProjectManagement.Utils.RevitUtils.Compare.Execute(true); 
+                DataContext = new SyncViewModel()
+            };
+            view.ShowDialog();
             return Result.Succeeded;
         }
 
-        /// <summary>
-        /// The Progre
-        /// </summary>
-        internal void Progre()
-        {
-        }
+        
     }
 }

@@ -18,12 +18,12 @@ namespace ProjectManagement.CmdRevit
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            HistoryList.HistoryInDatabase = new List<History>();
+            HistoryList.HistoryInDatabase = new List<Historyx>();
             HistoryList.CommentInDatabase = new List<Comment>();
             ComparisonList.ComparisonInDatabase = ComparisonController.GetComparison();
 
             HistoryList.HistoryInDatabase = HistoryController.GetHistory();
-            foreach (History item in HistoryList.HistoryInDatabase)
+            foreach (Historyx item in HistoryList.HistoryInDatabase)
             {
                 Comment comment = new Comment()
                 {
@@ -33,7 +33,7 @@ namespace ProjectManagement.CmdRevit
                 };
                 HistoryList.CommentInDatabase.Add(comment);
             }
-            VersionCommun.VersionInDatabase = VersionController.GetVersion();
+            ProjectProvider.Instance.Versions = VersionController.GetVersion();
             return Result.Succeeded;
         }
     }
