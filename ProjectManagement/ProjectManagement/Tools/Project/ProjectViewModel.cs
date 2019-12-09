@@ -5,6 +5,8 @@
     using GalaSoft.MvvmLight.Command;
     using ProjectManagement.Commun;
     using ProjectManagement.Models;
+    using ProjectManagement.Tools.History;
+    using ProjectManagement.Tools.Synchronize;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -29,6 +31,8 @@
         public RelayCommand<ProjectView> ProjectSelection { get; set; }
 
         public RelayCommand<ProjectView> Compare { get; set; }
+
+        public RelayCommand<ProjectView> Synchronize { get; set; }
 
         public ProjectModel Model { get; set; }
 
@@ -68,7 +72,7 @@
         {
             get => cbModelIsEnable; set { cbModelIsEnable = value; RaisePropertyChanged(); }
         }
-
+        private bool btnSynchronizeIsEnable;
         private bool btnConnectIsEnable;
 
         public bool BtnConnectIsEnable
@@ -82,6 +86,8 @@
         {
             get => btnDisconnectIsEnable; set { btnDisconnectIsEnable = value; RaisePropertyChanged(); }
         }
+
+        public bool BtnSynchronizeIsEnable { get => btnSynchronizeIsEnable; set { btnSynchronizeIsEnable = value; RaisePropertyChanged(); } }
 
         public ProjectViewModel()
         {
@@ -97,6 +103,13 @@
             Disconnect = new RelayCommand<ProjectView>(OnDisconnect);
             SendData = new RelayCommand<UserControl>(OnSendData);
             Compare = new RelayCommand<ProjectView>(OnCompare);
+            Synchronize = new RelayCommand<ProjectView>(OnSynchronize);
+        }
+
+        private void OnSynchronize(ProjectView obj)
+        {
+            SyncView syncView = new SyncView() { DataContext = new SyncViewModel() };
+            syncView.ShowDialog();
         }
 
         private void OnCompare(ProjectView view)
@@ -129,41 +142,6 @@
         }
 
         /// <summary>
-        /// Disconnect to current project
-        /// </summary>
-        /// <param name="view">The view<see cref="ProjectView"/></param>
-        private void OnDisconnect(ProjectView view)
-        {
-            AuthProvider.Instance.Disconnect();
-            BtnDisconnectIsEnable = false;
-            BtnConnectIsEnable = true;
-            CbProjectIsEnable = true;
-            CbModelIsEnable = true;
-            view.Projects.SelectedItem = null;
-            view.Models.SelectedItem = null;
-            view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.White);
-        }
-
-        /// <summary>
-        /// TWhen load window, load user and user's projects too
-        /// </summary>
-        /// <param name="view">The view<see cref="ProjectView"/></param>
-        private async void OnWindowLoaded(ProjectView view)
-        {
-            Task<User> userTask = Model.GetUser();
-            Task<List<ProjectManagement.Models.Project>> projects = Model.GetUserProjectsAsync(); 
-            view.Models.ItemsSource = ModelProvider.Instance.Models;
-            User = await userTask;
-            Projects = await projects;
-
-            BtnDisconnectIsEnable = false;
-            BtnConnectIsEnable = false;
-            CbProjectIsEnable = true;
-            CbModelIsEnable = true;
-            view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.White);
-        }
-
-        /// <summary>
         /// Get data from database and model
         /// </summary>
         /// <param name="view">The view<see cref="ProjectView"/></param>
@@ -171,7 +149,7 @@
         {
             BtnConnectIsEnable = false;
             if (ProjectProvider.Instance.CurrentVersion == null) return;
-             
+
             Thread thread = new Thread(() =>
             {
                 ProjectProvider.Instance.DicRevitElements = new Dictionary<string, RevitElement>();
@@ -183,12 +161,64 @@
                 BtnDisconnectIsEnable = true;
                 CbModelIsEnable = false;
                 CbProjectIsEnable = false;
+                BtnSynchronizeIsEnable = true;
             });
             thread.Start();
-             
 
             Model.GetParamterElement();
+
+            AuthProvider.Instance.IsConnected = true;
+
+            PaletteViewModel.TabItems.Add(new TabItem
+                 {
+                     Content = new HistoryView() { DataContext = new HistoryViewModel() },
+                     Header = "History"
+                 });
         }
+
+        /// <summary>
+        /// Disconnect to current project
+        /// </summary>
+        /// <param name="view">The view<see cref="ProjectView"/></param>
+        private void OnDisconnect(ProjectView view)
+        {
+            AuthProvider.Instance.Disconnect();
+            BtnDisconnectIsEnable = false;
+            BtnConnectIsEnable = true;
+            CbProjectIsEnable = true;
+            CbModelIsEnable = true;
+            BtnSynchronizeIsEnable = false;
+            view.Projects.SelectedItem = null;
+            view.Models.SelectedItem = null;
+            view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.White);
+            PaletteViewModel.TabItems.RemoveAt(1);
+        }
+
+        /// <summary>
+        /// TWhen load window, load user and user's projects too
+        /// </summary>
+        /// <param name="view">The view<see cref="ProjectView"/></param>
+        private async void OnWindowLoaded(ProjectView view)
+        {
+            if(AuthProvider.Instance.IsConnected == false)
+            {
+                Task<User> userTask = Model.GetUser();
+                Task<List<ProjectManagement.Models.Project>> projects = Model.GetUserProjectsAsync();
+                view.Models.ItemsSource = ModelProvider.Instance.Models;
+                User = await userTask;
+                Projects = await projects;
+
+                BtnDisconnectIsEnable = false;
+                BtnSynchronizeIsEnable = false;
+                BtnConnectIsEnable = false;
+                CbProjectIsEnable = true;
+                CbModelIsEnable = true;
+                view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.White);
+            }
+          
+        }
+
+   
 
         /// <summary>
         /// The OnSendData

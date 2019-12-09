@@ -118,27 +118,7 @@
         /// <returns>The <see cref="List{RevitElement}"/></returns>
         public List<RevitElement> GetRevitElementInCloud(Version version)
         {
-            if (ProjectProvider.Instance.CurrentProject == null)
-            {
-                MessageBox.Show("Select a project please");
-                return new List<RevitElement>();
-            }
-            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
-            RestRequest req = new RestRequest(route.url(), Method.GET);
-            req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-            req.AddParameter("version", version.version);
-
-
-
-            IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
-            string format = "0000-12-31T23:50:39.000Z"; // your datetime format
-            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
-
-
-            RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content, dateTimeConverter);
-
-            return revitElements.data;
+           return ProjectProvider.Instance.GetRevitElementInCloud(version);
         }
 
         /// <summary>

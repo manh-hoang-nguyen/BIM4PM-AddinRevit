@@ -31,8 +31,7 @@ namespace ProjectManagement.FormInterface
     {
         UIApplication _uiapp;
         public static Document _doc;
-        PanelProprety _panelProprety = null;
-        static bool _subscribed = false;
+        
         public frm_Login(UIApplication uiapp)
         {
             InitializeComponent();

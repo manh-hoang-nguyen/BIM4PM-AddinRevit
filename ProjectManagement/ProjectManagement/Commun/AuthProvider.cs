@@ -26,16 +26,22 @@
 
         public Token token { get; set; }
 
+        private bool isAuthenticated;
+
         public bool IsAuthenticated
         {
             get => isAuthenticated; set { isAuthenticated = value; OnPropertyChanged(); }
         }
 
-        private bool isAuthenticated;
+        public bool IsConnected { get => isConnected; set => isConnected = value; }
+
+        private bool isConnected;
+
         public void Logout()
         {
             IsAuthenticated = false;
             token = null;
+            IsConnected = false;
             Disconnect();
         }
         public void Disconnect()
@@ -43,6 +49,7 @@
             ProjectProvider.Instance.Reset();
             ModelProvider.Instance.Reset();
             CompareProvider.Instance.Reset();
+            IsConnected = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

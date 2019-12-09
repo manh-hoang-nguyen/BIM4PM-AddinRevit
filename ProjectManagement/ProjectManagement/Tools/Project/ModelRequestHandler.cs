@@ -59,6 +59,7 @@
         /// <returns></returns>
         private DocumentSet GetDocuments(UIApplication app)
         {
+             
             return app.Application.Documents;
         }
 
@@ -75,15 +76,7 @@
             }
             ModelProvider.Instance.Update();
             
-            if(ProjectProvider.Instance.DicRevitElements != null && ProjectProvider.Instance.DicRevitElements.Count == 0)
-            {
-                MessageBox.Show("You do not have data in cloud yet. Do your first commit.");
-                Synchronize.SyncView syncView = new Synchronize.SyncView
-                {
-                    DataContext = new Synchronize.SyncViewModel()
-                };
-                syncView.ShowDialog();
-            }
+           
             
         }
 

@@ -22,6 +22,15 @@
     <Window.Resources>
 
         <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="3" />
+            </Style>
+            <Style TargetType="Border">
+                <Setter Property="BorderThickness" Value="0.8" ></Setter>
+            </Style>
             <Style
                 x:Key="placeHolder"
                 BasedOn="{StaticResource {x:Type TextBox}}"
@@ -33,12 +42,12 @@
                                 <TextBox
                                     x:Name="textSource"
                                     Margin="1"
-                                    TextWrapping="Wrap"
-                                    AcceptsReturn="True"
                                     Panel.ZIndex="2"
+                                    AcceptsReturn="True"
                                     Background="Transparent"
                                     BorderThickness="0"
-                                    Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    TextWrapping="Wrap" />
                                 <TextBox
                                     Panel.ZIndex="1"
                                     Background="{TemplateBinding Background}"
@@ -158,15 +167,51 @@
                         Height="50"
                         Margin="1"
                         AcceptsReturn="True"
-                        TextWrapping="Wrap"
                         AutomationProperties.HelpText="Message"
                         Background="WhiteSmoke"
                         Style="{StaticResource placeHolder}"
                         Tag="Your simple message..."
-                         />
+                        TextWrapping="Wrap" />
                 </Border>
             </StackPanel>
 
+        </Grid>
+        <Grid Grid.Row="1" Margin="3">
+            <StackPanel>
+                <TextBlock Text="Summary:" FontWeight="Bold" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <Border  BorderBrush="Gray" Grid.ColumnSpan="2"></Border>
+                    <Border Background="WhiteSmoke" Grid.Row="1" BorderThickness="0.8, 0" BorderBrush="Gray" Grid.ColumnSpan="2" ></Border>
+                    <Border Grid.Row="2"  BorderBrush="Gray" Grid.ColumnSpan="2" ></Border>
+                    <Border Background="WhiteSmoke" Grid.Row="3" BorderThickness="0.8, 0" BorderBrush="Gray" Grid.ColumnSpan="2" ></Border>
+                    <Border Grid.Row="4"   BorderBrush="Gray" Grid.ColumnSpan="2" ></Border>
+                    <Border BorderThickness="0,0,0.8,0" BorderBrush="Gray" Grid.RowSpan="5"></Border>
+                    <TextBlock Text="Elements" FontWeight="Bold"/>
+                    <TextBlock Text="Same" Grid.Row="1" />
+                    <TextBlock Text="Modified" Grid.Row="2" />
+                    <TextBlock Text="New" Grid.Row="3"/>
+                    <TextBlock Text="Deleted" Grid.Row="4"/>
+                    <TextBlock Text="Number of elements" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="NumOfSame" FontWeight="Bold" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="NumOfModified" FontWeight="Bold" Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="NumOfNew" FontWeight="Bold" Grid.Column="1" Grid.Row="3"  HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="NumOfDeleted" FontWeight="Bold" Grid.Column="1" Grid.Row="4"  HorizontalAlignment="Center"/>
+                   
+                  
+                </Grid>
+            </StackPanel>
+         
         </Grid>
         <Grid Grid.Row="2" Margin="3">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
@@ -186,7 +231,7 @@
 
                 <Button
                     x:Name="Synchonize"
-                    Command="{Binding Synchonize}"
+                    Command="{Binding Synchronize}"
                     CommandParameter="{Binding ElementName=Win}"
                     Content="Synchonize" />
             </StackPanel>

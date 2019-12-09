@@ -64,27 +64,31 @@
 
         private void OnSynchronize(SyncView view)
         {
+            view.Win.Close();
             Model.Synchronize();
+            ProjectProvider.Instance.Update();
         }
 
         private void OnFirstCommit(SyncView view)
         {
+            view.Win.Close();
             Model.FirstCommit();
         }
 
         /// <summary>
-        /// The OnWindowLoaded
+        /// The OnWindowLoaded: Execute compare
         /// </summary>
         /// <param name="view">The view<see cref="SyncView"/></param>
         private void OnWindowLoaded(SyncView view)
         {
+
             if (ProjectProvider.Instance.DicRevitElements == null || ModelProvider.Instance.DicRevitElements == null)
             {
                 MessageBox.Show("You have to connect to project first!");
                 view.Win.Close();
             }
             else
-            {
+            { 
                 if (ModelProvider.Instance.DicRevitElements.Count == 0)
                 {
                     MessageBox.Show("No element in models");
@@ -92,17 +96,28 @@
                 }
                 else
                 {
-                    if (ProjectProvider.Instance.DicRevitElements.Count == 0)
+                    if (ProjectProvider.Instance.DicRevitElements != null && ProjectProvider.Instance.DicRevitElements.Count == 0)
+                    {
+                        MessageBox.Show("You do not have data in cloud yet. Do your first commit.");
                         view.Synchonize.IsEnabled = false;
+                    }
+                   
                     else
                         view.FirstCommit.IsEnabled = false;
 
                 }
+                view.Members.ItemsSource = AllMembers = new ObservableCollection<Member>(ProjectProvider.Instance.ProjectMembers);
+                view.MembersToMail.ItemsSource = MembersToMail;
 
+                CompareProvider.Instance.Execute();
 
+                view.NumOfSame.Text = CompareProvider.Instance.Same.Count.ToString();
+                view.NumOfModified.Text = CompareProvider.Instance.Modified.Count.ToString();
+                view.NumOfNew.Text = CompareProvider.Instance.New.Count.ToString();
+                view.NumOfDeleted.Text = CompareProvider.Instance.Deleted.Count.ToString();
             }
-            view.Members.ItemsSource = AllMembers = new ObservableCollection<Member>(ProjectProvider.Instance.ProjectMembers);
-            view.MembersToMail.ItemsSource = MembersToMail;
+
+           
 
         }
     }

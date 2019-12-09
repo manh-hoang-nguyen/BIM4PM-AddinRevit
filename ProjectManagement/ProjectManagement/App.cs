@@ -9,12 +9,12 @@ namespace ProjectManagement
     using ProjectManagement.FormInterface;
     using ProjectManagement.Models;
     using ProjectManagement.Tools;
+    using ProjectManagement.Tools.History;
     using ProjectManagement.Tools.Project;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Threading;
 
     internal class App : IExternalApplication
     {
@@ -24,10 +24,13 @@ namespace ProjectManagement
 
         public static ExternalEvent ModelEvent { get; set; }
 
+        public static HistoryRequestHandler HistoryHandler { get; set; }
+
+        public static ExternalEvent HistoryEvent { get; set; }
+
         public static PaletteMainView PaletteWindow { get; set; }
 
         public static DocumentSet DocumentSet { get; set; }
-       
 
         public static string _projectName;
 
@@ -51,11 +54,15 @@ namespace ProjectManagement
         /// <returns>The <see cref="Result"/></returns>
         public Result OnStartup(UIControlledApplication uicapp)
         {
-            //Instance = this;
+            Instance = this;
             ModelHandler = new ModelRequestHandler();
             ModelEvent = ExternalEvent.Create(ModelHandler);
+            HistoryHandler = new HistoryRequestHandler();
+            HistoryEvent = ExternalEvent.Create(HistoryHandler);
+
             PaletteUtilities.RegisterPalette(uicapp);
 
+            
 
             _uicapp = uicapp;
 
@@ -130,8 +137,7 @@ namespace ProjectManagement
 
 
 
-            uicapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(onViewActivated); //for panel proprety
-
+            uicapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(onViewActivated); //for panel proprety 
             uicapp.ControlledApplication.DocumentOpened += OnDocumentOpened;
             uicapp.ControlledApplication.DocumentCreated += OnDocumentCreated;
             uicapp.ControlledApplication.DocumentClosing += OnDocumentClosing;
@@ -142,62 +148,84 @@ namespace ProjectManagement
             return Result.Succeeded;
         }
 
+        /// <summary>
+        /// The OnDocumentChanged: Update list revit element in model
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="args">The args<see cref="DocumentChangedEventArgs"/></param>
         private void OnDocumentChanged(object sender, DocumentChangedEventArgs args)
         {
-            if (ModelProvider.Instance.CurrentModel == null 
+            Document doc = args.GetDocument();
+            if (ModelProvider.Instance.CurrentModel == null
                 || ModelProvider.Instance.DicRevitElements == null)
                 return;
 
-            if(args.GetDocument().Title == ModelProvider.Instance.CurrentModel.Title)
+            if (doc.Title == ModelProvider.Instance.CurrentModel.Title)
             {
                 List<ElementId> elementIds = new List<ElementId>();
-                
+
                 foreach (ElementId id in args.GetAddedElementIds())
                 {
-                    Element e = ModelProvider.Instance.CurrentModel.GetElement(id);
-                    
-                    
-                    RevitElement revitElement = new RevitElement(  e);
+                    Element e = doc.GetElement(id);
+                    if (null != e.Category
+                            && 0 < e.Parameters.Size
+                            && (e.Category.HasMaterialQuantities))
+                    {
+                        RevitElement revitElement = new RevitElement(e);
 
-                 if(ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
-                      ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId); 
-                 else
-                      ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
+                        if (ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
+                        {
+                            ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId);
+                            ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
+                        }
+
+                        else
+                            ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
+                    } 
                 }
                 foreach (ElementId id in args.GetDeletedElementIds())
                 {
-                    Element e = ModelProvider.Instance.CurrentModel.GetElement(id);
-
-                    RevitElement revitElement = new RevitElement(  e);
-
-                    if (ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
+                    foreach (RevitElement item in ModelProvider.Instance.DicRevitElements.Values)
                     {
-                        ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId);
-                        
+                        if (item.elementId == id.ToString())
+                        {
+                            ModelProvider.Instance.DicRevitElements.Remove(item.guid);
+                            break;
+                        }
                     }
+
+
                 }
                 foreach (ElementId id in args.GetModifiedElementIds())
                 {
-                    
-                    Element e = ModelProvider.Instance.CurrentModel.GetElement(id);
 
-                    RevitElement revitElement = new RevitElement (e);
-
-                    if (ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
+                    Element e = doc.GetElement(id);
+                    if (null != e.Category
+                          && 0 < e.Parameters.Size
+                          && (e.Category.HasMaterialQuantities))
                     {
-                        ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId);
-                        ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
-                    }    
+                        RevitElement revitElement = new RevitElement(e);
+
+                        if (ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
+                        {
+                            ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId);
+                            ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
+                        }
+                    }
+
                 }
             }
         }
 
+        /// <summary>
+        /// The OnDocumentSynchronized
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="args">The args<see cref="DocumentSynchronizedWithCentralEventArgs"/></param>
         private void OnDocumentSynchronized(object sender, DocumentSynchronizedWithCentralEventArgs args)
         {
-            
         }
 
-        //void Application_ViewActivated( object sender, ViewActivatedEventArgs e)
         /// <summary>
         /// The onViewActivated
         /// </summary>
@@ -215,10 +243,9 @@ namespace ProjectManagement
         /// The OnDocumentSave
         /// </summary>
         /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="DocumentSavedEventArgs"/></param>
+        /// <param name="args">The args<see cref="DocumentSavedEventArgs"/></param>
         private void OnDocumentSave(object sender, DocumentSavedEventArgs args)
         {
-            
         }
 
         /// <summary>
@@ -229,7 +256,7 @@ namespace ProjectManagement
         private static void OnDocumentCreated(object sender, DocumentCreatedEventArgs args)
         {
 
-          ModelProvider.Instance.Models.Add(args.Document);
+            ModelProvider.Instance.Models.Add(args.Document);
         }
 
         /// <summary>
@@ -263,23 +290,11 @@ namespace ProjectManagement
         {
 
             PanelProprety panelPropreties = new PanelProprety();
-            _panelProprety = panelPropreties; 
+            _panelProprety = panelPropreties;
             DockablePaneId paneId = new DockablePaneId(new Guid("{D7C963CE-B7CA-426A-8D51-6E8254D21157}"));
             _uicapp.RegisterDockablePane(paneId, "Historiques", (IDockablePaneProvider)panelPropreties);
         }
 
-        /* cach 2 tao voi event
-        private void OnApplicationInitialized(object sender, Autodesk.Revit.DB.Events.ApplicationInitializedEventArgs e)
-        {
-            PanelProprety MainDockableWindow = new PanelProprety();
-
-            _panelProprety = MainDockableWindow;
-
-            _dpid = new DockablePaneId(new Guid("{D7C963CE-B7CA-426A-8D51-6E8254D21157}"));
-
-            _uicapp.RegisterDockablePane(_dpid, "Historiquesfff", MainDockableWindow as IDockablePaneProvider);
-        }
-        */
         /// <summary>
         /// The OnShutdown
         /// </summary>

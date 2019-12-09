@@ -13,6 +13,7 @@
         public static string SerializeRevitParameters(Element e)
         {
             string parameters = "";
+            var charsToRemove = new string[] { "<", ">" };
             IList<Parameter> paraList = e.GetOrderedParameters();
 
             foreach (Parameter para in e.GetOrderedParameters())
@@ -54,6 +55,10 @@
 
                     if (val == null) val = "(n/a)";
                     parameters += string.Format("{0}:{1}={2}", para.Id, para.Definition.Name, val) + ";";
+                    foreach (var c in charsToRemove)
+                    {
+                        parameters = parameters.Replace(c, string.Empty);
+                    }
                 }
             }
 

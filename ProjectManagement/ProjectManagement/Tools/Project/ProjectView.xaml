@@ -22,6 +22,9 @@
     <UserControl.Resources>
 
         <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
             <Style TargetType="TextBlock">
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
@@ -98,8 +101,11 @@
 
         </StackPanel>
         <Grid Grid.Row="1">
-            <StackPanel Margin="3" Orientation="Horizontal">
+            <StackPanel>
                 <TextBlock Margin="0,0,3,0" Text="Want to see your model is up to date?" />
+            </StackPanel>
+            <StackPanel Margin="3" Orientation="Horizontal">
+
                 <TextBlock
                     Cursor="Hand"
                     FontStyle="Oblique"
@@ -127,8 +133,6 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Orientation="Horizontal">
-
-
                 <Border
                     Background="WhiteSmoke"
                     BorderBrush="Black"
@@ -143,6 +147,20 @@
                         IsEnabled="{Binding BtnConnectIsEnable, FallbackValue=false}" />
                 </Border>
 
+                <Border
+                    Background="WhiteSmoke"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    CornerRadius="2">
+                    <Button
+                        x:Name="BtnSynchronize"
+                        Margin="1"
+                        BorderThickness="0"
+                        Command="{Binding Synchronize}"
+                        CommandParameter="{Binding ElementName=Win}"
+                        Content="Sychronize"
+                        IsEnabled="{Binding BtnSynchronizeIsEnable, FallbackValue=false}" />
+                </Border>
                 <Button
                     Command="{Binding Disconnect}"
                     CommandParameter="{Binding ElementName=Win}"

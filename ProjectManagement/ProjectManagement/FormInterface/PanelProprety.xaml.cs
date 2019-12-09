@@ -22,7 +22,7 @@ namespace ProjectManagement.FormInterface
     public partial class PanelProprety : Page, IDockablePaneProvider 
     {
         public static UIDocument _uiDoc;
-        private string _guidElement;
+         
 
         private static string _guid;
 

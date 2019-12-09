@@ -12,7 +12,18 @@
 
         public List<RevitElement> data { get; set; }
     }
+    public class HistoryResParent
+    {
+        public bool success { get; set; }
 
+        public HistoryResChild data { get; set; }
+    }
+    public class HistoryResChild
+    {
+        public string _id { get; set; }
+
+        public  List<History> history { get; set; }
+    }
     public class History
     {
         public string _id { get; set; }
@@ -44,7 +55,7 @@
 
         public string name { get; set; }
 
-        public int elementId { get; set; }
+        public string elementId { get; set; }
 
         public string category { get; set; }
 
@@ -84,7 +95,7 @@
             version = ProjectProvider.Instance.CurrentVersion._id;
             guid = element.UniqueId;
             name = element.Name;
-            elementId = element.Id.IntegerValue;
+            elementId = element.Id.IntegerValue.ToString();
             category = element.Category.Name;
             level = ElementUtils.GetElementLevel(ModelProvider.Instance.Levels, element);
             parameters = ParameterUtils.SerializeRevitParameters(element);

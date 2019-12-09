@@ -30,6 +30,12 @@ namespace ProjectManagement.Commun
 
            return url;
         }
+        public string historyUrl(string guid)
+        {
+            string url = "/api/v1/projects/" + projectId + "/elements/guid/" + guid + "/history";
+
+            return url;
+        }
     }
 
 }

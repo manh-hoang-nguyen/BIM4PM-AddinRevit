@@ -49,6 +49,7 @@
         /// </summary>
         public void Synchronize()
         {
+            CompareProvider.Instance.Synchronize();
         }
     }
 }

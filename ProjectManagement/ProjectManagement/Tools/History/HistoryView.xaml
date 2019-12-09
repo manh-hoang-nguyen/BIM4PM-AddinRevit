@@ -1,0 +1,123 @@
+﻿<UserControl
+    x:Class="ProjectManagement.Tools.History.HistoryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ProgressBar="clr-namespace:ProjectManagement.Utils.ProgressBar"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:ProjectManagement.Tools.History"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    x:Name="Win"
+    d:DesignHeight="450"
+    d:DesignWidth="450"
+    mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding WindowLoaded}" CommandParameter="{Binding ElementName=Win}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding WindowClosed}" CommandParameter="{Binding ElementName=Win}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid Margin="3">
+            <!--<xctk:PropertyGrid x:Name="PG" > </xctk:PropertyGrid>-->
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListView x:Name="History">
+
+                    <ListView.View>
+
+                        <GridView ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                            <!--<GridViewColumn
+                                
+                                Width="0"
+                                DisplayMemberBinding="{Binding type}"
+                                Header="Type Change" />-->
+                            <GridViewColumn
+                                Width="Auto"
+                                DisplayMemberBinding="{Binding date}"
+                                Header="Date" />
+                            <GridViewColumn
+                                Width="Auto"
+                                DisplayMemberBinding="{Binding userName}"
+                                Header="Member" />
+
+                        </GridView>
+                    </ListView.View>
+
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Expander IsExpanded="True">
+                                                    <Expander.Header>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock
+                                                                VerticalAlignment="Bottom"
+                                                                FontSize="18"
+                                                                FontWeight="Bold"
+                                                                Foreground="Gray"
+                                                                Text="{Binding Name}" />
+                                                            <TextBlock
+                                                                Margin="10,0,0,0"
+                                                                VerticalAlignment="Bottom"
+                                                                FontSize="18"
+                                                                FontWeight="Bold"
+                                                                Foreground="Green"
+                                                                Text="{Binding ItemCount}" />
+                                                            <TextBlock
+                                                                VerticalAlignment="Bottom"
+                                                                FontSize="18"
+                                                                Foreground="Silver"
+                                                                Text=" Element(s)" />
+                                                        </StackPanel>
+                                                    </Expander.Header>
+                                                    <ItemsPresenter />
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
+            </ScrollViewer>
+        </Grid>
+        <Border
+            Grid.Row="1"
+            Width="80"
+            HorizontalAlignment="Right"
+            Background="WhiteSmoke"
+            BorderBrush="Black"
+            BorderThickness="1"
+            CornerRadius="2">
+            <Button
+                Margin="1"
+                BorderThickness="0"
+                Command="{Binding Refresh}"
+                CommandParameter="{Binding ElementName=Win}"
+                Content="Refresh" />
+        </Border>
+
+
+
+
+    </Grid>
+</UserControl>

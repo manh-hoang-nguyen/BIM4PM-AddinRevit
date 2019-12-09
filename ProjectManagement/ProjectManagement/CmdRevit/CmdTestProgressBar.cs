@@ -5,6 +5,7 @@
     using Autodesk.Revit.UI;
     using Newtonsoft.Json;
     using ProjectManagement.Commun;
+    using ProjectManagement.Tools.History;
     using ProjectManagement.Tools.Synchronize;
     using RestSharp;
     using System;
@@ -80,11 +81,7 @@
            */
 
             //CompareProvider.Instance.Execute();
-            SyncView view = new SyncView
-            {
-                DataContext = new SyncViewModel()
-            };
-            view.ShowDialog();
+         
             return Result.Succeeded;
         }
 

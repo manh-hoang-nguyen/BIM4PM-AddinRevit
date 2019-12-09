@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using ProjectManagement.Tools.Auth;
 using ProjectManagement.FormInterface;
+using ProjectManagement.Tools.History;
 
 namespace ProjectManagement.Tools
 {
    public class PaletteViewModel: ViewModelBase
     {
-        public ObservableCollection<TabItem> TabItems { get; set; } = new ObservableCollection<TabItem>();
+        public static ObservableCollection<TabItem> TabItems { get; set; } = new ObservableCollection<TabItem>();
 
         public PaletteViewModel()
         {
@@ -26,6 +27,11 @@ namespace ProjectManagement.Tools
                 Content = new ProjectView() { DataContext = new ProjectViewModel()}  ,
                 Header = "Connect"
             });
+            //TabItems.Add(new TabItem
+            //{
+            //    Content = new HistoryView() { DataContext = new HistoryViewModel()},
+            //    Header = "History"
+            //});
         }
     }
 }
