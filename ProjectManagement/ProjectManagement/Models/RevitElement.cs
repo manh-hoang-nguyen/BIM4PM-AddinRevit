@@ -40,7 +40,19 @@
 
         public bool sharedParameterChange { get; set; }
     }
-
+    public class HistoryByTypeChange
+    {
+        public DateTime date { get; set; }
+        public string userName { get; set; }
+        public TypeChange type { get; set; }
+    }
+    public enum TypeChange
+    {
+        FirstCommit,
+        Geometry,
+        Parameters,
+        SharedParameters
+    }
     public class RevitElement
     {
         public string _id { get; set; }

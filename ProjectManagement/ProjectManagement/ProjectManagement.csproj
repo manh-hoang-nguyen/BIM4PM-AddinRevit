@@ -299,6 +299,11 @@
       <DependentUpon>SyncView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\Synchronize\SyncViewModel.cs" />
+    <Compile Include="Tools\Topic\TopicModel.cs" />
+    <Compile Include="Tools\Topic\TopicView.xaml.cs">
+      <DependentUpon>TopicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Topic\TopicViewModel.cs" />
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
@@ -430,6 +435,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tools\Synchronize\SyncView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\Topic\TopicView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

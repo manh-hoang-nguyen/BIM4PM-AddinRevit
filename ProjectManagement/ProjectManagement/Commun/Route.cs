@@ -36,6 +36,23 @@ namespace ProjectManagement.Commun
 
             return url;
         }
+        public string commentUrl(string guid)
+        {
+
+            string url = "/api/v1/projects/" + projectId + "/comments/guid/" + guid;
+
+            return url;
+        }
+    }
+   public class TopicRoute
+    {
+        public string projectId;
+
+        public TopicRoute(string projectId)
+        {
+            this.projectId = projectId;
+        }
+
     }
 
 }

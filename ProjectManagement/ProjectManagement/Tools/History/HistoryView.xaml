@@ -21,10 +21,16 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <UserControl.Resources>
+
         <ResourceDictionary>
             <Style TargetType="Button">
                 <Setter Property="Cursor" Value="Hand" />
             </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ProjectManagement;component/Resources/UI/ProgressBar/ProgressBarResource.xaml" />
+                <ResourceDictionary Source="/ProjectManagement;component/Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="/ProjectManagement;component/Resources/ComboBoxResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -35,20 +41,13 @@
         <Grid Margin="3">
             <!--<xctk:PropertyGrid x:Name="PG" > </xctk:PropertyGrid>-->
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ListView x:Name="History">
+                <ListView x:Name="History" ItemContainerStyle="{StaticResource MaterialDesignGridViewItem}">
 
-                    <ListView.View>
-
-                        <GridView ScrollViewer.VerticalScrollBarVisibility="Auto">
-
-                            <!--<GridViewColumn
-                                
-                                Width="0"
-                                DisplayMemberBinding="{Binding type}"
-                                Header="Type Change" />-->
+                    <ListView.View> 
+                        <GridView ScrollViewer.VerticalScrollBarVisibility="Auto"> 
                             <GridViewColumn
                                 Width="Auto"
-                                DisplayMemberBinding="{Binding date}"
+                                DisplayMemberBinding="{Binding date, StringFormat=yyy/MM/dd HH:mm}"
                                 Header="Date" />
                             <GridViewColumn
                                 Width="Auto"
@@ -70,22 +69,18 @@
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock
                                                                 VerticalAlignment="Bottom"
-                                                                FontSize="18"
+                                                                FontSize="14"
                                                                 FontWeight="Bold"
                                                                 Foreground="Gray"
                                                                 Text="{Binding Name}" />
                                                             <TextBlock
                                                                 Margin="10,0,0,0"
                                                                 VerticalAlignment="Bottom"
-                                                                FontSize="18"
+                                                                FontSize="14"
                                                                 FontWeight="Bold"
                                                                 Foreground="Green"
                                                                 Text="{Binding ItemCount}" />
-                                                            <TextBlock
-                                                                VerticalAlignment="Bottom"
-                                                                FontSize="18"
-                                                                Foreground="Silver"
-                                                                Text=" Element(s)" />
+                                                            
                                                         </StackPanel>
                                                     </Expander.Header>
                                                     <ItemsPresenter />
@@ -101,14 +96,15 @@
             </ScrollViewer>
         </Grid>
         <Border
+            Width="auto"
             Grid.Row="1"
-            Width="80"
+              Height="20"
             HorizontalAlignment="Right"
             Background="WhiteSmoke"
             BorderBrush="Black"
             BorderThickness="1"
             CornerRadius="2">
-            <Button
+            <Button 
                 Margin="1"
                 BorderThickness="0"
                 Command="{Binding Refresh}"

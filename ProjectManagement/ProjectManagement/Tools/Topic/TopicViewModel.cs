@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManagement.Models
+namespace ProjectManagement.Tools.Topic
 {
-   public class Token
+   public class TopicViewModel
     {
-        public string token { get; set; }
     }
 }

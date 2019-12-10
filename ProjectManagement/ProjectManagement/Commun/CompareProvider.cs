@@ -115,6 +115,7 @@
             Task task3 = NewElementAsync();
 
             await Task.WhenAll(task1, task2, task3);
+            ProjectProvider.Instance.Update();
         }
 
         /// <summary>

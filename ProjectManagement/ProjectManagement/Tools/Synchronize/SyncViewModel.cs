@@ -66,7 +66,7 @@
         {
             view.Win.Close();
             Model.Synchronize();
-            ProjectProvider.Instance.Update();
+         
         }
 
         private void OnFirstCommit(SyncView view)

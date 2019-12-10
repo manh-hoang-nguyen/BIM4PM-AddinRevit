@@ -44,7 +44,8 @@
         <StackPanel>
             <TextBlock Style="{StaticResource MHHeader1}" Text="Welcome!" />
             <TextBlock Style="{StaticResource MHHeader1}" Text="{Binding Path=User.name.lastName}" />
-            <Grid Height="50" Margin="3">
+            <StackPanel Height="50" Margin="3">
+                <TextBlock Text="Select your project:" />
                 <Border CornerRadius="8" Style="{StaticResource MHBorderTextBox}">
                     <ComboBox
                         x:Name="Projects"
@@ -59,11 +60,11 @@
                         </i:Interaction.Triggers>
                     </ComboBox>
                 </Border>
-            </Grid>
+            </StackPanel>
             <ListView
+                Height="100"
                 x:Name="Versions"
                 Margin="3"
-                IsEnabled="False"
                 ItemContainerStyle="{StaticResource MaterialDesignGridViewItem}"
                 ItemsSource="{Binding Versions}">
 
@@ -81,7 +82,8 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Grid Height="50" Margin="3">
+            <StackPanel Height="50" Margin="3">
+                <TextBlock Text="Select your model" />
                 <Border CornerRadius="8" Style="{StaticResource MHBorderTextBox}">
                     <ComboBox
                         x:Name="Models"
@@ -96,7 +98,7 @@
                     </ComboBox>
                 </Border>
 
-            </Grid>
+            </StackPanel>
 
 
         </StackPanel>
@@ -153,7 +155,6 @@
                     BorderThickness="1"
                     CornerRadius="2">
                     <Button
-                        x:Name="BtnSynchronize"
                         Margin="1"
                         BorderThickness="0"
                         Command="{Binding Synchronize}"
@@ -161,13 +162,23 @@
                         Content="Sychronize"
                         IsEnabled="{Binding BtnSynchronizeIsEnable, FallbackValue=false}" />
                 </Border>
-                <Button
-                    Command="{Binding Disconnect}"
-                    CommandParameter="{Binding ElementName=Win}"
-                    IsEnabled="{Binding BtnDisconnectIsEnable, FallbackValue=false}"
-                    Style="{StaticResource MHButton1}">
-                    Disconnect
-                </Button>
+
+                <Border
+                    Background="WhiteSmoke"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    CornerRadius="2">
+                    <Button
+                        Margin="1"
+                        BorderThickness="0"
+                        Command="{Binding Disconnect}"
+                        CommandParameter="{Binding ElementName=Win}"
+                        Content="Disconnect"
+                        IsEnabled="{Binding BtnDisconnectIsEnable, FallbackValue=false}" />
+
+
+                </Border>
+
             </StackPanel>
         </Grid>
 

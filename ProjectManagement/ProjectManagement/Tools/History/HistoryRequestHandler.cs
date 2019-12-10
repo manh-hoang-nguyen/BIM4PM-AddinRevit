@@ -88,9 +88,9 @@
                         HistoryModel.HistoriesByTypeChange.Add(item);
                     }
                    
-
                     break;
                 default:
+                    MessageBox.Show("You have to select only an element");
                     break;
             }
         }
@@ -115,7 +115,7 @@
                     {
                         date = date,
                         userName = userName,
-                        type = TypeChange.firstCommit
+                        type = TypeChange.FirstCommit
                     };
                     hisByChange.Add(firstCommit);
                     continue;
@@ -127,7 +127,7 @@
                     {
                         date = date,
                         userName = userName,
-                        type = TypeChange.geometry
+                        type = TypeChange.Geometry
 
                     };
                     hisByChange.Add(geo);
@@ -138,7 +138,7 @@
                     {
                         date = date,
                         userName = userName,
-                        type = TypeChange.parameters
+                        type = TypeChange.Parameters
 
                     };
                     hisByChange.Add(para);
@@ -149,7 +149,7 @@
                     {
                         date = date,
                         userName = userName,
-                        type = TypeChange.sharedParameters
+                        type = TypeChange.SharedParameters
 
                     };
                     hisByChange.Add(sharedPara);

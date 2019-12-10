@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
@@ -25,17 +26,5 @@ namespace ProjectManagement.Tools.History
         
     }
 
-  public  class HistoryByTypeChange
-    {
-        public DateTime date { get; set; }
-        public string userName { get; set; }
-        public TypeChange type { get; set; }
-    }
-   public enum TypeChange
-    {
-        firstCommit,
-        geometry,
-        parameters,
-        sharedParameters
-    }
+  
 }

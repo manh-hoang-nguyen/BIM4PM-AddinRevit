@@ -122,7 +122,7 @@
 
             if (CompareProvider.Instance.IsUpToDate()) {
                 MessageBox.Show("Your model is up to date");
-                view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.Green);
+                view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.LightGreen);
             }
             else
             {
@@ -167,13 +167,9 @@
 
             Model.GetParamterElement();
 
-            AuthProvider.Instance.IsConnected = true;
+            AuthProvider.Instance.Connect();
 
-            PaletteViewModel.TabItems.Add(new TabItem
-                 {
-                     Content = new HistoryView() { DataContext = new HistoryViewModel() },
-                     Header = "History"
-                 });
+          
         }
 
         /// <summary>
@@ -191,7 +187,7 @@
             view.Projects.SelectedItem = null;
             view.Models.SelectedItem = null;
             view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.White);
-            PaletteViewModel.TabItems.RemoveAt(1);
+            
         }
 
         /// <summary>

@@ -20,25 +20,7 @@ namespace ProjectManagement.CmdRevit
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            UIApplication uiapp = commandData.Application;
-
-            LoginView loginView = new LoginView()
-            {
-                DataContext = new LoginViewModel(uiapp)
-            };
-            loginView.ShowDialog();
-            #region unsubcribe event
-            //App._uicapp.ControlledApplication.DocumentChanged -= new EventHandler<DocumentChangedEventArgs>(frm_Login.OnDocumentChanged);
-            //foreach (Autodesk.Windows.RibbonTab tab in Autodesk.Windows.ComponentManager.Ribbon.Tabs)
-            //{
-            //    if (tab.Id == "Modify")
-            //    {
-            //        tab.PropertyChanged -= PanelProprety.PanelEvent;
-                   
-            //    }
-            //}
-            //App.Instance.TextChangedButton();
-            #endregion
+            AuthProvider.Instance.Logout();
 
             return Result.Succeeded;
         }
