@@ -20,13 +20,13 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <UserControl.Resources>
-
         <ResourceDictionary>
             <Style TargetType="Button">
                 <Setter Property="Cursor" Value="Hand" />
             </Style>
             <Style TargetType="TextBlock">
                 <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="3" />
             </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ProjectManagement;component/Resources/UI/ProgressBar/ProgressBarResource.xaml" />
@@ -34,21 +34,51 @@
                 <ResourceDictionary Source="/ProjectManagement;component/Resources/ComboBoxResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
+        <Border
+            Grid.RowSpan="2"
+            Margin="3"
+            Background="White"
+            CornerRadius="3" />
         <StackPanel>
+
             <TextBlock Style="{StaticResource MHHeader1}" Text="Welcome!" />
             <TextBlock Style="{StaticResource MHHeader1}" Text="{Binding Path=User.name.lastName}" />
-            <StackPanel Height="50" Margin="3">
-                <TextBlock Text="Select your project:" />
+            <Border Margin="3,0" BorderThickness="0.5">
+                <Border.BorderBrush>
+                    <DrawingBrush
+                        TileMode="Tile"
+                        Viewport="0,0,8,8"
+                        ViewportUnits="Absolute">
+                        <DrawingBrush.Drawing>
+                            <DrawingGroup>
+                                <GeometryDrawing Brush="Blue">
+                                    <GeometryDrawing.Geometry>
+                                        <GeometryGroup>
+                                            <RectangleGeometry Rect="0,0,50,50" />
+                                            <RectangleGeometry Rect="50,50,50,50" />
+                                        </GeometryGroup>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Border.BorderBrush>
+            </Border>
+            <StackPanel Margin="3,10">
+                <TextBlock
+                    FontWeight="Bold"
+                    Foreground="Gray"
+                    Text="Select your project:" />
                 <Border CornerRadius="8" Style="{StaticResource MHBorderTextBox}">
                     <ComboBox
                         x:Name="Projects"
+                        BorderThickness="0"
                         DisplayMemberPath="name"
                         IsEnabled="{Binding CbProjectIsEnable, FallbackValue=true}"
                         ItemsSource="{Binding Projects}"
@@ -61,13 +91,31 @@
                     </ComboBox>
                 </Border>
             </StackPanel>
+            <StackPanel Margin="3">
+                <TextBlock
+                    FontWeight="Bold"
+                    Foreground="Gray"
+                    Text="Select your model:" />
+                <Border CornerRadius="8" Style="{StaticResource MHBorderTextBox}">
+                    <ComboBox
+                        x:Name="Models"
+                        DisplayMemberPath="Title"
+                        IsEnabled="{Binding CbModelIsEnable, FallbackValue=true}"
+                        Style="{StaticResource MHComboBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ModelSelection}" CommandParameter="{Binding ElementName=Win}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </Border>
+            </StackPanel>
             <ListView
-                Height="100"
                 x:Name="Versions"
                 Margin="3"
+                BorderThickness="0"
                 ItemContainerStyle="{StaticResource MaterialDesignGridViewItem}"
                 ItemsSource="{Binding Versions}">
-
                 <ListView.View>
                     <GridView>
 
@@ -82,29 +130,10 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <StackPanel Height="50" Margin="3">
-                <TextBlock Text="Select your model" />
-                <Border CornerRadius="8" Style="{StaticResource MHBorderTextBox}">
-                    <ComboBox
-                        x:Name="Models"
-                        DisplayMemberPath="Title"
-                        IsEnabled="{Binding CbModelIsEnable, FallbackValue=true}"
-                        Style="{StaticResource MHComboBox}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ModelSelection}" CommandParameter="{Binding ElementName=Win}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ComboBox>
-                </Border>
-
-            </StackPanel>
-
-
         </StackPanel>
         <Grid Grid.Row="1">
             <StackPanel>
-                <TextBlock Margin="0,0,3,0" Text="Want to see your model is up to date?" />
+                <TextBlock Margin="3,0,3,0" Text="Want to see your model is up to date?" />
             </StackPanel>
             <StackPanel Margin="3" Orientation="Horizontal">
 
@@ -135,49 +164,35 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Orientation="Horizontal">
-                <Border
-                    Background="WhiteSmoke"
-                    BorderBrush="Black"
-                    BorderThickness="1"
-                    CornerRadius="2">
-                    <Button
-                        Margin="1"
-                        BorderThickness="0"
-                        Command="{Binding Connect}"
-                        CommandParameter="{Binding ElementName=Win}"
-                        Content="Connect"
-                        IsEnabled="{Binding BtnConnectIsEnable, FallbackValue=false}" />
-                </Border>
 
-                <Border
-                    Background="WhiteSmoke"
-                    BorderBrush="Black"
-                    BorderThickness="1"
-                    CornerRadius="2">
-                    <Button
-                        Margin="1"
-                        BorderThickness="0"
-                        Command="{Binding Synchronize}"
-                        CommandParameter="{Binding ElementName=Win}"
-                        Content="Sychronize"
-                        IsEnabled="{Binding BtnSynchronizeIsEnable, FallbackValue=false}" />
-                </Border>
-
-                <Border
-                    Background="WhiteSmoke"
-                    BorderBrush="Black"
-                    BorderThickness="1"
-                    CornerRadius="2">
-                    <Button
-                        Margin="1"
-                        BorderThickness="0"
-                        Command="{Binding Disconnect}"
-                        CommandParameter="{Binding ElementName=Win}"
-                        Content="Disconnect"
-                        IsEnabled="{Binding BtnDisconnectIsEnable, FallbackValue=false}" />
+                <Button
+                    Command="{Binding Connect}"
+                    CommandParameter="{Binding ElementName=Win}"
+                    Content="Connect"
+                    IsEnabled="{Binding BtnConnectIsEnable, FallbackValue=false}"
+                    Style="{StaticResource MHButton1}" />
 
 
-                </Border>
+
+                <Button
+                    Margin="1"
+                    BorderThickness="0"
+                    Command="{Binding Synchronize}"
+                    CommandParameter="{Binding ElementName=Win}"
+                    Content="Sychronize"
+                    IsEnabled="{Binding BtnSynchronizeIsEnable, FallbackValue=false}"
+                    Style="{StaticResource MHButton1}" />
+
+
+
+                <Button
+                    Margin="1"
+                    BorderThickness="0"
+                    Command="{Binding Disconnect}"
+                    CommandParameter="{Binding ElementName=Win}"
+                    Content="Disconnect"
+                    IsEnabled="{Binding BtnDisconnectIsEnable, FallbackValue=false}"
+                    Style="{StaticResource MHButton1}" />
 
             </StackPanel>
         </Grid>

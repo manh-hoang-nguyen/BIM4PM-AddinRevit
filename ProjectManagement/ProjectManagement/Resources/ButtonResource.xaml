@@ -52,27 +52,85 @@
         </Setter>
     </Style>
     <Style x:Key="MHButton1" TargetType="Button">
-        
-        <Setter Property="Margin" Value="1" />
-         
         <Setter Property="Cursor" Value="Hand" />
-       
+        <Setter Property="BorderThickness" Value="0" />
+        <!--<Setter Property="Background" Value="Transparent" />-->
+        <Setter Property="Margin" Value="1" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="MinWidth" Value="60" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border
-                        Background="WhiteSmoke"
-                        BorderBrush="Black"
-                        BorderThickness="1"
+                        x:Name="border"
+                        Margin="3.5,0"  
                         CornerRadius="2">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="LightBlue" />
+                                        <Setter Property="BorderBrush" Value="LightSkyBlue" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </Trigger>
+                                   
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="Background" Value="LightGray" />
+                                        <Setter Property="BorderBrush" Value="Gray" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <ContentPresenter
-                            Margin="1"
-                            x:Name="contentPresenter" 
+                            HorizontalAlignment="Center"
+                            x:Name="contentPresenter"
+                            Margin="5,1"
                             Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            IsEnabled="{TemplateBinding IsEnabled}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightBlue" /> 
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="LightBlue" />
+                            <Setter Property="BorderBrush" TargetName="border" Value="SkyBlue" />
+                            <Setter Property="BorderThickness" TargetName="border" Value="2" />
+                            <Setter Property="Opacity" TargetName="border" Value="0.6" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <Style x:Key="MHButtonUseWithBorder" TargetType="{x:Type Button}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="LightBlue" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
+
 </ResourceDictionary>

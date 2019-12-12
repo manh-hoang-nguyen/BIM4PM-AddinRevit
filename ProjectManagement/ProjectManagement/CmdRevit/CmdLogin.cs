@@ -3,7 +3,9 @@
     using Autodesk.Revit.Attributes;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
+    using ProjectManagement.Commun;
     using ProjectManagement.Tools.Auth;
+    using System;
 
     [Transaction(TransactionMode.ReadOnly)]
     public class CmdLogin : IExternalCommand
@@ -18,6 +20,17 @@
                 DataContext = new LoginViewModel(uiapp)
             };
             loginView.ShowDialog();
+
+            if (AuthProvider.Instance.IsAuthenticated == true)
+            {
+                DockablePaneId dpid = new DockablePaneId(new Guid(Properties.Resources.PaletteGuid));
+
+                DockablePane dp = commandData.Application.GetDockablePane(dpid);
+
+                dp.Show();
+
+            }
+
             return Result.Succeeded;
         }
     }

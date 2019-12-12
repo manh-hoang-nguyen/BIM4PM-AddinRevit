@@ -171,6 +171,7 @@
     <Compile Include="Commun\AuthProvider.cs" />
     <Compile Include="Commun\CategoryProvider.cs" />
     <Compile Include="Commun\CompareProvider.cs" />
+    <Compile Include="Commun\DiscussionProvider.cs" />
     <Compile Include="Commun\ModelProvider.cs" />
     <Compile Include="Commun\ProjectProvider.cs" />
     <Compile Include="Commun\Route.cs" />
@@ -218,6 +219,7 @@
     <Compile Include="FormInterface\PanelProprety.xaml.cs">
       <DependentUpon>PanelProprety.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Comparison.cs" />
     <Compile Include="MethodeRevitApi.cs" />
     <Compile Include="Models\History.cs" />
@@ -225,6 +227,7 @@
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\RevitElement.cs" />
     <Compile Include="Models\Token.cs" />
+    <Compile Include="Models\Topic.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserProject.cs" />
     <Compile Include="Models\Version.cs" />
@@ -252,6 +255,8 @@
     <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\RotateTransformCentreConverter.cs" />
     <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\StartPointConverter.cs" />
     <Compile Include="Resources\Utils\BrushRoundConverter.cs" />
+    <Compile Include="Resources\Utils\Chip.cs" />
+    <Compile Include="Resources\Utils\NullableToVisibilityConverter.cs" />
     <Compile Include="Resources\Utils\DataGridAssist.cs" />
     <Compile Include="Resources\Utils\EqualityToVisibilityConverter.cs" />
     <Compile Include="Resources\Utils\Extensions.cs" />
@@ -277,6 +282,7 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\Auth\LoginViewModel.cs" />
+    <Compile Include="Tools\Discussion\DiscussionRequestHandler.cs" />
     <Compile Include="Tools\PaletteMainView.xaml.cs">
       <DependentUpon>PaletteMainView.xaml</DependentUpon>
     </Compile>
@@ -299,11 +305,11 @@
       <DependentUpon>SyncView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\Synchronize\SyncViewModel.cs" />
-    <Compile Include="Tools\Topic\TopicModel.cs" />
-    <Compile Include="Tools\Topic\TopicView.xaml.cs">
-      <DependentUpon>TopicView.xaml</DependentUpon>
+    <Compile Include="Tools\Discussion\DiscussionModel.cs" />
+    <Compile Include="Tools\Discussion\DiscussionView.xaml.cs">
+      <DependentUpon>DiscussionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\Topic\TopicViewModel.cs" />
+    <Compile Include="Tools\Discussion\DiscussionViewModel.cs" />
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
@@ -324,6 +330,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ProjectManagement.addin" />
+    <Content Include="Resources\Images\avatar.png" />
+    <Content Include="Resources\Images\BIM.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -379,6 +387,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\ListViewResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\MaterialDesignTheme.Chip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -438,7 +450,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\Topic\TopicView.xaml">
+    <Page Include="Tools\Discussion\DiscussionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

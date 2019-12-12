@@ -21,17 +21,14 @@ namespace ProjectManagement.Tools
 
         public PaletteViewModel()
         {
-
-            TabItems.Add(new TabItem
+            if(TabItems.Count == 0)
             {
-                Content = new ProjectView() { DataContext = new ProjectViewModel()}  ,
-                Header = "Connect"
-            });
-            //TabItems.Add(new TabItem
-            //{
-            //    Content = new HistoryView() { DataContext = new HistoryViewModel()},
-            //    Header = "History"
-            //});
+                TabItems.Add(new TabItem
+                {
+                    Content = new ProjectView() { DataContext = new ProjectViewModel() },
+                    Header = "Connect"
+                });
+            } 
         }
     }
 }

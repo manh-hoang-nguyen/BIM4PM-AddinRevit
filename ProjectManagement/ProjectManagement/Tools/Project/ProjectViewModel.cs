@@ -18,6 +18,7 @@
 
     public class ProjectViewModel : ViewModelBase
     {
+       
         public RelayCommand<ProjectView> WindowLoaded { get; set; }
 
         public RelayCommand<UserControl> SendData { get; set; }
@@ -137,8 +138,16 @@
         /// <param name="view">The view<see cref="ProjectView"/></param>
         private void OnModelSelection(ProjectView view)
         {
-            if (view.Projects.SelectedItem != null) BtnConnectIsEnable = true;
-            ModelProvider.Instance.CurrentModel = view.Models.SelectedItem as Document;
+            if (view.Projects.SelectedItem != null)
+            {
+                BtnConnectIsEnable = true;
+             
+            }
+          if(view.Models.SelectedItem != null)
+            {
+                ModelProvider.Instance.CurrentModel = view.Models.SelectedItem as Document;
+            }
+          
         }
 
         /// <summary>
@@ -179,6 +188,7 @@
         private void OnDisconnect(ProjectView view)
         {
             AuthProvider.Instance.Disconnect();
+            Versions = null;
             BtnDisconnectIsEnable = false;
             BtnConnectIsEnable = true;
             CbProjectIsEnable = true;

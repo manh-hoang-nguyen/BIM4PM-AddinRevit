@@ -48,7 +48,7 @@
     }
     public enum TypeChange
     {
-        FirstCommit,
+        CreatedOn,
         Geometry,
         Parameters,
         SharedParameters

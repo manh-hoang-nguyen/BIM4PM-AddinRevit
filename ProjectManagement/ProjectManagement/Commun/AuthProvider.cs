@@ -1,11 +1,15 @@
 ﻿namespace ProjectManagement.Commun
 {
+    using Newtonsoft.Json;
     using ProjectManagement.Models;
     using ProjectManagement.Tools;
+    using ProjectManagement.Tools.Discussion;
     using ProjectManagement.Tools.History;
+    using RestSharp;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows.Controls;
 
     public class AuthProvider : INotifyPropertyChanged
@@ -25,14 +29,14 @@
                 _ins = value;
             }
         }
-
+        public User CurrentUser { get; set; }
         public Token token { get; set; }
 
         private bool isAuthenticated;
 
         public bool IsAuthenticated
         {
-            get => isAuthenticated; set { isAuthenticated = value; OnPropertyChanged(); }
+            get => isAuthenticated; set { isAuthenticated = value; OnAuthenticated(); }
         }
 
         public bool IsConnected { get => isConnected; set { isConnected = value; OnConnected(); } }
@@ -57,12 +61,13 @@
             ProjectProvider.Instance.Reset();
             ModelProvider.Instance.Reset();
             CompareProvider.Instance.Reset();
+            DiscussionProvider.Instance.Reset();
             IsConnected = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnAuthenticated([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
@@ -71,6 +76,20 @@
                 Priority = ThreadPriority.BelowNormal,
                 IsBackground = true
             }.Start();
+
+            if(IsAuthenticated == true)
+            {
+                RestRequest req = new RestRequest(Route.GetMe, Method.GET);
+                req.AddHeader("Content-Type", "application/json");
+                req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+
+                IRestResponse res = Route.Client.Execute(req);
+
+                UserRes User = JsonConvert.DeserializeObject<UserRes>(res.Content);
+
+                CurrentUser = User.data;
+            }
+           
         }
         protected virtual void OnConnected([CallerMemberName] string propertyName = null)
         {
@@ -82,12 +101,19 @@
                     Content = new HistoryView() { DataContext = new HistoryViewModel() },
                     Header = "History"
                 });
+                PaletteViewModel.TabItems.Add(new TabItem
+                {
+                    Content = new DiscussionView() { DataContext = new DiscussionViewModel() },
+                    Header = "Discussion"
+                });
             }
             else
             {
-                for (int i = 1; i < PaletteViewModel.TabItems.Count; i++)
+                int count = PaletteViewModel.TabItems.Count;
+                for (int i = 1; i < count; i++)
                 {
-                    PaletteViewModel.TabItems.RemoveAt(i);
+                    PaletteViewModel.TabItems.RemoveAt(1);
+                    
                 }
             }
         }

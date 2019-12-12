@@ -42,6 +42,7 @@
                 string message = "Opps! There has been an error while uploading your model. " + res.ErrorException.Message;
                 throw new Exception(message);
             }
+            AuthProvider.Instance.Disconnect();
         }
 
         /// <summary>

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjectManagement.Tools.Topic
+namespace ProjectManagement.Tools.Discussion
 {
     /// <summary>
     /// Logique d'interaction pour TopicView.xaml
     /// </summary>
-    public partial class TopicView : UserControl
+    public partial class DiscussionView : UserControl
     {
-        public TopicView()
+        public DiscussionView()
         {
             InitializeComponent();
         }

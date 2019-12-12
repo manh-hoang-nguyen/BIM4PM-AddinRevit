@@ -27,8 +27,7 @@ namespace ProjectManagement.CmdRevit
             {
                 Comment comment = new Comment()
                 {
-                    guid = item.guid,
-                    comments = item.comments.ToList()
+                    
 
                 };
                 HistoryList.CommentInDatabase.Add(comment);

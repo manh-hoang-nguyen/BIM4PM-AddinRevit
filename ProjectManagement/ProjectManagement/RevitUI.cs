@@ -1,39 +1,41 @@
-﻿using Autodesk.Revit.UI;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-
-namespace ProjectManagement
+﻿namespace ProjectManagement
 {
-    class Onglet
+    using Autodesk.Revit.UI;
+    using System.IO;
+    using System.Reflection;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+
+    internal class Onglet
     {
-
-
+        /// <summary>
+        /// The Ajouter
+        /// </summary>
+        /// <param name="application">The application<see cref="UIControlledApplication"/></param>
+        /// <param name="nomOnglet">The nomOnglet<see cref="string"/></param>
         public void Ajouter(UIControlledApplication application, string nomOnglet)
         {
             application.CreateRibbonTab(nomOnglet);
         }
-
     }
-    class Ruban
-    {
 
+    internal class Ruban
+    {
+        /// <summary>
+        /// The Ajouter
+        /// </summary>
+        /// <param name="application">The application<see cref="UIControlledApplication"/></param>
+        /// <param name="NomOnglet">The NomOnglet<see cref="string"/></param>
+        /// <param name="NomRuban">The NomRuban<see cref="string"/></param>
+        /// <returns>The <see cref="RibbonPanel"/></returns>
         public RibbonPanel Ajouter(UIControlledApplication application, string NomOnglet, string NomRuban)
         {
             return application.CreateRibbonPanel(NomOnglet, NomRuban);
         }
     }
-    class Bouton
-    {
-        // Les constructeurs
 
-        // Les méthodes
+    internal class Bouton
+    {
         /// <summary>
         /// Ajoute un bouton dans le complément RZB.
         /// </summary>
@@ -60,16 +62,8 @@ namespace ProjectManagement
         }
     }
 
-    class Separateur
+    internal class Separateur
     {
-        // Les champs
-
-        // Les accesseurs ou propriétés
-
-        // Les constructeurs.
-
-        // Les méthodes
-
         /// <summary>
         /// Crée un séparateur
         /// </summary>
@@ -78,15 +72,14 @@ namespace ProjectManagement
         {
             NomPanneau.AddSeparator();
         }
-
     }
-    class OutilImage
+
+    internal class OutilImage
     {
         /// <summary>
         /// Récupère une image (png, ico, jpeg, bmp) dans les ressources.
         /// </summary>
         /// <param name="nomImage"></param>
-        /// <param name="objet"></param>
         /// <returns></returns>
         public static ImageSource ImageSource(string nomImage)
         {

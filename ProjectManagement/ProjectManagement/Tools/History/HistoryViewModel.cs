@@ -41,6 +41,13 @@
             PropertyGroupDescription group = new PropertyGroupDescription("type");
             collectionView.GroupDescriptions.Clear();
             collectionView.GroupDescriptions.Add(group);
+
+            collectionView.SortDescriptions.Clear();
+            collectionView.SortDescriptions.Add(new System.ComponentModel.SortDescription("type", System.ComponentModel.ListSortDirection.Ascending));
+            collectionView.SortDescriptions.Add(new System.ComponentModel.SortDescription("date", System.ComponentModel.ListSortDirection.Descending));
+          
+
+
         }
     }
 }

@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows;
 
     public class CompareProvider
     {
@@ -116,6 +117,7 @@
 
             await Task.WhenAll(task1, task2, task3);
             ProjectProvider.Instance.Update();
+            MessageBox.Show("Your model is updated on cloud.");
         }
 
         /// <summary>

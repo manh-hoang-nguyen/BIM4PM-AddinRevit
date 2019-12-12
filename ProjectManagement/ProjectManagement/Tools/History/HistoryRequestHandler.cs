@@ -10,7 +10,6 @@
     using RestSharp;
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Globalization;
     using System.Linq;
     using System.Threading;
@@ -35,7 +34,7 @@
                     case HistoryRequestId.Refresh:
                         Refresh(app);
                         break;
-                    case HistoryRequestId.None: 
+                    case HistoryRequestId.None:
                         break;
                 }
             }
@@ -76,8 +75,8 @@
                     string guid = e.UniqueId;
                     RestRequest req = new RestRequest(route.historyUrl(guid), Method.GET);
                     req.AddHeader("Content-Type", "application/json");
-                    req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token); 
-                    IRestResponse<Models.History> res = Route.Client.Execute<Models.History>(req); 
+                    req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+                    IRestResponse<Models.History> res = Route.Client.Execute<Models.History>(req);
                     string format = "0000-12-31T23:50:39.000Z";
                     var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
                     HistoryResParent revitElements = JsonConvert.DeserializeObject<HistoryResParent>(res.Content, dateTimeConverter);
@@ -87,7 +86,7 @@
                     {
                         HistoryModel.HistoriesByTypeChange.Add(item);
                     }
-                   
+
                     break;
                 default:
                     MessageBox.Show("You have to select only an element");
@@ -115,7 +114,7 @@
                     {
                         date = date,
                         userName = userName,
-                        type = TypeChange.FirstCommit
+                        type = TypeChange.CreatedOn
                     };
                     hisByChange.Add(firstCommit);
                     continue;
@@ -163,20 +162,12 @@
     public class HistoryRequest
     {
         private int _request = (int)HistoryRequestId.None;
-
-        /// <summary>
-        /// The Take
-        /// </summary>
-        /// <returns>The <see cref="RequestId"/></returns>
+         
         public HistoryRequestId Take()
         {
             return (HistoryRequestId)Interlocked.Exchange(ref _request, (int)HistoryRequestId.None);
         }
-
-        /// <summary>
-        /// The Make
-        /// </summary>
-        /// <param name="request">The request<see cref="RequestId"/></param>
+ 
         public void Make(HistoryRequestId request)
         {
             Interlocked.Exchange(ref _request, (int)request);

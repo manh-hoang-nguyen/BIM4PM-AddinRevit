@@ -9,12 +9,14 @@ namespace ProjectManagement
     using ProjectManagement.FormInterface;
     using ProjectManagement.Models;
     using ProjectManagement.Tools;
+    using ProjectManagement.Tools.Discussion;
     using ProjectManagement.Tools.History;
     using ProjectManagement.Tools.Project;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Windows;
 
     internal class App : IExternalApplication
     {
@@ -27,6 +29,10 @@ namespace ProjectManagement
         public static HistoryRequestHandler HistoryHandler { get; set; }
 
         public static ExternalEvent HistoryEvent { get; set; }
+
+        public static DiscussionRequestHandler DiscussionHandler { get; set; }
+
+        public static ExternalEvent DiscussionEvent { get; set; }
 
         public static PaletteMainView PaletteWindow { get; set; }
 
@@ -59,6 +65,8 @@ namespace ProjectManagement
             ModelEvent = ExternalEvent.Create(ModelHandler);
             HistoryHandler = new HistoryRequestHandler();
             HistoryEvent = ExternalEvent.Create(HistoryHandler);
+            DiscussionHandler = new DiscussionRequestHandler();
+            DiscussionEvent = ExternalEvent.Create(DiscussionHandler);
 
             PaletteUtilities.RegisterPalette(uicapp);
 
@@ -141,12 +149,15 @@ namespace ProjectManagement
             uicapp.ControlledApplication.DocumentOpened += OnDocumentOpened;
             uicapp.ControlledApplication.DocumentCreated += OnDocumentCreated;
             uicapp.ControlledApplication.DocumentClosing += OnDocumentClosing;
+            uicapp.ControlledApplication.DocumentClosed += OnDocumentClosed;
             uicapp.ControlledApplication.DocumentSaved += OnDocumentSave;
             uicapp.ControlledApplication.DocumentSynchronizedWithCentral += OnDocumentSynchronized;
             uicapp.ControlledApplication.DocumentChanged += OnDocumentChanged;
 
             return Result.Succeeded;
         }
+
+       
 
         /// <summary>
         /// The OnDocumentChanged: Update list revit element in model
@@ -276,13 +287,22 @@ namespace ProjectManagement
         /// <param name="source">The source<see cref="object"/></param>
         /// <param name="args">The args<see cref="DocumentClosingEventArgs"/></param>
         private static void OnDocumentClosing(object source, DocumentClosingEventArgs args)
-        {
+        {  
+            //if (args.Document.Title == ModelProvider.Instance.CurrentModel.Title) AuthProvider.Instance.Disconnect();
+            if (ModelProvider.Instance.CurrentModel != null && args.Document.Title == ModelProvider.Instance.CurrentModel.Title)
+            {
+                MessageBox.Show("Please DISCONNECT to project before closing the model.");
+                args.Cancel();
+                return;
+            }
             var docToRemove = ModelProvider.Instance.Models.Where(x => x.Title == args.Document.Title);
             if (docToRemove != null) ModelProvider.Instance.Models.Remove(docToRemove.FirstOrDefault());
-
-            if (args.Document.Title == ModelProvider.Instance.CurrentModel.Title) AuthProvider.Instance.Disconnect();
         }
-
+        private void OnDocumentClosed(object sender, DocumentClosedEventArgs args)
+        {
+             
+           
+        }
         /// <summary>
         /// The DockablePanelActivated
         /// </summary>
@@ -304,6 +324,11 @@ namespace ProjectManagement
         {
             a.ControlledApplication.DocumentOpened -= OnDocumentOpened;
             a.ControlledApplication.DocumentCreated -= OnDocumentCreated;
+            a.ControlledApplication.DocumentClosing -= OnDocumentClosing;
+            a.ControlledApplication.DocumentClosed -= OnDocumentClosed; 
+            a.ControlledApplication.DocumentSaved -= OnDocumentSave;
+            a.ControlledApplication.DocumentSynchronizedWithCentral -= OnDocumentSynchronized;
+            a.ControlledApplication.DocumentChanged -= OnDocumentChanged;
             return Result.Succeeded;
         }
 

@@ -77,8 +77,8 @@ namespace ProjectManagement.FormInterface
             ChildComment comment = new ChildComment
             {
                 //authorName = UserData.user.userName,
-                comment = txbComment.Text,
-                datetime = DateTime.Now
+                text = txbComment.Text,
+                createdAt = DateTime.Now
             };
             string json = "{\"guid\":\"" + _guid + "\",\"auteur\":\"" + auteur + "\",\"comment\":\"" + txbComment.Text + "\"}";
             ChildComment com = CommentController.PostComment(json,UserData.authentication.token);
@@ -91,16 +91,16 @@ namespace ProjectManagement.FormInterface
             int i = 0;
             foreach (Comment item in HistoryList.CommentInDatabase)
             {
-                if (item.guid == Guid)
-                {
+                //if (item.guid == Guid)
+                //{
                      
-                    //item.comments[item.comments.Length] = com;
-                    item.comments.Add(com);
-                    HistoryList.CommentInDatabase.Insert(i, item);
-                    HistoryList.CommentInDatabase.RemoveAt(i+1);
-                    break;
-                }
-                i++;
+                //    //item.comments[item.comments.Length] = com;
+                //    item.comments.Add(com);
+                //    HistoryList.CommentInDatabase.Insert(i, item);
+                //    HistoryList.CommentInDatabase.RemoveAt(i+1);
+                //    break;
+                //}
+                //i++;
             }
             comment_element.Height = PanelHistory.Height/2.5;
             txbComment.Text = "";
@@ -127,9 +127,9 @@ namespace ProjectManagement.FormInterface
                         {
                             Guid = doc.GetElement(ids.ElementAt(0)).UniqueId;
 
-                            Comment xx = (from e1 in HistoryList.CommentInDatabase
-                                          where e1.guid == Guid
-                                          select e1).FirstOrDefault();
+                            //Comment xx = (from e1 in HistoryList.CommentInDatabase
+                            //              where e1.guid == Guid
+                            //              select e1).FirstOrDefault();
 
                             Historyx x = (from e1 in HistoryList.HistoryInDatabase
                                           where e1.guid == Guid
@@ -138,10 +138,10 @@ namespace ProjectManagement.FormInterface
                             {
                                 modifications.Add(x.modifications[x.modifications.Count() - i]);
                             }
-                            for (int i = 1; i <= xx.comments.Count(); i++)
-                            {
-                                comments.Add(xx.comments[xx.comments.Count() - i]);
-                            }
+                            //for (int i = 1; i <= xx.comments.Count(); i++)
+                            //{
+                            //    comments.Add(xx.comments[xx.comments.Count() - i]);
+                            //}
                             //comments = new ObservableCollection<ChildComment>(tmp_comments.Reverse());
                         }
                         catch

@@ -36,10 +36,27 @@ namespace ProjectManagement.Commun
 
             return url;
         }
-        public string commentUrl(string guid)
+       
+    }
+    public class CommentRoute
+    {
+        public string projectId;
+
+        public CommentRoute(string projectId)
+        {
+            this.projectId = projectId;
+        }
+        public string url(string guid)
         {
 
             string url = "/api/v1/projects/" + projectId + "/comments/guid/" + guid;
+
+            return url;
+        }
+        public string updateUrl(string guid, string id)
+        {
+
+            string url = "/api/v1/projects/" + projectId + "/comments/" + id + "/guid/" + guid;
 
             return url;
         }
@@ -52,7 +69,20 @@ namespace ProjectManagement.Commun
         {
             this.projectId = projectId;
         }
+        public string url(string guid)
+        {
 
+            string url = "/api/v1/projects/" + projectId + "/topics/guid/" + guid;
+
+            return url;
+        }
+        public string updateUrl(string guid, string id)
+        {
+
+            string url = "/api/v1/projects/" + projectId + "/topics/" + id + "/guid/" + guid;
+
+            return url;
+        }
     }
 
 }

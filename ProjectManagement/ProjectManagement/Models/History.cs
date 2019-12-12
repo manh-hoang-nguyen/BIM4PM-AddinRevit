@@ -25,18 +25,6 @@ namespace ProjectManagement.Models
         public DateTime datetime { get; set; }
     }
 
-    public class ChildComment
-    {
-        public string _id { get; set; }
-        public string authorId { get; set; }
-        public string authorName { get; set; }
-        public string comment { get; set; }
-        public DateTime datetime { get; set; }
-    }
-    public class Comment
-    {
-        public string guid { get; set; }
-        public List<ChildComment> comments { get; set; }
-        
-    }
+   
+  
 }

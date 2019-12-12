@@ -30,7 +30,7 @@ namespace ProjectManagement.FormInterface
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
-            string sent= comment.Text;
+            
             string[] stringArray = comment.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             string ddd = "";
             int count = stringArray.Length;

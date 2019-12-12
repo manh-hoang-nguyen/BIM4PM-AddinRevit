@@ -63,14 +63,14 @@
                 Command="{Binding Authenticated}"
                 CommandParameter="{Binding ElementName=Win}"
                 Content="OK"
-                Style="{StaticResource MHButton}" />
+                Style="{StaticResource MHButton1}" />
         </StackPanel>
         <WrapPanel
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Visibility="{Binding VisibilityNotAuthenticated, FallbackValue=Hidden}">
 
-            <TextBlock HorizontalAlignment="Center" Text="Emai or password is not correct" />
+            <TextBlock HorizontalAlignment="Center" Text="Some errors occur..." />
         </WrapPanel>
         <StackPanel
             Grid.Row="1"
@@ -81,7 +81,7 @@
                 Command="{Binding WindowLoaded}"
                 CommandParameter="{Binding ElementName=Win}"
                 Content="Reconnect"
-                Style="{StaticResource MHButton}" />
+                Style="{StaticResource MHButton1}" />
             <TextBlock
                 VerticalAlignment="Bottom"
                 FontSize="14"
@@ -90,7 +90,7 @@
                 Command="{Binding Cancel}"
                 CommandParameter="{Binding ElementName=Win}"
                 Content="Cancel"
-                Style="{StaticResource MHButton}" />
+                Style="{StaticResource MHButton1}" />
         </StackPanel>
         <StackPanel
             Name="VisiblityLoginWindow"
@@ -146,12 +146,12 @@
                 Command="{Binding Login}"
                 CommandParameter="{Binding ElementName=Win}"
                 Content="Login"
-                Style="{StaticResource MHButton}" />
+                Style="{StaticResource MHButton1}" />
             <Button
                 Command="{Binding Cancel}"
                 CommandParameter="{Binding ElementName=Win}"
                 Content="Cancel"
-                Style="{StaticResource MHButton}" />
+                Style="{StaticResource MHButton1}" />
         </StackPanel>
         <progressBar:CircularProgressBar Grid.RowSpan="2" Visibility="{Binding VisibilityProgressBar, FallbackValue=Hidden}" />
 
