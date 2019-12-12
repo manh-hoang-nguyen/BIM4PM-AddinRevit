@@ -96,7 +96,7 @@
         /// </summary>
         /// <param name="e">The e<see cref="Element"/></param>
         /// <returns>The <see cref="string"/></returns>
-        public static string SerializeSharedParameters(Element e)
+        public static string SerializeSharedParameters(Element e, Document doc)
         {
             string parameters = "";
             IList<Parameter> paraList = e.GetOrderedParameters();
@@ -106,8 +106,12 @@
 
                 if (para.IsShared == true)
                 {
-
-                    parameters += string.Format("{0}:{1}={2}", para.Id, para.Definition.Name, ParameterToString(para)) + ";";
+                    SharedParameterElement sharedParameter = doc.GetElement(para.Id) as SharedParameterElement;
+                    if (sharedParameter.GetDefinition().Visible == true)
+                    {
+                        parameters += string.Format("{0}:{1}={2}", para.Id, para.Definition.Name, ParameterToString(para)) + ";";
+                    }
+                  
                 }
             }
 

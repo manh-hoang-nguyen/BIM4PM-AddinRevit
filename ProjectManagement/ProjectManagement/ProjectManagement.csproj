@@ -327,6 +327,7 @@
     <Compile Include="Utils\RevitUtils\ElementUtils.cs" />
     <Compile Include="Utils\RevitUtils\FilterUtils.cs" />
     <Compile Include="Utils\RevitUtils\ParameterUtils.cs" />
+    <Compile Include="Utils\RevitUtils\ScheduleUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ProjectManagement.addin" />

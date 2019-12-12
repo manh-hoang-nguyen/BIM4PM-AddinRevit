@@ -67,7 +67,7 @@
             switch (selectedIds.Count)
             {
                 case 0:
-                    MessageBox.Show("You have to select an element");
+                    MessageBox.Show("Please select an element");
                     break;
                 case 1:
                     RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
@@ -89,7 +89,7 @@
 
                     break;
                 default:
-                    MessageBox.Show("You have to select only an element");
+                    MessageBox.Show("Please select ONLY an element");
                     break;
             }
         }

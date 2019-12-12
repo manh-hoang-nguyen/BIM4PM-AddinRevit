@@ -103,22 +103,26 @@
 
         public RevitElement(Element element)
         {
-            project = ProjectProvider.Instance.CurrentProject._id;
-            version = ProjectProvider.Instance.CurrentVersion._id;
-            guid = element.UniqueId;
-            name = element.Name;
-            elementId = element.Id.IntegerValue.ToString();
-            category = element.Category.Name;
-            level = ElementUtils.GetElementLevel(ModelProvider.Instance.Levels, element);
-            parameters = ParameterUtils.SerializeRevitParameters(element);
-            geometryParameters = ParameterUtils.SerializeGeoParameters(element);
-            sharedParameters = ParameterUtils.SerializeSharedParameters(element);
-            worksetId = element.WorksetId.ToString();
-            location = ElementUtils.SerializeLocation(element);
-            boundingBox = ElementUtils.SerializeBoundingBox(element.get_BoundingBox(null));
-            centroid = ElementUtils.SerializePoint(ElementUtils.GetCentroid(element));
-            volume = ElementUtils.GetAllSolidVolume(element).ToString();
-            typeId = element.GetTypeId().ToString();
+            if (ModelProvider.Instance.CurrentModel !=null && ProjectProvider.Instance.CurrentProject != null)
+            {
+                project = ProjectProvider.Instance.CurrentProject._id;
+                version = ProjectProvider.Instance.CurrentVersion._id;
+                guid = element.UniqueId;
+                name = element.Name;
+                elementId = element.Id.IntegerValue.ToString();
+                category = element.Category.Name;
+                level = ElementUtils.GetElementLevel(ModelProvider.Instance.Levels, element);
+                parameters = ParameterUtils.SerializeRevitParameters(element);
+                geometryParameters = ParameterUtils.SerializeGeoParameters(element); 
+                sharedParameters = ParameterUtils.SerializeSharedParameters(element, ModelProvider.Instance.CurrentModel);
+                worksetId = element.WorksetId.ToString();
+                location = ElementUtils.SerializeLocation(element);
+                boundingBox = ElementUtils.SerializeBoundingBox(element.get_BoundingBox(null));
+                centroid = ElementUtils.SerializePoint(ElementUtils.GetCentroid(element));
+                volume = ElementUtils.GetAllSolidVolume(element).ToString();
+                typeId = element.GetTypeId().ToString();
+            }
+          
         }
 
         public RevitElement(RevitElement project, RevitElement model, List<History> history)

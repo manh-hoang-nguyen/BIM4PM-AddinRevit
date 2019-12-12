@@ -107,6 +107,11 @@
                 VersionRes Version = JsonConvert.DeserializeObject<VersionRes>(res.Content);
                 Versions = Version.data[0].versions;
 
+                if(Versions == null)
+                {
+                    MessageBox.Show("Please create a version of project.");
+                    return;
+                }
                 CurrentVersion = Versions[Versions.Count - 1];
             }
         }

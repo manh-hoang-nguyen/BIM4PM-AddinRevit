@@ -33,7 +33,8 @@
             IRestResponse res = Route.Client.Execute(req);
             if (res.StatusCode.ToString() == "OK")
             {
-                MessageBox.Show("Success", "Operation is finished");
+                MessageBox.Show("Success", "Operation is finished. Please reconnect to project!");
+                AuthProvider.Instance.Disconnect();
                 return;
             }
 

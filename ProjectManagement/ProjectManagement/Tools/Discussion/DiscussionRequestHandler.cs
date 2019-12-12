@@ -56,7 +56,7 @@ namespace ProjectManagement.Tools.Discussion
             switch (selectedIds.Count)
             {
                 case 0:
-                    MessageBox.Show("You have to select an element");
+                    MessageBox.Show("Please select an element");
                     break;
                 case 1:
                    
@@ -67,7 +67,7 @@ namespace ProjectManagement.Tools.Discussion
                     DiscussionModel.GetComment();
                     break;
                 default:
-                    MessageBox.Show("You have to select only an element");
+                    MessageBox.Show("Please select ONLY an element");
                     break;
             }
         }
