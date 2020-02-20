@@ -68,21 +68,34 @@
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
             IRestResponse res = Route.Client.Execute(req);
-            string format = "0000-12-31T23:50:39.000Z";
-            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
-            CommentRes commentRes = JsonConvert.DeserializeObject<CommentRes>(res.Content, dateTimeConverter);
-
-            if (commentRes.data != null)
+            if (res.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                ObservableCollection<Comment> tmp = new ObservableCollection<Comment>();
-                foreach (Comment comment in commentRes.data.comments)
+                MessageBox.Show("No comment on this element.");
+                return;
+            }
+            if(res.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+
+                string format = "0000-12-31T23:50:39.000Z";
+                var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
+                CommentRes commentRes = JsonConvert.DeserializeObject<CommentRes>(res.Content, dateTimeConverter);
+
+                if (commentRes.data != null)
                 {
-                    tmp.Add(comment);
+                    ObservableCollection<Comment> tmp = new ObservableCollection<Comment>();
+                    foreach (Comment comment in commentRes.data.comments)
+                    {
+                        tmp.Add(comment);
+                    }
+                    for (int i = 1; i <= tmp.Count(); i++)
+                    {
+                        DiscussionProvider.Instance.Comments.Add(tmp[tmp.Count() - i]);
+                    }
                 }
-                for (int i = 1; i <= tmp.Count(); i++)
-                {
-                    DiscussionProvider.Instance.Comments.Add(tmp[tmp.Count() - i]);
-                }
+            }
+            else
+            {
+                MessageBox.Show("Some errors on getting comments of element");
             }
         }
     }

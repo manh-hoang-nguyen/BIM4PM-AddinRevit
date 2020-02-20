@@ -1,22 +1,21 @@
-﻿using ProjectManagement.Commun;
-using ProjectManagement.Controllers.Utils;
-using ProjectManagement.Models;
-using ProjectManagement.Routes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
-using System.Windows;
-using Version = ProjectManagement.Models.Version;
-
-namespace ProjectManagement.Controllers
+﻿namespace ProjectManagement.Controllers
 {
-   public class VersionController
+    using ProjectManagement.Commun;
+    using ProjectManagement.Controllers.Utils;
+    using ProjectManagement.Routes;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Web.Script.Serialization;
+    using System.Windows;
+    using Version = ProjectManagement.Models.Version;
+
+    public class VersionController
     {
+        /// <summary>
+        /// The GetVersion
+        /// </summary>
+        /// <returns>The <see cref="ObservableCollection{Version}"/></returns>
         public static List<Version> GetVersion()
         {
             string json;

@@ -117,9 +117,16 @@
 
             await Task.WhenAll(task1, task2, task3);
             ProjectProvider.Instance.Update();
-            MessageBox.Show("Your model is updated on cloud.");
+            MessageBox.Show("Sucess! Your model is updated on cloud.If your data is too big, our server can take a while to process");
         }
 
+        public async void FirstCommit()
+        {
+
+            Task task = NewElementAsync(); 
+            await Task.WhenAll(task);
+            MessageBox.Show("Sucess! Your model is sent to cloud.If your data is too big, our server can take a while to process");
+        }
         /// <summary>
         /// The ModifiedElementAsync
         /// </summary>

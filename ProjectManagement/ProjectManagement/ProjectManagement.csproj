@@ -29,7 +29,7 @@
     <StartAction>Program</StartAction>
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2019\Revit.exe</StartProgram>
     <LangVersion>7.1</LangVersion>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -165,7 +165,6 @@
     <Compile Include="CmdRevit\CmdSendDeletedElement.cs" />
     <Compile Include="CmdRevit\CmdSynchronization.cs" />
     <Compile Include="CmdRevit\CmdTestProgressBar.cs" />
-    <Compile Include="CmdRevit\Utils\AvailabilityButton.cs" />
     <Compile Include="CmdRevit\Utils\Compare.cs" />
     <Compile Include="CmdRevit\Utils\PanelAvailability.cs" />
     <Compile Include="Commun\AuthProvider.cs" />

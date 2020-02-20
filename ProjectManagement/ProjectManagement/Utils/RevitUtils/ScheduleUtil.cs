@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ProjectManagement.Utils.RevitUtils
 {
-   public class ScheduleUtil
+   public static class ScheduleUtil
     {
-        class ScheduleDataParser
+      public  class ScheduleDataParser
         {
             /// <summary>
             /// Default schedule data file field delimiter.
@@ -48,7 +48,7 @@ namespace ProjectManagement.Utils.RevitUtils
             public ScheduleDataParser(string filename)
             {
                 StreamReader stream = File.OpenText(filename);
-
+                
                 string line;
                 string[] a;
 
@@ -93,6 +93,7 @@ namespace ProjectManagement.Utils.RevitUtils
                     DataRow dr = _table.LoadDataRow(a, true);
                 }
                 _table.EndLoadData();
+                stream.Close();
             }
         }
     }

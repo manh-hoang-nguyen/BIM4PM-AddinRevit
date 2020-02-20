@@ -4,21 +4,27 @@
     using GalaSoft.MvvmLight.Command;
     using ProjectManagement.Commun;
     using ProjectManagement.Models;
-    using System;
     using System.Collections.ObjectModel;
     using System.Windows;
 
     public class SyncViewModel : ViewModelBase
     {
         public RelayCommand<SyncView> WindowLoaded { get; set; }
+
         public RelayCommand<SyncView> FirstCommit { get; set; }
+
         public RelayCommand<SyncView> Synchronize { get; set; }
+
         public RelayCommand<SyncView> MemberDoubleClick { get; set; }
+
         public RelayCommand<SyncView> MemberToMailDoubleClick { get; set; }
+
         public RelayCommand<SyncView> MailNotification { get; set; }
+
         public SyncModel Model { get; set; }
 
         public ObservableCollection<Member> AllMembers { get; set; } = new ObservableCollection<Member>();
+
         public ObservableCollection<Member> MembersToMail { get; set; } = new ObservableCollection<Member>();
 
         public SyncViewModel()
@@ -32,9 +38,13 @@
             MailNotification = new RelayCommand<SyncView>(OnMailNotification);
         }
 
+        /// <summary>
+        /// The OnMailNotification
+        /// </summary>
+        /// <param name="view">The view<see cref="SyncView"/></param>
         private void OnMailNotification(SyncView view)
         {
-            if (view.ckbMail.IsChecked== true)
+            if (view.ckbMail.IsChecked == true)
             {
                 view.MailPanel.Visibility = Visibility.Visible;
             }
@@ -44,31 +54,46 @@
             }
         }
 
+        /// <summary>
+        /// The OnMemberToMailDoubleClick
+        /// </summary>
+        /// <param name="view">The view<see cref="SyncView"/></param>
         private void OnMemberToMailDoubleClick(SyncView view)
         {
-          
+
             Member member = view.MembersToMail.SelectedItem as Member;
             if (member == null) return;
             AllMembers.Add(member);
             MembersToMail.Remove(member);
         }
 
+        /// <summary>
+        /// The OnMemberDoubleClick
+        /// </summary>
+        /// <param name="view">The view<see cref="SyncView"/></param>
         private void OnMemberDoubleClick(SyncView view)
         {
-            
-            Member member= view.Members.SelectedItem as Member;
+
+            Member member = view.Members.SelectedItem as Member;
             if (member == null) return;
             AllMembers.Remove(member);
             MembersToMail.Add(member);
         }
 
+        /// <summary>
+        /// The OnSynchronize
+        /// </summary>
+        /// <param name="view">The view<see cref="SyncView"/></param>
         private void OnSynchronize(SyncView view)
         {
             view.Win.Close();
             Model.Synchronize();
-         
         }
 
+        /// <summary>
+        /// The OnFirstCommit
+        /// </summary>
+        /// <param name="view">The view<see cref="SyncView"/></param>
         private void OnFirstCommit(SyncView view)
         {
             view.Win.Close();
@@ -88,7 +113,7 @@
                 view.Win.Close();
             }
             else
-            { 
+            {
                 if (ModelProvider.Instance.DicRevitElements.Count == 0)
                 {
                     MessageBox.Show("No element in models");
@@ -101,7 +126,7 @@
                         MessageBox.Show("You do not have data in cloud yet. Do your first commit.");
                         view.Synchonize.IsEnabled = false;
                     }
-                   
+
                     else
                         view.FirstCommit.IsEnabled = false;
 
@@ -116,9 +141,6 @@
                 view.NumOfNew.Text = CompareProvider.Instance.New.Count.ToString();
                 view.NumOfDeleted.Text = CompareProvider.Instance.Deleted.Count.ToString();
             }
-
-           
-
         }
     }
 }

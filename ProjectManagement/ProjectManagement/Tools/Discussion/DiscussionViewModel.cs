@@ -27,6 +27,7 @@
         public RelayCommand<DiscussionView> GetTopics { get; set; }
 
         public RelayCommand<DiscussionView> TxbCommentChange { get; set; }
+
         public DiscussionModel Model { get; set; }
 
         private bool _btnSendIsEnabled { get; set; }

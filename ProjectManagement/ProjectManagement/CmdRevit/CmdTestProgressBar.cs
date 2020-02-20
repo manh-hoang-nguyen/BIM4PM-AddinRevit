@@ -5,11 +5,10 @@
     using Autodesk.Revit.UI;
     using Newtonsoft.Json;
     using ProjectManagement.Commun;
-    using ProjectManagement.Tools.History;
-    using ProjectManagement.Tools.Synchronize;
     using RestSharp;
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.IO;
 
     [Transaction(TransactionMode.ReadOnly)]
@@ -82,25 +81,80 @@
                  throw new Exception(messagex);
              }
            */
+ 
+            FilteredElementCollector col
+            = new FilteredElementCollector(doc)
+            .OfClass(typeof(ViewSchedule));
 
-            //CompareProvider.Instance.Execute();
-            //FilteredElementCollector col
-            //= new FilteredElementCollector(doc)
-            //.OfClass(typeof(ViewSchedule));
+            ViewScheduleExportOptions opt = new ViewScheduleExportOptions();
+            string path = Path.GetTempPath();
+            string name = "";
+            string namex="";
+            foreach (ViewSchedule vs in col)
+            {
+                name = vs.Name +".txt";
+                namex = vs.Name;
+                vs.Export(path, name, opt);
+                break;
+            }
 
-            //ViewScheduleExportOptions opt
-            //  = new ViewScheduleExportOptions();
+            string filename = Path.Combine(path,name);
+            ProjectManagement.Utils.RevitUtils.ScheduleUtil.ScheduleDataParser parser = new ProjectManagement.Utils.RevitUtils.ScheduleUtil.ScheduleDataParser(filename);
+            var table = parser.Table;
 
-            //foreach (ViewSchedule vs in col)
-            //{
-            // var x=   vs.Parameters;
-            //  var y=  vs.Name;
-            //}
+            
+          
+            List<string> list = new List<string>();
+            for (int i = 1; i < parser.Table.Rows.Count; i++)
+            {
+                string itemChild = "";
+                string item = "";
+                for (int j = 0; j < parser.Table.Columns.Count; j++)
+                {
+                    if(j != parser.Table.Columns.Count - 1)
+                    {
+                        itemChild += "\"" + parser.Table.Columns[j].ColumnName + "\":\"" + parser.Table.Rows[i][j] + "\",";
+                    }
+                    else
+                    {
+                        itemChild += "\"" + parser.Table.Columns[j].ColumnName + "\":\"" + parser.Table.Rows[i][j] + "\"";
+                    }
+                }
+                item = "{" + itemChild + "}";
+                list.Add(item);
+            }
+            string bodychild="[";
+            for (int i = 0; i < list.Count; i++)
+            {
+                if(i != list.Count - 1)
+                {
+                    bodychild += list[i] +",";
+                }
+                else
+                {
+                    bodychild += list[i] + "]";
+                }
+            }
+            string body ="{\"name\":\"" + namex +"\",\""+"isShared\":\"true\"," + "\"data\":"   + bodychild + "}";
 
-            getScheduleData(doc);
+            string url = string.Format("{0}/{1}/schedules", Route.UserProjects, ProjectProvider.Instance.CurrentProject._id);
+            RestRequest req = new RestRequest(url, Method.POST);
+            req.AddHeader("Content-Type", "application/json");
+            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+            req.RequestFormat = DataFormat.Json;
+            req.AddJsonBody(body);
+            IRestResponse res = Route.Client.Execute(req);
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
+            File.Delete(@filename);
+
             return Result.Succeeded;
         }
 
+        /// <summary>
+        /// The getScheduleData
+        /// </summary>
+        /// <param name="doc">The doc<see cref="Document"/></param>
         public void getScheduleData(Document doc)
         {
             FilteredElementCollector collector = new FilteredElementCollector(doc);
@@ -141,6 +195,11 @@
             }
         }
 
+        /// <summary>
+        /// The DataMapping
+        /// </summary>
+        /// <param name="keyData">The keyData<see cref="List{string}"/></param>
+        /// <param name="valueData">The valueData<see cref="List{List{string}}"/></param>
         public static void DataMapping(List<string> keyData, List<List<string>> valueData)
         {
             List<Dictionary<string, string>> items = new List<Dictionary<string, string>>();

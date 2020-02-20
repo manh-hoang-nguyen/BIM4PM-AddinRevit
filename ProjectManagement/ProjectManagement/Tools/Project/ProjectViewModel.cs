@@ -56,7 +56,7 @@
             get => _versions; set { _versions = value; RaisePropertyChanged(); }
         }
 
-        private List<Models.Version> _versions;
+        private List<Models.Version> _versions; 
 
         private User _user;
 

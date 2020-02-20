@@ -70,7 +70,7 @@ namespace ProjectManagement
 
             PaletteUtilities.RegisterPalette(uicapp);
 
-            
+
 
             _uicapp = uicapp;
 
@@ -78,7 +78,7 @@ namespace ProjectManagement
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
             /************************************Création de l'onglet ***********************************************/
-            string nomOnglet = "BIMNG-Project Management";
+            string nomOnglet = "Manh Hoang";
             Onglet onglet = new Onglet();
             onglet.Ajouter(uicapp, nomOnglet);
             Bouton button = new Bouton();
@@ -96,52 +96,57 @@ namespace ProjectManagement
             rib_panelProprety.Visible = false;
             //*********************************
 
-            PushButtonData data = new PushButtonData("Connecter", "Login", thisAssemblyPath, "ProjectManagement.CmdRevit.CmdLogin");
+            PushButtonData login = new PushButtonData("Connecter", "Login", thisAssemblyPath, "ProjectManagement.CmdRevit.CmdLogin");
+            login.AvailabilityClassName = "ProjectManagement.AvailabilityButtonLogin";
+            _button = rbAuth.AddItem(login);
 
-            data.AvailabilityClassName = "ProjectManagement.CmdRevit.Utils.AvailabilityButton";
+            rbAuth.AddSeparator();
 
-            _button = rbAuth.AddItem(data);
+            PushButtonData logout = new PushButtonData("Logout", "Logout", thisAssemblyPath, "ProjectManagement.CmdRevit.CmdLogout");
+            logout.AvailabilityClassName = "ProjectManagement.AvailabilityButtonLogout";
+            rbAuth.AddItem(logout);
+
             /************************************Création de bouton Extraction de données***********************************************/
 
-            string logo = null;
-            string commentaireBouton = "Get Data";
+            //string logo = null;
+            //string commentaireBouton = "Get Data";
 
 
             //************* Panel Authen***********
 
-            rbAuth.AddSeparator();
-            button.Ajouter(rbAuth, "Logout", logo, "ProjectManagement.CmdRevit.CmdLogout", thisAssemblyPath, "Log out of server");
-            button.Ajouter(rbAuth, "progessbar", logo, "ProjectManagement.CmdRevit.CmdTestProgressBar", thisAssemblyPath, "");
-            //*********** Panel Verification*****************
-            button.Ajouter(rbVerification, "Verif Model", logo, "ProjectManagement.CmdRevit.CmdCheckModel", thisAssemblyPath, "Vérifier si model est à jour sur cloud");
-            rbVerification.AddSeparator();
-            button.Ajouter(rbVerification, "Update", logo, "ProjectManagement.CmdRevit.CmdUpdate", thisAssemblyPath, "Mettre à jour data in cloud");
 
 
-            //**************Panel Database******************
-            //button.Ajouter(rbDatabase, "Get Data", logo, "ProjectManagement.CmdRevit.CmdGetData", thisAssemblyPath, commentaireBouton);
+            //button.Ajouter(rbAuth, "progessbar", logo, "ProjectManagement.CmdRevit.CmdTestProgressBar", thisAssemblyPath, "");
+            ////*********** Panel Verification*****************
+            //button.Ajouter(rbVerification, "Verif Model", logo, "ProjectManagement.CmdRevit.CmdCheckModel", thisAssemblyPath, "Vérifier si model est à jour sur cloud");
+            //rbVerification.AddSeparator();
+            //button.Ajouter(rbVerification, "Update", logo, "ProjectManagement.CmdRevit.CmdUpdate", thisAssemblyPath, "Mettre à jour data in cloud");
+
+
+            ////**************Panel Database******************
+            ////button.Ajouter(rbDatabase, "Get Data", logo, "ProjectManagement.CmdRevit.CmdGetData", thisAssemblyPath, commentaireBouton);
+            ////rbDatabase.AddSeparator();
+            //button.Ajouter(rbDatabase, "Synchronization", logo, "ProjectManagement.CmdRevit.CmdSynchronization", thisAssemblyPath, commentaireBouton);
             //rbDatabase.AddSeparator();
-            button.Ajouter(rbDatabase, "Synchronization", logo, "ProjectManagement.CmdRevit.CmdSynchronization", thisAssemblyPath, commentaireBouton);
-            rbDatabase.AddSeparator();
-            button.Ajouter(rbDatabase, "Vider Database", logo, "ProjectManagement.CmdRevit.CmdDeleteData", thisAssemblyPath, commentaireBouton);
-            rbDatabase.AddSeparator();
-            button.Ajouter(rbDatabase, "Create Version", logo, "ProjectManagement.CmdRevit.CmdCreateVersion", thisAssemblyPath, commentaireBouton);
+            //button.Ajouter(rbDatabase, "Vider Database", logo, "ProjectManagement.CmdRevit.CmdDeleteData", thisAssemblyPath, commentaireBouton);
+            //rbDatabase.AddSeparator();
+            //button.Ajouter(rbDatabase, "Create Version", logo, "ProjectManagement.CmdRevit.CmdCreateVersion", thisAssemblyPath, commentaireBouton);
 
-            //************* Panel Project Management*********** 
-            button.Ajouter(ribbonPanel, "Send Data", logo, "ProjectManagement.CmdRevit.CmdSendData", thisAssemblyPath, commentaireBouton);
-            ribbonPanel.AddSeparator();
-            button.Ajouter(ribbonPanel, "DeletedElement", logo, "ProjectManagement.CmdRevit.CmdSendDeletedElement", thisAssemblyPath, commentaireBouton);
+            ////************* Panel Project Management*********** 
+            //button.Ajouter(ribbonPanel, "Send Data", logo, "ProjectManagement.CmdRevit.CmdSendData", thisAssemblyPath, commentaireBouton);
+            //ribbonPanel.AddSeparator();
+            //button.Ajouter(ribbonPanel, "DeletedElement", logo, "ProjectManagement.CmdRevit.CmdSendDeletedElement", thisAssemblyPath, commentaireBouton);
 
 
-            button.Ajouter(rbAuth, "Afficher", logo, "ProjectManagement.ShowDockableWindow", thisAssemblyPath, "Afficher pallette de propriétés");
-            Separateur.Ajouter(rib_panelProprety);
-            button.Ajouter(rib_panelProprety, "Masquer", logo, "ProjectManagement.HideDockableWindow", thisAssemblyPath, "Masquer pallette de propriétés");
+            //button.Ajouter(rbAuth, "Afficher", logo, "ProjectManagement.ShowDockableWindow", thisAssemblyPath, "Afficher pallette de propriétés");
+            //Separateur.Ajouter(rib_panelProprety);
+            //button.Ajouter(rib_panelProprety, "Masquer", logo, "ProjectManagement.HideDockableWindow", thisAssemblyPath, "Masquer pallette de propriétés");
 
-            rib_panelProprety.AddSeparator();
-            button.Ajouter(rib_panelProprety, "Modification Watcher", logo, "ProjectManagement.CmdRevit.CmdModificationWatcher", thisAssemblyPath, "Masquer pallette de propriétés");
+            //rib_panelProprety.AddSeparator();
+            //button.Ajouter(rib_panelProprety, "Modification Watcher", logo, "ProjectManagement.CmdRevit.CmdModificationWatcher", thisAssemblyPath, "Masquer pallette de propriétés");
 
 
-            DockablePanelActivated(); //Method for dockable panel
+            //DockablePanelActivated(); //Method for dockable panel
 
 
 
@@ -156,8 +161,6 @@ namespace ProjectManagement
 
             return Result.Succeeded;
         }
-
-       
 
         /// <summary>
         /// The OnDocumentChanged: Update list revit element in model
@@ -192,7 +195,7 @@ namespace ProjectManagement
 
                         else
                             ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
-                    } 
+                    }
                 }
                 foreach (ElementId id in args.GetDeletedElementIds())
                 {
@@ -287,22 +290,27 @@ namespace ProjectManagement
         /// <param name="source">The source<see cref="object"/></param>
         /// <param name="args">The args<see cref="DocumentClosingEventArgs"/></param>
         private static void OnDocumentClosing(object source, DocumentClosingEventArgs args)
-        {  
+        {
             //if (args.Document.Title == ModelProvider.Instance.CurrentModel.Title) AuthProvider.Instance.Disconnect();
             if (ModelProvider.Instance.CurrentModel != null && args.Document.Title == ModelProvider.Instance.CurrentModel.Title)
             {
-                MessageBox.Show("Please DISCONNECT to project before closing the model.");
+                TaskDialog.Show("Manh-Hoang","Please DISCONNECT to project before closing the model.");
                 args.Cancel();
                 return;
             }
             var docToRemove = ModelProvider.Instance.Models.Where(x => x.Title == args.Document.Title);
             if (docToRemove != null) ModelProvider.Instance.Models.Remove(docToRemove.FirstOrDefault());
         }
+
+        /// <summary>
+        /// The OnDocumentClosed
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="args">The args<see cref="DocumentClosedEventArgs"/></param>
         private void OnDocumentClosed(object sender, DocumentClosedEventArgs args)
         {
-             
-           
         }
+
         /// <summary>
         /// The DockablePanelActivated
         /// </summary>
@@ -325,7 +333,7 @@ namespace ProjectManagement
             a.ControlledApplication.DocumentOpened -= OnDocumentOpened;
             a.ControlledApplication.DocumentCreated -= OnDocumentCreated;
             a.ControlledApplication.DocumentClosing -= OnDocumentClosing;
-            a.ControlledApplication.DocumentClosed -= OnDocumentClosed; 
+            a.ControlledApplication.DocumentClosed -= OnDocumentClosed;
             a.ControlledApplication.DocumentSaved -= OnDocumentSave;
             a.ControlledApplication.DocumentSynchronizedWithCentral -= OnDocumentSynchronized;
             a.ControlledApplication.DocumentChanged -= OnDocumentChanged;
@@ -339,6 +347,42 @@ namespace ProjectManagement
         {
             string s = _button.ItemText;
             _button.ItemText = s.Equals("Login") ? ("Vous êtes connecté au projet" + Environment.NewLine + _projectName) : "Login";
+        }
+    }
+
+    public class AvailabilityButtonLogin : IExternalCommandAvailability
+    {
+        /// <summary>
+        /// The IsCommandAvailable
+        /// </summary>
+        /// <param name="a">The a<see cref="UIApplication"/></param>
+        /// <param name="b">The b<see cref="CategorySet"/></param>
+        /// <returns>The <see cref="bool"/></returns>
+        public bool IsCommandAvailable(UIApplication a, CategorySet b)
+        {
+            if (AuthProvider.Instance.IsAuthenticated == false)
+            {
+                return true;
+            }
+            else return false;
+        }
+    }
+
+    public class AvailabilityButtonLogout : IExternalCommandAvailability
+    {
+        /// <summary>
+        /// The IsCommandAvailable
+        /// </summary>
+        /// <param name="a">The a<see cref="UIApplication"/></param>
+        /// <param name="b">The b<see cref="CategorySet"/></param>
+        /// <returns>The <see cref="bool"/></returns>
+        public bool IsCommandAvailable(UIApplication a, CategorySet b)
+        {
+            if (AuthProvider.Instance.IsAuthenticated == false)
+            {
+                return false;
+            }
+            else return true;
         }
     }
 

@@ -61,6 +61,13 @@ namespace ProjectManagement.Tools.Discussion
                 case 1:
                    
                     Element e = doc.GetElement(selectedIds.First());
+                    if ((null != e.Category
+                          && 0 < e.Parameters.Size
+                          && (e.Category.HasMaterialQuantities)) == false)
+                    {
+                        MessageBox.Show("This element is NOT SUPPORTED by us. Sorry!");
+                        return;
+                    }
                     DiscussionProvider.Instance.RevitElement = new RevitElement();
                     DiscussionProvider.Instance.RevitElement.guid = e.UniqueId;
                     DiscussionProvider.Instance.RevitElement.elementId = e.Id.ToString();

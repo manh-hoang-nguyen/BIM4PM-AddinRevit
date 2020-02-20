@@ -34,6 +34,7 @@
         {
             get => _currentModel; set { _currentModel = value; OnPropertyChanged(); }
         }
+        public IList<Level> Levels { get; set; }
 
         public ObservableCollection<Document> Models { get; set; } = new ObservableCollection<Document>();//Dont reset Models, exception null when disconnect
 
@@ -44,7 +45,7 @@
             Levels = null;
         }
 
-        public IList<Level> Levels { get; set; }
+      
 
         public void Update()
         {

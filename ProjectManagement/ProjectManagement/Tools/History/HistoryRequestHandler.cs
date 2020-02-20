@@ -72,21 +72,44 @@
                 case 1:
                     RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
                     Element e = doc.GetElement(selectedIds.First());
-                    string guid = e.UniqueId;
+                    if ((null != e.Category
+                            && 0 < e.Parameters.Size
+                            && (e.Category.HasMaterialQuantities)) == false)
+                    {
+                        MessageBox.Show("This element is NOT SUPPORTED by us. Sorry!");
+                        return;
+                    }
+                     string guid = e.UniqueId;
                     RestRequest req = new RestRequest(route.historyUrl(guid), Method.GET);
                     req.AddHeader("Content-Type", "application/json");
                     req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
                     IRestResponse<Models.History> res = Route.Client.Execute<Models.History>(req);
-                    string format = "0000-12-31T23:50:39.000Z";
-                    var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
-                    HistoryResParent revitElements = JsonConvert.DeserializeObject<HistoryResParent>(res.Content, dateTimeConverter);
 
-                    HistoryModel.HistoriesByTypeChange.Clear();
-                    foreach (HistoryByTypeChange item in GetHistoryByType(revitElements.data.history))
+                    if(res.StatusCode == System.Net.HttpStatusCode.NotFound)
                     {
-                        HistoryModel.HistoriesByTypeChange.Add(item);
+                        MessageBox.Show("Element is not synchronized on cloud yet.");
+                        return;
+                    }
+                    if(res.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string format = "0000-12-31T23:50:39.000Z";
+                        var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
+                        HistoryResParent revitElements = JsonConvert.DeserializeObject<HistoryResParent>(res.Content, dateTimeConverter);
+
+                        HistoryModel.HistoriesByTypeChange.Clear();
+                        foreach (HistoryByTypeChange item in GetHistoryByType(revitElements.data.history))
+                        {
+                            HistoryModel.HistoriesByTypeChange.Add(item);
+                        }
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Some error on getting element history.");
+                        
                     }
 
+                  
                     break;
                 default:
                     MessageBox.Show("Please select ONLY an element");

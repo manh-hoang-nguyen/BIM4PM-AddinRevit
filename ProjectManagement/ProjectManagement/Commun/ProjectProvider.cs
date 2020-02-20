@@ -5,9 +5,11 @@
     using ProjectManagement.Models;
     using RestSharp;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Globalization;
     using System.Runtime.CompilerServices;
+    using System.Threading;
     using System.Windows;
 
     public class ProjectProvider : INotifyPropertyChanged
@@ -54,6 +56,8 @@
         /// </summary>
         public void Reset()
         {
+            ProjectMembers = null;
+            SelectedProject = null;
             CurrentProject = null;
             DicRevitElements = null;
             Versions = null;
@@ -88,16 +92,6 @@
 
             if (CurrentProject != null)
             {
-                //Get project information
-                string url0 = string.Format("{0}/{1}", Route.UserProjects, CurrentProject._id);
-                RestRequest req0 = new RestRequest(url0, Method.GET);
-                req0.AddHeader("Content-Type", "application/json");
-                req0.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-                IRestResponse res0 = Route.Client.Execute(req0);
-                SingleProjectRes project = JsonConvert.DeserializeObject<SingleProjectRes>(res0.Content);
-                SelectedProject = project.data;
-                ProjectMembers = SelectedProject.members;
-
                 string url = string.Format("{0}/{1}/versions", Route.UserProjects, CurrentProject._id);
                 RestRequest req = new RestRequest(url, Method.GET);
                 req.AddHeader("Content-Type", "application/json");
@@ -106,13 +100,27 @@
 
                 VersionRes Version = JsonConvert.DeserializeObject<VersionRes>(res.Content);
                 Versions = Version.data[0].versions;
-
-                if(Versions == null)
+                
+                if (Versions.Count == 0)
                 {
                     MessageBox.Show("Please create a version of project.");
                     return;
                 }
                 CurrentVersion = Versions[Versions.Count - 1];
+
+                Thread thread = new Thread(() =>
+                {
+                    //Get project information
+                    string url0 = string.Format("{0}/{1}", Route.UserProjects, CurrentProject._id);
+                    RestRequest req0 = new RestRequest(url0, Method.GET);
+                    req0.AddHeader("Content-Type", "application/json");
+                    req0.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+                    IRestResponse res0 = Route.Client.Execute(req0);
+                    SingleProjectRes project = JsonConvert.DeserializeObject<SingleProjectRes>(res0.Content);
+                    SelectedProject = project.data;
+                    ProjectMembers = SelectedProject.members; 
+                });
+                thread.Start();
             }
         }
 
