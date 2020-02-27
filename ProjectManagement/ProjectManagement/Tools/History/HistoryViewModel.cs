@@ -26,8 +26,7 @@
 
         private void OnRefresh(HistoryView view)
         {
-            Model.GetHistory();
-            
+            Model.GetHistory();  
         }
 
         /// <summary>
@@ -36,6 +35,7 @@
         /// <param name="view">The view<see cref="HistoryView"/></param>
         private void OnWindowLoaded(HistoryView view)
         {
+             
             view.History.ItemsSource = HistoryModel.HistoriesByTypeChange;
             CollectionView collectionView = (CollectionView)CollectionViewSource.GetDefaultView(view.History.ItemsSource);
             PropertyGroupDescription group = new PropertyGroupDescription("type");

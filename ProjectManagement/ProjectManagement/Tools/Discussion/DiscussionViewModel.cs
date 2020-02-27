@@ -70,7 +70,7 @@
         }
 
         private void OnWindowLoaded(DiscussionView view)
-        {
+        { 
             view.comments.ItemsSource = DiscussionProvider.Instance.Comments;
           
         }
