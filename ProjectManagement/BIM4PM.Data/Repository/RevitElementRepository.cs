@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BIM4PM.Data
 {
-    public class Class1
+    class RevitElementRepository
     {
     }
 }

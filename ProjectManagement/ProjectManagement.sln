@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIM4PM.Data", "BIM4PM.Data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIM4PM.Common", "BIM4PM.Common\BIM4PM.Common.csproj", "{F1CBC246-98F8-45E3-A301-57CB65F5E994}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIM4PM.Model", "BIM4PM.Model\BIM4PM.Model.csproj", "{52752596-3B00-48D8-9681-763558FF4E0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{F1CBC246-98F8-45E3-A301-57CB65F5E994}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1CBC246-98F8-45E3-A301-57CB65F5E994}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1CBC246-98F8-45E3-A301-57CB65F5E994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52752596-3B00-48D8-9681-763558FF4E0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52752596-3B00-48D8-9681-763558FF4E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52752596-3B00-48D8-9681-763558FF4E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52752596-3B00-48D8-9681-763558FF4E0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

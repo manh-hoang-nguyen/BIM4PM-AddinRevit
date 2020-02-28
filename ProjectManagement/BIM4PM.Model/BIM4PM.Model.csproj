@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B9019A62-37BD-4F63-A93E-7EEBA2475651}</ProjectGuid>
+    <ProjectGuid>{52752596-3B00-48D8-9681-763558FF4E0E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BIM4PM.Data</RootNamespace>
-    <AssemblyName>BIM4PM.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <RootNamespace>BIM4PM.Model</RootNamespace>
+    <AssemblyName>BIM4PM.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RevitAPI, Version=19.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Revit.RevitApi.x64.2019.0.0\lib\net45\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI, Version=19.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Revit.RevitApiUI.x64.2019.0.0\lib\net45\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,11 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repository\AuthenticationRepository.cs" />
-    <Compile Include="Repository\CommentRepository.cs" />
+    <Compile Include="Authentication.cs" />
+    <Compile Include="EntityBase.cs" />
+    <Compile Include="History.cs" />
+    <Compile Include="Member.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\RevitElementRepository.cs" />
-    <Compile Include="Repository\VersionRepository.cs" />
+    <Compile Include="RevitElement.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Version.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
