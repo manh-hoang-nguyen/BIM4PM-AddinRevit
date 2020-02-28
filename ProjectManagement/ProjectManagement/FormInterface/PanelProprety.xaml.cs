@@ -88,7 +88,7 @@ namespace ProjectManagement.FormInterface
             //              select c).FirstOrDefault();
            
 
-            int i = 0;
+            
             foreach (Comment item in HistoryList.CommentInDatabase)
             {
                 //if (item.guid == Guid)
