@@ -18,8 +18,7 @@
         {
             get
             {
-                if (_ins == null)
-                    _ins = new CompareProvider();
+
                 return _ins;
             }
             set
@@ -28,17 +27,28 @@
             }
         }
 
+        public CompareProvider()
+        {
+            ElementToExamine = new List<ElementId>();
+            Deleted = new List<string>();
+            New = new List<string>();
+
+            Modified = new List<string>();
+
+            Same = new List<string>();
+        }
+
         public IList<ElementId> ElementToExamine { get; set; } = new List<ElementId>();
 
         public Dictionary<string, RevitElement> ModifiedElementToSynchonize { get; set; }
 
-        public IList<string> Deleted { get; set; } = new List<string>();
+        public IList<string> Deleted { get; set; }
 
-        public IList<string> New { get; set; } = new List<string>();
+        public IList<string> New { get; set; }
 
-        public ICollection<string> Modified { get; set; } = new List<string>();
+        public ICollection<string> Modified { get; set; }
 
-        public ICollection<string> Same { get; set; } = new List<string>();
+        public ICollection<string> Same { get; set; }
 
         /// <summary>
         /// Verify if model is up to date on cloud (after compare)
@@ -120,13 +130,17 @@
             MessageBox.Show("Sucess! Your model is updated on cloud.If your data is too big, our server can take a while to process");
         }
 
+        /// <summary>
+        /// The FirstCommit
+        /// </summary>
         public async void FirstCommit()
         {
 
-            Task task = NewElementAsync(); 
+            Task task = NewElementAsync();
             await Task.WhenAll(task);
             MessageBox.Show("Sucess! Your model is sent to cloud.If your data is too big, our server can take a while to process");
         }
+
         /// <summary>
         /// The ModifiedElementAsync
         /// </summary>
@@ -140,10 +154,10 @@
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
             string body = JsonConvert.SerializeObject(ModifiedElementToSynchonize.Values);
-            req.RequestFormat = RestSharp.DataFormat.Json; 
-            req.AddJsonBody(body); 
-            Route.Client.Timeout = Int32.MaxValue; 
-            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req); 
+            req.RequestFormat = RestSharp.DataFormat.Json;
+            req.AddJsonBody(body);
+            Route.Client.Timeout = Int32.MaxValue;
+            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
             var res = await resTask;
         }
 
@@ -152,7 +166,7 @@
         /// </summary>
         /// <returns>The <see cref="Task"/></returns>
         private async Task DeletedElementAsync()
-        { 
+        {
             if (ProjectProvider.Instance.CurrentProject == null
                 || Deleted.Count == 0
                 || AuthProvider.Instance.token == null) return;
@@ -166,10 +180,10 @@
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
             string body = JsonConvert.SerializeObject(delElements);
-            req.RequestFormat = RestSharp.DataFormat.Json; 
-            req.AddJsonBody(body); 
-            Route.Client.Timeout = Int32.MaxValue; 
-            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req); 
+            req.RequestFormat = RestSharp.DataFormat.Json;
+            req.AddJsonBody(body);
+            Route.Client.Timeout = Int32.MaxValue;
+            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
             var res = await resTask;
         }
 
@@ -193,9 +207,9 @@
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
             string body = JsonConvert.SerializeObject(newElements);
-            req.RequestFormat = RestSharp.DataFormat.Json; 
-            req.AddJsonBody(body); 
-            Route.Client.Timeout = Int32.MaxValue; 
+            req.RequestFormat = RestSharp.DataFormat.Json;
+            req.AddJsonBody(body);
+            Route.Client.Timeout = Int32.MaxValue;
             Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
 
             var res = await resTask;

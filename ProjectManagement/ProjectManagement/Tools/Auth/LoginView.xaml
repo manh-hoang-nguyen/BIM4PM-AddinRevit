@@ -7,7 +7,6 @@
     xmlns:local="clr-namespace:ProjectManagement.Tools.Auth"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:progressBar="clr-namespace:ProjectManagement.Resources.UI.ProgressBar.CircularProgressBar"
-    
     x:Name="Win"
     Title="Login"
     Width="380"

@@ -30,9 +30,10 @@
             }
         }
         public User CurrentUser { get; set; }
+
         public Token token { get; set; }
 
-        private bool isAuthenticated;
+        private bool isAuthenticated ;
 
         public bool IsAuthenticated
         {

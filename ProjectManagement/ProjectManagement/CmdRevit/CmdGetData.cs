@@ -1,22 +1,13 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Newtonsoft.Json;
-using ProjectManagement.Controllers;
-using ProjectManagement.FormInterface;
-using System.Collections.Generic;
-using System.Threading;
-using ProjectManagement.Commun;
-using System.Linq;
-using ProjectManagement.Models;
-using System.Threading.Tasks;
 
 namespace ProjectManagement.CmdRevit
 {
     [Transaction(TransactionMode.Manual)]
     public class CmdGetData : IExternalCommand
     {
-        public   Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             /*
             GuidList.guid_newElement = new List<string>();
@@ -30,7 +21,7 @@ namespace ProjectManagement.CmdRevit
             UIDocument uiDoc = ui_app.ActiveUIDocument;
             Document doc = uiDoc.Document;
             List<Level> lst_Levels = MethodeRevitApi.GetLevels(doc);
-          
+
             ComparisonList.ComparisonInDatabase = ComparisonController.GetComparison();
 
             HistoryList.HistoryInDatabase=  HistoryController.GetHistory();
@@ -43,10 +34,8 @@ namespace ProjectManagement.CmdRevit
             foreach (Element e in MethodeRevitApi.GetElementOfCategories(doc))
             {
                 ComparisonList.ComparisonInModel.Add(ComparisonController.CreateComparison(e));
-
-
             }
-            
+
             Utils.Compare.GetListGuidElement();
             JsonPost.PostComparison = new List<JsonToPostComparison>();
             foreach (Element e in MethodeRevitApi.GetElementOfCategories(doc))
@@ -54,7 +43,6 @@ namespace ProjectManagement.CmdRevit
                 JsonToPostComparison comparison = ComparisonController.CreateJsonPost(e);
 
                 JsonPost.PostComparison.Add(comparison);
-
             }
             */
             /*  DataList.DataModel = new List<Data>();
@@ -71,21 +59,9 @@ namespace ProjectManagement.CmdRevit
                                  */
             return Result.Succeeded;
         }
-        void getComment()
+
+        private void getComment()
         {
-            foreach (Historyx item in HistoryList.HistoryInDatabase)
-            { 
-                Comment comment = new Comment()
-                {
-                   
-                   
-                    
-                };
-
-
-                HistoryList.CommentInDatabase.Add(comment);
-            }
         }
-       
     }
 }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManagement.Controllers
+namespace BIM4PM.Model
 {
-    class EvolutionController
+   public class Token
     {
+       public bool success { get; set; }
+        public string token { get; set; }
     }
 }

@@ -32,7 +32,6 @@
 
             Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
 
-
             var res = await resTask;
             UserRes User = JsonConvert.DeserializeObject<UserRes>(res.Content);
             return User.data;
@@ -132,6 +131,7 @@
                 MessageBox.Show("Select a project please");
                 return;
             }
+
             RestRequest req = new RestRequest(route.url(), Method.POST);
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);

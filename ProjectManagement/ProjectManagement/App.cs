@@ -294,9 +294,8 @@ namespace ProjectManagement
             //if (args.Document.Title == ModelProvider.Instance.CurrentModel.Title) AuthProvider.Instance.Disconnect();
             if (ModelProvider.Instance.CurrentModel != null && args.Document.Title == ModelProvider.Instance.CurrentModel.Title)
             {
-                TaskDialog.Show("Manh-Hoang","Please DISCONNECT to project before closing the model.");
-                args.Cancel();
-                return;
+                 
+                AuthProvider.Instance.Logout();
             }
             var docToRemove = ModelProvider.Instance.Models.Where(x => x.Title == args.Document.Title);
             if (docToRemove != null) ModelProvider.Instance.Models.Remove(docToRemove.FirstOrDefault());

@@ -105,6 +105,7 @@
 
             // Get geometry element of the selected element
             GeometryElement geoElement = e.get_Geometry(opt);
+            if (geoElement == null) return volume;
             // Get geometry object
             foreach (GeometryObject geoObject in geoElement)
             {
@@ -155,6 +156,7 @@
 
             // Get geometry element of the selected element
             GeometryElement geoElement = e.get_Geometry(opt);
+            if (geoElement == null) return volume;
             // Get geometry object
             foreach (GeometryObject geoObject in geoElement)
             {

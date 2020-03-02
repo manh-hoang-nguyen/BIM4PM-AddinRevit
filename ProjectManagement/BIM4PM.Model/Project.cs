@@ -4,9 +4,9 @@
     using System.Collections.Generic;
 
     
-    public class Project
+    public class Project: EntityBase
     {
-        public string _id { get; set; }
+        
 
         public string name { get; set; }
 
@@ -15,12 +15,17 @@
         public string owner { get; set; }
 
         public List<Member> members { get; set; }
+         
+       
 
-        public DateTime createdAt { get; set; }
+        public override bool Validate()
+        {
+            var isValid = true;
 
-        public DateTime updatedAt { get; set; }
+            if (string.IsNullOrWhiteSpace(_id)) isValid = false;
 
-        public int __v { get; set; }
+            return isValid;
+        }
     }
 
     public class ProjectRes

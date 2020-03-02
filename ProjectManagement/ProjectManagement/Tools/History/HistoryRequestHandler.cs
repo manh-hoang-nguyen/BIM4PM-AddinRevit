@@ -96,10 +96,10 @@
                         var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
                         HistoryResParent revitElements = JsonConvert.DeserializeObject<HistoryResParent>(res.Content, dateTimeConverter);
 
-                        HistoryModel.HistoriesByTypeChange.Clear();
+                        HistoryModel.Instance.HistoriesByTypeChange.Clear();
                         foreach (HistoryByTypeChange item in GetHistoryByType(revitElements.data.history))
                         {
-                            HistoryModel.HistoriesByTypeChange.Add(item);
+                            HistoryModel.Instance.HistoriesByTypeChange.Add(item);
                         }
 
                     }

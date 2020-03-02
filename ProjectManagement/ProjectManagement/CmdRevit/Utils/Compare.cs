@@ -13,15 +13,6 @@ namespace ProjectManagement.CmdRevit.Utils
         public static void GetListGuidElement()
         {
              
-            IEnumerable<string> guid_version_1 = from e in ComparisonList.ComparisonInDatabase
-                                                 select e.guid;
-            IEnumerable<string> guid_version_2 = from e in ComparisonList.ComparisonInModel
-                                                 select e.guid;
-           GuidList.guid_deletedElement = guid_version_1.Where(x => !guid_version_2.Contains(x));
-
-            GuidList.guid_newElement = guid_version_2.Where(x => !guid_version_1.Contains(x));
-
-              GuidList.guid_ElementToExamine = guid_version_2.Where(x => guid_version_1.Contains(x));
 
           
 

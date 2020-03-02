@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIM4PM.Data
+namespace BIM4PM.DataAccess
 {
     public class CommentRepository
     {
+        
     }
 }

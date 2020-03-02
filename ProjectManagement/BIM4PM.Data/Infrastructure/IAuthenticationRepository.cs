@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace BIM4PM.DataAccess
 {
-  public class VersionRepository:RepositoryBase<Version>
+    public interface IAuthenticationRepository
     {
-        
+        string Token { get; set; }
+        bool IsAuthenticated { get; set; }
     }
 }

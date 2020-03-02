@@ -16,8 +16,7 @@ namespace ProjectManagement.Commun
         {
             get
             {
-                if (_ins == null)
-                    _ins = new DiscussionProvider();
+                
                 return _ins;
             }
             set
@@ -25,9 +24,14 @@ namespace ProjectManagement.Commun
                 _ins = value;
             }
         }
+
+        public DiscussionProvider()
+        {
+            Comments = new ObservableCollection<Comment>();
+        }
         public RevitElement RevitElement { get; set; }
 
-        public ObservableCollection<Comment> Comments { get; set; } = new ObservableCollection<Comment>();
+        public ObservableCollection<Comment> Comments { get; set; } 
 
         public void Reset()
         {

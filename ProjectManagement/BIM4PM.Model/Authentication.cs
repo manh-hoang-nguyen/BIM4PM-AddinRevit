@@ -10,5 +10,6 @@ namespace ProjectManagement.Models
     {
         public string token { get; set; }
         public string userId { get; set; }
+        public bool IsAuthenticated { get; set; }
     }
 }

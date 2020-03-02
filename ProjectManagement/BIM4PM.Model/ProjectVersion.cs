@@ -14,21 +14,20 @@
     {
         public string _id { get; set; }
  
-        public List<Version> versions { get; set; }
-
-      
+        public List<ProjectVersion> versions { get; set; } 
     }
 
-    public class Version
-    {
-        public string _id { get; set; }
-
-        public DateTime createdAt { get; set; }
-
+    public class ProjectVersion:EntityBase
+    { 
         public string description { get; set; }
 
         public string createdBy { get; set; }
 
         public int version { get; set; }
+
+        public override bool Validate()
+        {
+            return true;
+        }
     }
 }

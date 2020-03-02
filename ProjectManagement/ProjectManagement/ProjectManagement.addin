@@ -3,7 +3,7 @@
   
   <AddIn Type="Application">
     <Name>ProjectManagement</Name>
-    <Assembly>ProjectManagement.dll</Assembly>
+    <Assembly>BIM4PM\ProjectManagement.dll</Assembly>
     <FullClassName>ProjectManagement.App</FullClassName>
     <ClientId>58fa283c-ad79-42db-b93e-6c540a7f1a46</ClientId>
     <VendorId>Manh Hoang NGUYEN</VendorId>

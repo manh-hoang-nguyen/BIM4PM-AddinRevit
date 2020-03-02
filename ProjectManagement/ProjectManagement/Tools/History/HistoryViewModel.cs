@@ -36,7 +36,7 @@
         private void OnWindowLoaded(HistoryView view)
         {
              
-            view.History.ItemsSource = HistoryModel.HistoriesByTypeChange;
+            view.History.ItemsSource = HistoryModel.Instance.HistoriesByTypeChange;
             CollectionView collectionView = (CollectionView)CollectionViewSource.GetDefaultView(view.History.ItemsSource);
             PropertyGroupDescription group = new PropertyGroupDescription("type");
             collectionView.GroupDescriptions.Clear();

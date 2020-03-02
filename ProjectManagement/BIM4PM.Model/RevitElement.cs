@@ -1,7 +1,6 @@
 ﻿namespace BIM4PM.Model
 {
     using Autodesk.Revit.DB;
-     
     using System;
     using System.Collections.Generic;
 
@@ -37,10 +36,8 @@
         Parameters,
         SharedParameters
     }
-    public class RevitElement
-    {
-        public string _id { get; set; }
-
+    public class RevitElement: EntityBase
+    { 
         public string project { get; set; }
 
         public string version { get; set; }
@@ -75,41 +72,40 @@
 
         public string volume { get; set; }
 
-        public DateTime createdAt { get; set; }
+        
 
-        public DateTime updatedAt { get; set; }
-
-        public int __v { get; set; }
+       
 
         public RevitElement()
         {
+           
         }
 
         public RevitElement(Element element)
         {
-            //if (ModelProvider.Instance.CurrentModel !=null && ProjectProvider.Instance.CurrentProject != null)
-            //{
-            //    project = ProjectProvider.Instance.CurrentProject._id;
-            //    version = ProjectProvider.Instance.CurrentVersion._id;
-            //    guid = element.UniqueId;
-            //    name = element.Name;
-            //    elementId = element.Id.IntegerValue.ToString();
-            //    category = element.Category.Name;
-            //    level = ElementUtils.GetElementLevel(ModelProvider.Instance.Levels, element);
-            //    parameters = ParameterUtils.SerializeRevitParameters(element);
-            //    geometryParameters = ParameterUtils.SerializeGeoParameters(element); 
-            //    sharedParameters = ParameterUtils.SerializeSharedParameters(element, ModelProvider.Instance.CurrentModel);
-            //    worksetId = element.WorksetId.ToString();
-            //    location = ElementUtils.SerializeLocation(element);
-            //    boundingBox = ElementUtils.SerializeBoundingBox(element.get_BoundingBox(null));
-            //    centroid = ElementUtils.SerializePoint(ElementUtils.GetCentroid(element));
-            //    volume = ElementUtils.GetAllSolidVolume(element).ToString();
-            //    typeId = element.GetTypeId().ToString();
-            //}
-          
-        }
+            //    //if (ModelProvider.Instance.CurrentModel !=null && ProjectProvider.Instance.CurrentProject != null)
+            //    //{
+            //    //    project = ProjectProvider.Instance.CurrentProject._id;
+            //    //    version = ProjectProvider.Instance.CurrentVersion._id;
+            //        guid = element.UniqueId;
+            //        name = element.Name;
+            //       elementId = element.Id.IntegerValue.ToString();
+            //       category = element.Category.Name;
+            //      //  level = ElementUtils.GetElementLevel(ModelProvider.Instance.Levels, element);
+            //    //   parameters = ParameterUtils.SerializeRevitParameters(element);
+            //    //    geometryParameters = ParameterUtils.SerializeGeoParameters(element); 
+            //    //    sharedParameters = ParameterUtils.SerializeSharedParameters(element, ModelProvider.Instance.CurrentModel);
+            //        worksetId = element.WorksetId.ToString();
+            //    //    location = ElementUtils.SerializeLocation(element);
+            //    //    boundingBox = ElementUtils.SerializeBoundingBox(element.get_BoundingBox(null));
+            //    //    centroid = ElementUtils.SerializePoint(ElementUtils.GetCentroid(element));
+            //    //    volume = ElementUtils.GetAllSolidVolume(element).ToString();
+            //    //    typeId = element.GetTypeId().ToString();
+            //    //}
 
-        public RevitElement(RevitElement project, RevitElement model, List<History> history)
+            }
+
+            public RevitElement(RevitElement project, RevitElement model, List<History> history)
         {
             _id = project._id;
             this.project = project.project; 
@@ -183,6 +179,17 @@
                 hashCode = (hashCode * 397) ^ typeId.GetHashCode();
                 return hashCode;
             }
+        }
+
+        public override bool Validate()
+        {
+            var isValid = true;
+            if (string.IsNullOrWhiteSpace(project)) isValid = false;
+            if (string.IsNullOrWhiteSpace(version)) isValid = false;
+            if (string.IsNullOrWhiteSpace(guid)) isValid = false;
+            if (string.IsNullOrWhiteSpace(name)) isValid = false;
+            if (string.IsNullOrWhiteSpace(elementId)) isValid = false;
+            return isValid;
         }
     }
 }

@@ -52,9 +52,63 @@
         </Setter>
     </Style>
     <Style x:Key="MHButton1" TargetType="Button">
-        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="#FFE6E6E6" />
+        <Setter Property="BorderBrush" Value="#cccccc" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="#333333" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="16,4,16,4" />
+        <Setter Property="Margin" Value="1,2,1,2" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="TextBlock.FontSize" Value="12" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Name="Chrome"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true">
+                        <ContentPresenter
+                            Name="Presenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#333333" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#1ba1e2" />
+                            <Setter Property="BorderBrush" Value="#1ba1e2" />
+                            <Setter Property="Foreground" Value="#ffffff" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#FF6BC3EE" />
+                            <Setter Property="BorderBrush" Value="#FF6BC3EE" />
+                            <Setter Property="Foreground" Value="#ffffff" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter TargetName="Chrome" Property="BorderBrush" Value="#1ba1e2" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--<Setter Property="Cursor" Value="Hand" />
         <Setter Property="BorderThickness" Value="0" />
+        -->
         <!--<Setter Property="Background" Value="Transparent" />-->
+        <!--
         <Setter Property="Margin" Value="1" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Height" Value="20" />
@@ -66,7 +120,7 @@
                 <ControlTemplate TargetType="Button">
                     <Border
                         x:Name="border"
-                        Margin="3.5,0"  
+                        Margin="3.5,0"
                         CornerRadius="2">
                         <Border.Style>
                             <Style TargetType="Border">
@@ -76,7 +130,7 @@
                                         <Setter Property="BorderBrush" Value="LightSkyBlue" />
                                         <Setter Property="BorderThickness" Value="1" />
                                     </Trigger>
-                                   
+
                                     <Trigger Property="IsMouseOver" Value="False">
                                         <Setter Property="Background" Value="LightGray" />
                                         <Setter Property="BorderBrush" Value="Gray" />
@@ -95,7 +149,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="LightBlue" /> 
+                            <Setter Property="Background" Value="LightBlue" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"  Value="True">
                             <Setter Property="Background" TargetName="border" Value="LightBlue" />
@@ -109,7 +163,7 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
 
     </Style>
 
