@@ -1,19 +1,20 @@
 ﻿namespace BIM4PM.Model
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
 
     
     public class Project: EntityBase
     {
-        
 
+        [JsonProperty("name")]
         public string name { get; set; }
-
+        [JsonProperty("description")]
         public string description { get; set; }
-
+        [JsonProperty("owner")]
         public string owner { get; set; }
-
+        [JsonProperty("members")]
         public List<Member> members { get; set; }
          
        
@@ -22,7 +23,7 @@
         {
             var isValid = true;
 
-            if (string.IsNullOrWhiteSpace(_id)) isValid = false;
+            if (string.IsNullOrWhiteSpace(Id)) isValid = false;
 
             return isValid;
         }

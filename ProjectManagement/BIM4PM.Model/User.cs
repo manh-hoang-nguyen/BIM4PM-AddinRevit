@@ -1,16 +1,18 @@
 ﻿namespace BIM4PM.Model
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
 
     public class User : EntityBase
     {
+        [JsonProperty("name")]
         public UserName name { get; set; }
-
+        [JsonProperty("status")]
         public string status { get; set; }
-
+        [JsonProperty("email")]
         public string email { get; set; }
-
+        [JsonProperty("projects")]
         public List<Project> projects { get; set; }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace BIM4PM.DataAccess
         public IEnumerable<RevitElement> GetRevitElements(Project project, ProjectVersion version)
         {
            
-            RevitElementRoute route = new RevitElementRoute(project._id);
+            RevitElementRoute route = new RevitElementRoute(project.Id);
             RestRequestBase reqBase = new RestRequestBase(route.url(), Method.GET);
             RestRequest req = reqBase.Request;
             req.AddParameter("version", version.version);

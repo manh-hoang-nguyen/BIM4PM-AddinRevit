@@ -11,9 +11,9 @@ namespace BIM4PM.DataAccess.Repository
     {
         public Project GetProjet(string projectId)
         {
-            //Project project;
+            Project project = new Project();
 
-            //return project;
+            return project;
         }
     }
 }

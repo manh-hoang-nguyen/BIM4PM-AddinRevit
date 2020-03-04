@@ -1,6 +1,7 @@
 ﻿namespace BIM4PM.Model
 {
     using Autodesk.Revit.DB;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
 
@@ -38,38 +39,39 @@
     }
     public class RevitElement: EntityBase
     { 
-        public string project { get; set; }
-
+        [JsonProperty("project")]
+        public string Project { get; set; }
+        [JsonProperty("version")]
         public string version { get; set; }
-
+        [JsonProperty("guid")]
         public string guid { get; set; }
-
+        [JsonProperty("history")]
         public List<History> history { get; set; }
-
+        [JsonProperty("name")]
         public string name { get; set; }
-
+        [JsonProperty("elementId")]
         public string elementId { get; set; }
-
+        [JsonProperty("category")]
         public string category { get; set; }
-
+        [JsonProperty("level")]
         public string level { get; set; }
-
+        [JsonProperty("parameters")]
         public string parameters { get; set; }
-
+        [JsonProperty("geometryParameters")]
         public string geometryParameters { get; set; }
-
+        [JsonProperty("sharedParameters")]
         public string sharedParameters { get; set; }
-
+        [JsonProperty("worksetId")]
         public string worksetId { get; set; }
-
+        [JsonProperty("location")]
         public string location { get; set; }
-
+        [JsonProperty("boundingBox")]
         public string boundingBox { get; set; }
-
+        [JsonProperty("centroid")]
         public string centroid { get; set; }
-
+        [JsonProperty("typeId")]
         public string typeId { get; set; }
-
+        [JsonProperty("volume")]
         public string volume { get; set; }
 
         
@@ -107,8 +109,8 @@
 
             public RevitElement(RevitElement project, RevitElement model, List<History> history)
         {
-            _id = project._id;
-            this.project = project.project; 
+            Id = project.Id;
+            this.Project = project.Project; 
             version = project.version; 
             guid = project.guid; 
             this.history = history; 
@@ -184,7 +186,7 @@
         public override bool Validate()
         {
             var isValid = true;
-            if (string.IsNullOrWhiteSpace(project)) isValid = false;
+            if (string.IsNullOrWhiteSpace(Project)) isValid = false;
             if (string.IsNullOrWhiteSpace(version)) isValid = false;
             if (string.IsNullOrWhiteSpace(guid)) isValid = false;
             if (string.IsNullOrWhiteSpace(name)) isValid = false;
