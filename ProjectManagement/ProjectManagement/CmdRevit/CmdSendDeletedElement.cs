@@ -1,14 +1,6 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Newtonsoft.Json;
-using ProjectManagement.Controllers;
-using ProjectManagement.FormInterface;
-using System.Collections.Generic;
-using System.Threading;
-using ProjectManagement.Commun;
-using ProjectManagement.CmdRevit.Utils;
-
 
 namespace ProjectManagement.CmdRevit
 {

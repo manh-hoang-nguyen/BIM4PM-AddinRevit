@@ -12,22 +12,8 @@
 
     public class CompareProvider
     {
-        private static CompareProvider _ins;
-
-        public static CompareProvider Instance
-        {
-            get
-            {
-
-                return _ins;
-            }
-            set
-            {
-                _ins = value;
-            }
-        }
-
-        public CompareProvider()
+        private readonly static CompareProvider _instance = new CompareProvider();
+        private CompareProvider()
         {
             ElementToExamine = new List<ElementId>();
             Deleted = new List<string>();
@@ -37,6 +23,9 @@
 
             Same = new List<string>();
         }
+
+        public static CompareProvider Instance => _instance;
+       
 
         public IList<ElementId> ElementToExamine { get; set; } = new List<ElementId>();
 

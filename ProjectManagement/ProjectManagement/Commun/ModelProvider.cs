@@ -10,21 +10,15 @@
 
     public class ModelProvider : INotifyPropertyChanged
     {
-        private static ModelProvider _ins;
+        private  readonly static ModelProvider _ins = new ModelProvider();
 
-        public static ModelProvider Instance
+        private ModelProvider()
         {
-            get
-            {
-                if (_ins == null)
-                    _ins = new ModelProvider();
-                return _ins;
-            }
-            set
-            {
-                _ins = value;
-            }
+
         }
+
+        public static ModelProvider Instance => _ins;
+        
 
         public Dictionary<string, RevitElement> DicRevitElements { get; set; }
 
@@ -44,8 +38,6 @@
             CurrentModel = null;
             Levels = null;
         }
-
-      
 
         public void Update()
         {

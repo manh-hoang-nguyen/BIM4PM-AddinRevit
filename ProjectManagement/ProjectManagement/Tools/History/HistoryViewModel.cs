@@ -19,7 +19,7 @@
 
         public HistoryViewModel()
         {
-            Model = new HistoryModel();
+            //Model = new HistoryModel();
             WindowLoaded = new RelayCommand<HistoryView>(OnWindowLoaded);
             Refresh = new RelayCommand<HistoryView>(OnRefresh);
         }

@@ -10,25 +10,16 @@ namespace ProjectManagement.Commun
 {
    public class DiscussionProvider
     {
-        private static DiscussionProvider _ins;
+        private readonly static DiscussionProvider _instance = new DiscussionProvider();
 
-        public static DiscussionProvider Instance
-        {
-            get
-            {
-                
-                return _ins;
-            }
-            set
-            {
-                _ins = value;
-            }
-        }
-
-        public DiscussionProvider()
+        private DiscussionProvider()
         {
             Comments = new ObservableCollection<Comment>();
         }
+
+        public static DiscussionProvider Instance => _instance;
+        
+ 
         public RevitElement RevitElement { get; set; }
 
         public ObservableCollection<Comment> Comments { get; set; } 

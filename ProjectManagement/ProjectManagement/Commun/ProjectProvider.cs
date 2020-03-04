@@ -5,7 +5,6 @@
     using ProjectManagement.Models;
     using RestSharp;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Globalization;
     using System.Runtime.CompilerServices;
@@ -14,21 +13,13 @@
 
     public class ProjectProvider : INotifyPropertyChanged
     {
-        private static ProjectProvider _ins;
+        private readonly static ProjectProvider _instance = new ProjectProvider();
 
-        public static ProjectProvider Instance
+        private ProjectProvider()
         {
-            get
-            {
-                if (_ins == null)
-                    _ins = new ProjectProvider();
-                return _ins;
-            }
-            set
-            {
-                _ins = value;
-            }
+
         }
+        public static ProjectProvider Instance => _instance;
 
         private Project _currentProject;
 
@@ -100,7 +91,7 @@
 
                 VersionRes Version = JsonConvert.DeserializeObject<VersionRes>(res.Content);
                 Versions = Version.data[0].versions;
-                
+
                 if (Versions.Count == 0)
                 {
                     MessageBox.Show("Please create a version of project.");
@@ -118,7 +109,7 @@
                     IRestResponse res0 = Route.Client.Execute(req0);
                     SingleProjectRes project = JsonConvert.DeserializeObject<SingleProjectRes>(res0.Content);
                     SelectedProject = project.data;
-                    ProjectMembers = SelectedProject.members; 
+                    ProjectMembers = SelectedProject.members;
                 });
                 thread.Start();
             }
@@ -140,11 +131,11 @@
             RestRequest req = new RestRequest(route.url(), Method.GET);
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-            req.AddParameter("version", version.version); 
+            req.AddParameter("version", version.version);
             IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
             string format = "0000-12-31T23:50:39.000Z"; // datetime format
             var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
-             
+
             RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content, dateTimeConverter);
 
             return revitElements.data;
