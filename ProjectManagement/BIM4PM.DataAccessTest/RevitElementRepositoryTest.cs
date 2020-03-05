@@ -37,7 +37,7 @@
             var revitElementRepository = new RevitElementRepository();
             Project project = new Project
             {
-                _id = "5d713995b721c3bb38c1f5d0"
+                Id = "5d713995b721c3bb38c1f5d0"
             };
             ProjectVersion projectVersion = new ProjectVersion
             {
