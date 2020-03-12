@@ -12,22 +12,20 @@
 
     public class CompareProvider
     {
-        private readonly static CompareProvider _instance = new CompareProvider();
         private CompareProvider()
         {
+            AuthProvider.Instance.ConnectionChanged += (s, e) => Reset();
+
             ElementToExamine = new List<ElementId>();
             Deleted = new List<string>();
             New = new List<string>();
-
             Modified = new List<string>();
-
             Same = new List<string>();
         }
 
-        public static CompareProvider Instance => _instance;
-       
+        public static CompareProvider Instance { get; } = new CompareProvider();
 
-        public IList<ElementId> ElementToExamine { get; set; } = new List<ElementId>();
+        public IList<ElementId> ElementToExamine { get; set; }
 
         public Dictionary<string, RevitElement> ModifiedElementToSynchonize { get; set; }
 
@@ -54,12 +52,15 @@
         /// </summary>
         public void Reset()
         {
-            ElementToExamine = new List<ElementId>();
-            Deleted = new List<string>();
-            Modified = new List<string>();
-            New = new List<string>();
-            Same = new List<string>();
-            ModifiedElementToSynchonize = null;
+            if (AuthProvider.Instance.IsConnected == false)
+            {
+                ElementToExamine = new List<ElementId>();
+                Deleted = new List<string>();
+                Modified = new List<string>();
+                New = new List<string>();
+                Same = new List<string>();
+                ModifiedElementToSynchonize = null;
+            }
         }
 
         /// <summary>
@@ -124,7 +125,6 @@
         /// </summary>
         public async void FirstCommit()
         {
-
             Task task = NewElementAsync();
             await Task.WhenAll(task);
             MessageBox.Show("Sucess! Your model is sent to cloud.If your data is too big, our server can take a while to process");

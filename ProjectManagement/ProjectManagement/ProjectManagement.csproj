@@ -167,9 +167,10 @@
     <Compile Include="CmdRevit\Utils\Compare.cs" />
     <Compile Include="CmdRevit\Utils\PanelAvailability.cs" />
     <Compile Include="Commun\AuthProvider.cs" />
-    <Compile Include="Commun\CategoryProvider.cs" />
     <Compile Include="Commun\CompareProvider.cs" />
     <Compile Include="Commun\DiscussionProvider.cs" />
+    <Compile Include="Commun\Mediator\AuthChangedEventArgs.cs" />
+    <Compile Include="Commun\Mediator\Mediator.cs" />
     <Compile Include="Commun\ModelProvider.cs" />
     <Compile Include="Commun\ProjectProvider.cs" />
     <Compile Include="Commun\Route.cs" />
@@ -202,7 +203,6 @@
     <Compile Include="Models\Comparison.cs" />
     <Compile Include="MethodeRevitApi.cs" />
     <Compile Include="Models\History.cs" />
-    <Compile Include="Models\Authentication.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\RevitElement.cs" />
     <Compile Include="Models\Token.cs" />
@@ -252,6 +252,9 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\Auth\LoginViewModel.cs" />
+    <Compile Include="Tools\Auth\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tools\Discussion\DiscussionRequestHandler.cs" />
     <Compile Include="Tools\PaletteMainView.xaml.cs">
       <DependentUpon>PaletteMainView.xaml</DependentUpon>
@@ -303,6 +306,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\ProjectManagement.Models.Authentication.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -398,6 +402,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tools\Auth\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\Auth\UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

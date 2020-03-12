@@ -7,15 +7,19 @@
     
     public class Project: EntityBase
     {
+        public Project()
+        {
+            Members = new List<Member>();
+        }
 
         [JsonProperty("name")]
-        public string name { get; set; }
+        public string Name { get; set; }
         [JsonProperty("description")]
-        public string description { get; set; }
+        public string Description { get; set; }
         [JsonProperty("owner")]
-        public string owner { get; set; }
+        public string Owner { get; set; }
         [JsonProperty("members")]
-        public List<Member> members { get; set; }
+        public List<Member> Members { get; set; }
          
        
 

@@ -42,37 +42,37 @@
         [JsonProperty("project")]
         public string Project { get; set; }
         [JsonProperty("version")]
-        public string version { get; set; }
+        public string Version { get; set; }
         [JsonProperty("guid")]
-        public string guid { get; set; }
+        public string Guid { get; set; }
         [JsonProperty("history")]
-        public List<History> history { get; set; }
+        public List<History> History { get; set; }
         [JsonProperty("name")]
-        public string name { get; set; }
+        public string Name { get; set; }
         [JsonProperty("elementId")]
-        public string elementId { get; set; }
+        public string ElementId { get; set; }
         [JsonProperty("category")]
-        public string category { get; set; }
+        public string Category { get; set; }
         [JsonProperty("level")]
-        public string level { get; set; }
+        public string Level { get; set; }
         [JsonProperty("parameters")]
-        public string parameters { get; set; }
+        public string Parameters { get; set; }
         [JsonProperty("geometryParameters")]
-        public string geometryParameters { get; set; }
+        public string GeometryParameters { get; set; }
         [JsonProperty("sharedParameters")]
-        public string sharedParameters { get; set; }
+        public string SharedParameters { get; set; }
         [JsonProperty("worksetId")]
-        public string worksetId { get; set; }
+        public string WorksetId { get; set; }
         [JsonProperty("location")]
-        public string location { get; set; }
+        public string Location { get; set; }
         [JsonProperty("boundingBox")]
-        public string boundingBox { get; set; }
+        public string BoundingBox { get; set; }
         [JsonProperty("centroid")]
-        public string centroid { get; set; }
+        public string Centroid { get; set; }
         [JsonProperty("typeId")]
-        public string typeId { get; set; }
+        public string TypeId { get; set; }
         [JsonProperty("volume")]
-        public string volume { get; set; }
+        public string Volume { get; set; }
 
         
 
@@ -80,7 +80,7 @@
 
         public RevitElement()
         {
-           
+            History = new List<History>();
         }
 
         public RevitElement(Element element)
@@ -111,22 +111,22 @@
         {
             Id = project.Id;
             this.Project = project.Project; 
-            version = project.version; 
-            guid = project.guid; 
-            this.history = history; 
-            name = model.name; 
-            elementId = model.elementId; 
-            category = model.category; 
-            level = model.level; 
-            parameters = model.parameters; 
-            geometryParameters = model.geometryParameters; 
-            sharedParameters = model.sharedParameters; 
-            worksetId = model.worksetId; 
-            location = model.location;
-            boundingBox = model.boundingBox; 
-            centroid = model.centroid;
-            typeId = model.typeId;
-            volume = model.volume;
+            Version = project.Version; 
+            Guid = project.Guid; 
+            this.History = history; 
+            Name = model.Name; 
+            ElementId = model.ElementId; 
+            Category = model.Category; 
+            Level = model.Level; 
+            Parameters = model.Parameters; 
+            GeometryParameters = model.GeometryParameters; 
+            SharedParameters = model.SharedParameters; 
+            WorksetId = model.WorksetId; 
+            Location = model.Location;
+            BoundingBox = model.BoundingBox; 
+            Centroid = model.Centroid;
+            TypeId = model.TypeId;
+            Volume = model.Volume;
         }
 
         /// <summary>
@@ -136,16 +136,16 @@
         /// <returns>The <see cref="bool"/></returns>
         protected bool Equals(RevitElement other)
         {
-            return string.Equals(name, other.name)
-                && string.Equals(category, other.category)
-                && string.Equals(level, other.level)
-                && string.Equals(parameters, other.parameters)
-                && string.Equals(sharedParameters, other.parameters) //we dont compare worksetId
-                && string.Equals(location, other.location)
-                && string.Equals(boundingBox, other.boundingBox)
-                && string.Equals(centroid, other.centroid)
-                && string.Equals(volume, other.volume)
-                && string.Equals(typeId, other.typeId);
+            return string.Equals(Name, other.Name)
+                && string.Equals(Category, other.Category)
+                && string.Equals(Level, other.Level)
+                && string.Equals(Parameters, other.Parameters)
+                && string.Equals(SharedParameters, other.Parameters) //we dont compare worksetId
+                && string.Equals(Location, other.Location)
+                && string.Equals(BoundingBox, other.BoundingBox)
+                && string.Equals(Centroid, other.Centroid)
+                && string.Equals(Volume, other.Volume)
+                && string.Equals(TypeId, other.TypeId);
         }
 
         /// <summary>
@@ -169,16 +169,16 @@
         {
             unchecked
             {
-                var hashCode = (name != null ? name.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (category != null ? category.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ level.GetHashCode();
-                hashCode = (hashCode * 397) ^ parameters.GetHashCode();
-                hashCode = (hashCode * 397) ^ sharedParameters.GetHashCode();
-                hashCode = (hashCode * 397) ^ location.GetHashCode();
-                hashCode = (hashCode * 397) ^ boundingBox.GetHashCode();
-                hashCode = (hashCode * 397) ^ centroid.GetHashCode();
-                hashCode = (hashCode * 397) ^ volume.GetHashCode();
-                hashCode = (hashCode * 397) ^ typeId.GetHashCode();
+                var hashCode = (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Category != null ? Category.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Level.GetHashCode();
+                hashCode = (hashCode * 397) ^ Parameters.GetHashCode();
+                hashCode = (hashCode * 397) ^ SharedParameters.GetHashCode();
+                hashCode = (hashCode * 397) ^ Location.GetHashCode();
+                hashCode = (hashCode * 397) ^ BoundingBox.GetHashCode();
+                hashCode = (hashCode * 397) ^ Centroid.GetHashCode();
+                hashCode = (hashCode * 397) ^ Volume.GetHashCode();
+                hashCode = (hashCode * 397) ^ TypeId.GetHashCode();
                 return hashCode;
             }
         }
@@ -187,10 +187,10 @@
         {
             var isValid = true;
             if (string.IsNullOrWhiteSpace(Project)) isValid = false;
-            if (string.IsNullOrWhiteSpace(version)) isValid = false;
-            if (string.IsNullOrWhiteSpace(guid)) isValid = false;
-            if (string.IsNullOrWhiteSpace(name)) isValid = false;
-            if (string.IsNullOrWhiteSpace(elementId)) isValid = false;
+            if (string.IsNullOrWhiteSpace(Version)) isValid = false;
+            if (string.IsNullOrWhiteSpace(Guid)) isValid = false;
+            if (string.IsNullOrWhiteSpace(Name)) isValid = false;
+            if (string.IsNullOrWhiteSpace(ElementId)) isValid = false;
             return isValid;
         }
     }

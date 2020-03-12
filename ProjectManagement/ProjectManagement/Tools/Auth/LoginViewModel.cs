@@ -4,10 +4,8 @@
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
     using ProjectManagement.Commun;
-    using ProjectManagement.Tools.Project;
     using System.Threading;
     using System.Windows;
-    using System.Windows.Controls;
     using Visibility = System.Windows.Visibility;
 
     public class LoginViewModel : ViewModelBase
@@ -65,7 +63,7 @@
         {
             get => _password; set { _password = value; RaisePropertyChanged(); }
         }
-       
+
         public LoginViewModel(UIApplication uiapp)
         {
             _uiapp = uiapp;
@@ -76,23 +74,14 @@
             Authenticated = new RelayCommand<Window>(OnAuthenticated);
         }
 
-        /// <summary>
-        /// The OnAuthenticated
-        /// </summary>
-        /// <param name="win">The win<see cref="Window"/></param>
         private void OnAuthenticated(Window win)
         {
             win.Close();
-            
         }
 
-        /// <summary>
-        /// The OnWindowLoaded
-        /// </summary>
-        /// <param name="Window">The Window<see cref="Window"/></param>
         private void OnWindowLoaded(LoginView win)
         {
-             
+
             VisibilityProgressBar = Visibility.Hidden;
             VisibilityAuthenticated = Visibility.Hidden;
             VisibilityNotAuthenticated = Visibility.Hidden;
@@ -108,13 +97,9 @@
             }
         }
 
-        /// <summary>
-        /// The OnLogin
-        /// </summary>
-        /// <param name="passwordBox">The passwordBox<see cref="PasswordBox"/></param>
         private void OnLogin(LoginView win)
         {
-            if (win.cBSave.IsChecked==true)
+            if (win.cBSave.IsChecked == true)
             {
                 Properties.Settings.Default["UserEmail"] = win.tbEmail.Text;
                 Properties.Settings.Default["UserPassword"] = win.PasswordBox.Password;
@@ -123,8 +108,8 @@
             }
             else
             {
-                Properties.Settings.Default["UserEmail"] ="";
-                Properties.Settings.Default["UserPassword"] ="";
+                Properties.Settings.Default["UserEmail"] = "";
+                Properties.Settings.Default["UserPassword"] = "";
                 Properties.Settings.Default["IsSave"] = "0";
                 Properties.Settings.Default.Save();
             }
@@ -154,10 +139,6 @@
             thread.Start();
         }
 
-        /// <summary>
-        /// The OnCancel
-        /// </summary>
-        /// <param name="win">The win<see cref="Window"/></param>
         private void OnCancel(Window win)
         {
             win.Close();

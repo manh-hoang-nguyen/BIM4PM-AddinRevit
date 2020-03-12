@@ -10,10 +10,10 @@ namespace BIM4PM.Model
     public class Member
     {
         [JsonProperty("_id")]
-        public string _id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("user")]
-        public User user { get; set; }
+        public User User { get; set; }
         [JsonProperty("role")]
-        public string role { get; set; }
+        public string Role { get; set; }
     }
 }

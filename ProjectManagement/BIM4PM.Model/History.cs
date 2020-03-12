@@ -10,18 +10,18 @@ namespace BIM4PM.Model
     public class History
     {
         [JsonProperty("_id")]
-        public string _id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("modifiedAt")]
-        public DateTime modifiedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
         [JsonProperty("user")]
-        public User user { get; set; }
+        public User User { get; set; }
         [JsonProperty("isFirstCommit")]
-        public bool isFirstCommit { get; set; }
+        public bool IsFirstCommit { get; set; }
         [JsonProperty("geometryChange")]
-        public bool geometryChange { get; set; }
+        public bool GeometryChange { get; set; }
         [JsonProperty("parameterChange")]
-        public bool parameterChange { get; set; }
+        public bool ParameterChange { get; set; }
         [JsonProperty("sharedParameterChange")]
-        public bool sharedParameterChange { get; set; }
+        public bool SharedParameterChange { get; set; }
     }
 }

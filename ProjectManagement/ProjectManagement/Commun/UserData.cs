@@ -5,7 +5,7 @@ namespace ProjectManagement.Commun
 {
     public class UserData
     {
-        public static Authentication authentication;
+         
         public static List<UserProject> userProject;
         public static string idProjectActive;
         public static User user;

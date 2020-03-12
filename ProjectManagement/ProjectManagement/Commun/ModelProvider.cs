@@ -10,15 +10,14 @@
 
     public class ModelProvider : INotifyPropertyChanged
     {
-        private  readonly static ModelProvider _ins = new ModelProvider();
-
         private ModelProvider()
         {
-
+            AuthProvider.Instance.ConnectionChanged += (s, e) =>  Reset();
+           
         }
 
-        public static ModelProvider Instance => _ins;
-        
+        public static ModelProvider Instance { get; } = new ModelProvider();
+
 
         public Dictionary<string, RevitElement> DicRevitElements { get; set; }
 
@@ -34,9 +33,13 @@
 
         public void Reset()
         {
-            DicRevitElements = null;
-            CurrentModel = null;
-            Levels = null;
+            if((AuthProvider.Instance.IsConnected == false))
+            {
+                DicRevitElements = null;
+                CurrentModel = null;
+                Levels = null;
+            }
+          
         }
 
         public void Update()

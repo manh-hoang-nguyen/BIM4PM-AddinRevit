@@ -100,11 +100,16 @@
 
             ProjectSelection = new RelayCommand<ProjectView>(OnProjectSelection);
             ModelSelection = new RelayCommand<ProjectView>(OnModelSelection);
-            Connect = new RelayCommand<ProjectView>(OnConnect);
+            Connect = new RelayCommand<ProjectView>(OnConnect, CanConnect);
             Disconnect = new RelayCommand<ProjectView>(OnDisconnect);
             SendData = new RelayCommand<UserControl>(OnSendData);
             Compare = new RelayCommand<ProjectView>(OnCompare);
             Synchronize = new RelayCommand<ProjectView>(OnSynchronize);
+        }
+
+        private bool CanConnect(ProjectView arg)
+        {
+            return true;
         }
 
         private void OnSynchronize(ProjectView obj)
@@ -177,7 +182,7 @@
             Model.GetParamterElement();
 
             AuthProvider.Instance.Connect();
-
+            AuthProvider.Instance.OnConnectionChanged(this,EventArgs.Empty);
           
         }
 
@@ -188,6 +193,7 @@
         private void OnDisconnect(ProjectView view)
         {
             AuthProvider.Instance.Disconnect();
+            AuthProvider.Instance.OnConnectionChanged(this, EventArgs.Empty);
             Versions = null;
             BtnDisconnectIsEnable = false;
             BtnConnectIsEnable = true;

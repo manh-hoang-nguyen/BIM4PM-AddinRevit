@@ -8,11 +8,11 @@
         [JsonProperty("_id")]
         public string Id { get; set; }
         [JsonProperty("createdAt")]
-        public DateTime createdAt { get; set; }
+        public DateTime CreatedAt { get; set; }
         [JsonProperty("updatedAt")]
-        public DateTime updatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         [JsonProperty("__v")]
-        public int __v { get; set; }
+        public int V { get; set; }
        
         public bool IsValid => Validate();
  

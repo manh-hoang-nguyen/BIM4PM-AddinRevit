@@ -6,14 +6,18 @@
 
     public class User : EntityBase
     {
+        public User()
+        {
+            Projects = new List<Project>();
+        }
         [JsonProperty("name")]
-        public UserName name { get; set; }
+        public UserName Name { get; set; }
         [JsonProperty("status")]
-        public string status { get; set; }
+        public string Status { get; set; }
         [JsonProperty("email")]
-        public string email { get; set; }
+        public string Email { get; set; }
         [JsonProperty("projects")]
-        public List<Project> projects { get; set; }
+        public List<Project> Projects { get; set; }
 
         /// <summary>
         /// The Validate

@@ -17,8 +17,9 @@
 
         private ProjectProvider()
         {
-
+            AuthProvider.Instance.ConnectionChanged += (s, e) => Reset();
         }
+
         public static ProjectProvider Instance => _instance;
 
         private Project _currentProject;
@@ -45,15 +46,18 @@
         /// <summary>
         /// The Reset
         /// </summary>
-        public void Reset()
+        private void Reset()
         {
-            ProjectMembers = null;
-            SelectedProject = null;
-            CurrentProject = null;
-            DicRevitElements = null;
-            Versions = null;
-            UserProjects = null;
-            CurrentVersion = null;
+            if (AuthProvider.Instance.IsConnected == false)
+            {
+                ProjectMembers = null;
+                SelectedProject = null;
+                CurrentProject = null;
+                DicRevitElements = null;
+                Versions = null;
+                UserProjects = null;
+                CurrentVersion = null;
+            }
         }
 
         /// <summary>

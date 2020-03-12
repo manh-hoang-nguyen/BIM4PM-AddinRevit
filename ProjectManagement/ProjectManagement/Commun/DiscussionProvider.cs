@@ -10,25 +10,27 @@ namespace ProjectManagement.Commun
 {
    public class DiscussionProvider
     {
-        private readonly static DiscussionProvider _instance = new DiscussionProvider();
-
         private DiscussionProvider()
         {
+            AuthProvider.Instance.ConnectionChanged += (s, e) => Reset(); 
+
             Comments = new ObservableCollection<Comment>();
         }
 
-        public static DiscussionProvider Instance => _instance;
-        
- 
+        public static DiscussionProvider Instance { get; } = new DiscussionProvider();
+
+
         public RevitElement RevitElement { get; set; }
 
         public ObservableCollection<Comment> Comments { get; set; } 
 
         public void Reset()
         {
-            RevitElement = null;
-            Comments  = new ObservableCollection<Comment>();
-          
+            if (AuthProvider.Instance.IsConnected == false)
+            {
+                RevitElement = null;
+                Comments = new ObservableCollection<Comment>();
+            } 
         }
     }
   
