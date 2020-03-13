@@ -11,11 +11,10 @@
 
     public class PaletteViewModel : ViewModelBase
     {
-        ObservableCollection<TabItem> TabItems  = new ObservableCollection<TabItem>();
+       public static ObservableCollection<TabItem> TabItems { get; set; } = new ObservableCollection<TabItem>();
 
         public PaletteViewModel()
-        {
-            AuthProvider.Instance.PropertyChanged += (s, e) => AddTabsOnConnected();
+        { 
             if (TabItems.Count == 0)
             {
                 TabItems.Add(new TabItem
@@ -24,22 +23,16 @@
                     Header = "Connect"
                 });
             }
+            AuthProvider.Instance.PropertyChanged += (s, e) => AddTabsOnConnected();
         }
 
         private void AddTabsOnConnected()
         {
-            if(AuthProvider.Instance.IsAuthenticated == true)
-            {
-                new Thread(() => PaletteUtilities.LaunchCommunicator())
-                {
-                    Priority = ThreadPriority.BelowNormal,
-                    IsBackground = true
-                }.Start();
+            if (AuthProvider.Instance.IsAuthenticated =! true)
+            { 
+                TabItems.RemoveAt(0);
             }
-            else
-            {
-                 TabItems.RemoveAt(0);
-            }
+            
 
             if (AuthProvider.Instance.IsConnected == true)
             {

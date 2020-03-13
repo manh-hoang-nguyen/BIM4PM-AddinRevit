@@ -252,9 +252,6 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\Auth\LoginViewModel.cs" />
-    <Compile Include="Tools\Auth\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Tools\Discussion\DiscussionRequestHandler.cs" />
     <Compile Include="Tools\PaletteMainView.xaml.cs">
       <DependentUpon>PaletteMainView.xaml</DependentUpon>
@@ -402,10 +399,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tools\Auth\LoginView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tools\Auth\UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

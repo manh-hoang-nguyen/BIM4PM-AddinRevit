@@ -94,7 +94,7 @@ namespace ProjectManagement
             rbDatabase.Visible = false;
             ribbonPanel.Visible = false;
             rib_panelProprety.Visible = false;
-            //*********************************
+            
 
             PushButtonData login = new PushButtonData("Connecter", "Login", thisAssemblyPath, "ProjectManagement.CmdRevit.CmdLogin");
             login.AvailabilityClassName = "ProjectManagement.AvailabilityButtonLogin";
@@ -106,49 +106,7 @@ namespace ProjectManagement
             logout.AvailabilityClassName = "ProjectManagement.AvailabilityButtonLogout";
             rbAuth.AddItem(logout);
 
-            /************************************Création de bouton Extraction de données***********************************************/
-
-            //string logo = null;
-            //string commentaireBouton = "Get Data";
-
-
-            //************* Panel Authen***********
-
-
-
-            //button.Ajouter(rbAuth, "progessbar", logo, "ProjectManagement.CmdRevit.CmdTestProgressBar", thisAssemblyPath, "");
-            ////*********** Panel Verification*****************
-            //button.Ajouter(rbVerification, "Verif Model", logo, "ProjectManagement.CmdRevit.CmdCheckModel", thisAssemblyPath, "Vérifier si model est à jour sur cloud");
-            //rbVerification.AddSeparator();
-            //button.Ajouter(rbVerification, "Update", logo, "ProjectManagement.CmdRevit.CmdUpdate", thisAssemblyPath, "Mettre à jour data in cloud");
-
-
-            ////**************Panel Database******************
-            ////button.Ajouter(rbDatabase, "Get Data", logo, "ProjectManagement.CmdRevit.CmdGetData", thisAssemblyPath, commentaireBouton);
-            ////rbDatabase.AddSeparator();
-            //button.Ajouter(rbDatabase, "Synchronization", logo, "ProjectManagement.CmdRevit.CmdSynchronization", thisAssemblyPath, commentaireBouton);
-            //rbDatabase.AddSeparator();
-            //button.Ajouter(rbDatabase, "Vider Database", logo, "ProjectManagement.CmdRevit.CmdDeleteData", thisAssemblyPath, commentaireBouton);
-            //rbDatabase.AddSeparator();
-            //button.Ajouter(rbDatabase, "Create Version", logo, "ProjectManagement.CmdRevit.CmdCreateVersion", thisAssemblyPath, commentaireBouton);
-
-            ////************* Panel Project Management*********** 
-            //button.Ajouter(ribbonPanel, "Send Data", logo, "ProjectManagement.CmdRevit.CmdSendData", thisAssemblyPath, commentaireBouton);
-            //ribbonPanel.AddSeparator();
-            //button.Ajouter(ribbonPanel, "DeletedElement", logo, "ProjectManagement.CmdRevit.CmdSendDeletedElement", thisAssemblyPath, commentaireBouton);
-
-
-            //button.Ajouter(rbAuth, "Afficher", logo, "ProjectManagement.ShowDockableWindow", thisAssemblyPath, "Afficher pallette de propriétés");
-            //Separateur.Ajouter(rib_panelProprety);
-            //button.Ajouter(rib_panelProprety, "Masquer", logo, "ProjectManagement.HideDockableWindow", thisAssemblyPath, "Masquer pallette de propriétés");
-
-            //rib_panelProprety.AddSeparator();
-            //button.Ajouter(rib_panelProprety, "Modification Watcher", logo, "ProjectManagement.CmdRevit.CmdModificationWatcher", thisAssemblyPath, "Masquer pallette de propriétés");
-
-
-            //DockablePanelActivated(); //Method for dockable panel
-
-
+             
 
             uicapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(onViewActivated); //for panel proprety 
             uicapp.ControlledApplication.DocumentOpened += OnDocumentOpened;

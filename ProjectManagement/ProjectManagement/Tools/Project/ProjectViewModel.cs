@@ -215,7 +215,7 @@
             if(AuthProvider.Instance.IsConnected == false)
             {
                 Task<User> userTask = Model.GetUser();
-                Task<List<ProjectManagement.Models.Project>> projects = Model.GetUserProjectsAsync();
+                Task<List<Project>> projects = Model.GetUserProjectsAsync();
                 view.Models.ItemsSource = ModelProvider.Instance.Models;
                 User = await userTask;
                 Projects = await projects;

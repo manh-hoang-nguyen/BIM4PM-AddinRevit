@@ -26,12 +26,12 @@
 
         public bool IsAuthenticated
         {
-            get => isAuthenticated; set { isAuthenticated = value; OnPropertyChanged(); }
+            get => isAuthenticated; set { isAuthenticated = value; OnPropertyChanged("IsAuthenticated"); }
         }
 
         public bool IsConnected
         {
-            get => _isConnected; set { _isConnected = value; OnPropertyChanged(); }
+            get => _isConnected; set { _isConnected = value; OnPropertyChanged("IsConnected"); }
         }
 
         public void Logout()
@@ -43,13 +43,21 @@
         } 
 
         public event PropertyChangedEventHandler PropertyChanged;
-         
+        
+       
         public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
             if (IsAuthenticated == true)
             {
+
+                new Thread(() => PaletteUtilities.LaunchCommunicator())
+                {
+                    Priority = ThreadPriority.BelowNormal,
+                    IsBackground = true
+                }.Start();
+
                 RestRequest req = new RestRequest(Route.GetMe, Method.GET);
                 req.AddHeader("Content-Type", "application/json");
                 req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
