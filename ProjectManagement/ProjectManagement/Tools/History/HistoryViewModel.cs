@@ -13,8 +13,7 @@
 
         public RelayCommand<HistoryView> Refresh { get; set; }
 
-        public HistoryModel Model { get; set; }
-
+     
          
 
         public HistoryViewModel()
@@ -26,7 +25,7 @@
 
         private void OnRefresh(HistoryView view)
         {
-            Model.GetHistory();  
+            HistoryModel.Instance.GetHistory();  
         }
 
         /// <summary>
