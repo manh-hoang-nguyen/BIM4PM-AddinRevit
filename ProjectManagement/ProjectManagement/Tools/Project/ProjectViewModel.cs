@@ -181,9 +181,9 @@
 
             Model.GetParamterElement();
 
-            AuthProvider.Instance.Connect();
-            AuthProvider.Instance.OnConnectionChanged(this,EventArgs.Empty);
-          
+            AuthProvider.Instance.IsConnected = true;
+           
+
         }
 
         /// <summary>
@@ -192,8 +192,8 @@
         /// <param name="view">The view<see cref="ProjectView"/></param>
         private void OnDisconnect(ProjectView view)
         {
-            AuthProvider.Instance.Disconnect();
-            AuthProvider.Instance.OnConnectionChanged(this, EventArgs.Empty);
+            AuthProvider.Instance.IsConnected = false;
+             
             Versions = null;
             BtnDisconnectIsEnable = false;
             BtnConnectIsEnable = true;

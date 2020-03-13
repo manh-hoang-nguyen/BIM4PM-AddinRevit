@@ -12,7 +12,7 @@
     {
         private ModelProvider()
         {
-            AuthProvider.Instance.ConnectionChanged += (s, e) =>  Reset();
+            AuthProvider.Instance.PropertyChanged += (s, e) =>  Reset();
            
         }
 

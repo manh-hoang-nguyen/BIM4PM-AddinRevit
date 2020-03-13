@@ -12,7 +12,7 @@ namespace ProjectManagement.Commun
     {
         private DiscussionProvider()
         {
-            AuthProvider.Instance.ConnectionChanged += (s, e) => Reset(); 
+            AuthProvider.Instance.PropertyChanged += (s, e) => Reset(); 
 
             Comments = new ObservableCollection<Comment>();
         }

@@ -14,7 +14,7 @@
 
         public PaletteViewModel()
         {
-            AuthProvider.Instance.ConnectionChanged += (s, e) => AddTabsOnConnected();
+            AuthProvider.Instance.PropertyChanged += (s, e) => AddTabsOnConnected();
             if (TabItems.Count == 0)
             {
                 TabItems.Add(new TabItem

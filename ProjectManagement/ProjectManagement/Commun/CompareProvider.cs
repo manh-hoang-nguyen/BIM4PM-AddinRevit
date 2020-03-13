@@ -14,7 +14,7 @@
     {
         private CompareProvider()
         {
-            AuthProvider.Instance.ConnectionChanged += (s, e) => Reset();
+            AuthProvider.Instance.PropertyChanged += (s, e) => Reset();
 
             ElementToExamine = new List<ElementId>();
             Deleted = new List<string>();
