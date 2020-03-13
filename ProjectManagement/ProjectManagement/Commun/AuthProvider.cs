@@ -26,7 +26,7 @@
 
         public bool IsAuthenticated
         {
-            get => isAuthenticated; set { isAuthenticated = value; OnAuthenticated(); }
+            get => isAuthenticated; set { isAuthenticated = value; OnPropertyChanged(); }
         }
 
         public bool IsConnected
@@ -39,27 +39,14 @@
             IsAuthenticated = false;
             token = null;
             IsConnected = false; 
-            PaletteViewModel.TabItems.RemoveAt(0);
+           
         } 
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public event PropertyChangedEventHandler AuthenticationChanged;
-
-        public void OnAuthenticationChanged([CallerMemberName] string propertyName = null)
-        {
-            AuthenticationChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected virtual void OnAuthenticated([CallerMemberName] string propertyName = null)
+         
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-            new Thread(() => PaletteUtilities.LaunchCommunicator())
-            {
-                Priority = ThreadPriority.BelowNormal,
-                IsBackground = true
-            }.Start();
 
             if (IsAuthenticated == true)
             {
@@ -73,11 +60,6 @@
 
                 CurrentUser = User.data;
             }
-        }
-
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -46,7 +46,7 @@ namespace ProjectManagement.Tools
         /// </summary>
         public static void LaunchCommunicator()
         {
-            if(AuthProvider.Instance.IsAuthenticated==true)
+             
             App.PaletteWindow.MainControl.Dispatcher.Invoke(() =>
             {
                 // (Konrad) We have to make sure that we unregister from all Messaging before reloading UI.

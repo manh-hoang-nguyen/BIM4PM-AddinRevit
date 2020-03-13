@@ -6,11 +6,12 @@
     using ProjectManagement.Tools.History;
     using ProjectManagement.Tools.Project;
     using System.Collections.ObjectModel;
+    using System.Threading;
     using System.Windows.Controls;
 
     public class PaletteViewModel : ViewModelBase
     {
-        public static ObservableCollection<TabItem> TabItems { get; set; } = new ObservableCollection<TabItem>();
+        ObservableCollection<TabItem> TabItems  = new ObservableCollection<TabItem>();
 
         public PaletteViewModel()
         {
@@ -27,6 +28,19 @@
 
         private void AddTabsOnConnected()
         {
+            if(AuthProvider.Instance.IsAuthenticated == true)
+            {
+                new Thread(() => PaletteUtilities.LaunchCommunicator())
+                {
+                    Priority = ThreadPriority.BelowNormal,
+                    IsBackground = true
+                }.Start();
+            }
+            else
+            {
+                 TabItems.RemoveAt(0);
+            }
+
             if (AuthProvider.Instance.IsConnected == true)
             {
                 TabItems.Add(new TabItem
