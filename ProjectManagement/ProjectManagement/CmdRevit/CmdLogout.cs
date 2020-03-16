@@ -22,9 +22,7 @@ namespace ProjectManagement.CmdRevit
             //}
 
             AuthProvider.Instance.Logout();
-
-         
-          
+              
             return Result.Succeeded;
         }
     }

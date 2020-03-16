@@ -23,15 +23,20 @@
                     Header = "Connect"
                 });
             }
-            AuthProvider.Instance.PropertyChanged += (s, e) => AddTabsOnConnected();
+            AuthProvider.Instance.AuthenticationChanged += (s, e) => OnAuthentication();
+            AuthProvider.Instance.ConnectionChanged += (s, e) => AddTabsOnConnected();
+           
         }
 
-        private void AddTabsOnConnected()
+        private void OnAuthentication()
         {
-            if (AuthProvider.Instance.IsAuthenticated =! true)
-            { 
+            if (AuthProvider.Instance.IsAuthenticated = !true)
+            {
                 TabItems.RemoveAt(0);
             }
+        }
+        private void AddTabsOnConnected()
+        {
             
 
             if (AuthProvider.Instance.IsConnected == true)

@@ -1,14 +1,16 @@
 ﻿namespace ProjectManagement.Commun
 {
+    using GalaSoft.MvvmLight;
     using Newtonsoft.Json;
     using ProjectManagement.Models;
     using ProjectManagement.Tools;
     using RestSharp;
+    using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Threading;
 
-    public class AuthProvider : INotifyPropertyChanged
+    public class AuthProvider : ObservableObject
     {
         private AuthProvider()
         {
@@ -20,18 +22,23 @@
 
         public Token token { get; set; }
 
-        private bool isAuthenticated;
+        private bool _isAuthenticated;
 
         private bool _isConnected;
 
         public bool IsAuthenticated
         {
-            get => isAuthenticated; set { isAuthenticated = value; OnPropertyChanged("IsAuthenticated"); }
+            get => _isAuthenticated;
+            set
+            {
+                _isAuthenticated = value;
+                OnAuthenticationChanged();
+            }
         }
 
         public bool IsConnected
         {
-            get => _isConnected; set { _isConnected = value; OnPropertyChanged("IsConnected"); }
+            get => _isConnected; set { _isConnected = value; OnConnectionChanged(); }
         }
 
         public void Logout()
@@ -40,18 +47,16 @@
             token = null;
             IsConnected = false; 
            
-        } 
+        }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        
-       
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public event EventHandler AuthenticationChanged ;
+        public event EventHandler ConnectionChanged;
+
+        protected virtual void OnAuthenticationChanged()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
+            (AuthenticationChanged as EventHandler)?.Invoke(this, EventArgs.Empty);
             if (IsAuthenticated == true)
             {
-
                 new Thread(() => PaletteUtilities.LaunchCommunicator())
                 {
                     Priority = ThreadPriority.BelowNormal,
@@ -68,6 +73,11 @@
 
                 CurrentUser = User.data;
             }
+        }
+        
+        protected virtual void OnConnectionChanged()
+        {
+            (ConnectionChanged as EventHandler)?.Invoke(this, EventArgs.Empty);
         }
     }
 }

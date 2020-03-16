@@ -85,7 +85,7 @@
                         Style="{StaticResource MHComboBox}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ProjectSelection}" CommandParameter="{Binding ElementName=Win}" />
+                                <i:InvokeCommandAction Command="{Binding ProjectSelectionCommand}" CommandParameter="{Binding ElementName=Win}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
@@ -104,7 +104,7 @@
                         Style="{StaticResource MHComboBox}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ModelSelection}" CommandParameter="{Binding ElementName=Win}" />
+                                <i:InvokeCommandAction Command="{Binding ModelSelectionCommand}" CommandParameter="{Binding ElementName=Win}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
@@ -145,7 +145,7 @@
                     TextDecorations="Underline">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseDown">
-                            <i:InvokeCommandAction Command="{Binding Compare}" CommandParameter="{Binding ElementName=Win}" />
+                            <i:InvokeCommandAction Command="{Binding CompareCommand}" CommandParameter="{Binding ElementName=Win}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBlock>
@@ -166,34 +166,25 @@
                 Orientation="Horizontal">
 
                 <Button
-                    Command="{Binding Connect}"
+                    Command="{Binding ConnectCommand}"
                     CommandParameter="{Binding ElementName=Win}"
                     Content="Connect"
-                    IsEnabled="{Binding BtnConnectIsEnable, FallbackValue=false}"
-                    Style="{StaticResource MHButton1}" />
-
-
+                    Style="{StaticResource MHButton1}" /> 
 
                 <Button
                     Margin="1"
                     BorderThickness="0"
-                    Command="{Binding Synchronize}"
+                    Command="{Binding SynchronizeCommand}"
                     CommandParameter="{Binding ElementName=Win}"
-                    Content="Sychronize"
-                    IsEnabled="{Binding BtnSynchronizeIsEnable, FallbackValue=false}"
-                    Style="{StaticResource MHButton1}" />
-
-
-
+                    Content="Synchronize"
+                    Style="{StaticResource MHButton1}" /> 
                 <Button
                     Margin="1"
                     BorderThickness="0"
-                    Command="{Binding Disconnect}"
+                    Command="{Binding DisconnectCommand}"
                     CommandParameter="{Binding ElementName=Win}"
                     Content="Disconnect"
-                    IsEnabled="{Binding BtnDisconnectIsEnable, FallbackValue=false}"
-                    Style="{StaticResource MHButton1}" />
-
+                    Style="{StaticResource MHButton1}" /> 
             </StackPanel>
         </Grid>
 

@@ -13,14 +13,12 @@
 
     public class ProjectProvider : INotifyPropertyChanged
     {
-        private readonly static ProjectProvider _instance = new ProjectProvider();
-
         private ProjectProvider()
         {
-            AuthProvider.Instance.PropertyChanged += (s, e) => Reset();
+            AuthProvider.Instance.ConnectionChanged += (s, e) => Reset();
         }
 
-        public static ProjectProvider Instance => _instance;
+        public static ProjectProvider Instance { get; } = new ProjectProvider();
 
         private Project _currentProject;
 
@@ -118,12 +116,7 @@
                 thread.Start();
             }
         }
-
-        /// <summary>
-        /// The GetRevitElementInCloud
-        /// </summary>
-        /// <param name="version">The version<see cref="Version"/></param>
-        /// <returns>The <see cref="List{RevitElement}"/></returns>
+ 
         public List<RevitElement> GetRevitElementInCloud(Version version)
         {
             if (CurrentProject == null)

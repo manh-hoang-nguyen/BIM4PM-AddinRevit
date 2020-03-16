@@ -1,6 +1,7 @@
 ﻿namespace ProjectManagement.Commun
 {
     using Autodesk.Revit.DB;
+    using GalaSoft.MvvmLight;
     using ProjectManagement.Models;
     using ProjectManagement.Utils.RevitUtils;
     using System.Collections.Generic;
@@ -8,11 +9,11 @@
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
 
-    public class ModelProvider : INotifyPropertyChanged
+    public class ModelProvider : ObservableObject
     {
         private ModelProvider()
         {
-            AuthProvider.Instance.PropertyChanged += (s, e) =>  Reset();
+            AuthProvider.Instance.ConnectionChanged += (s, e) =>  Reset();
            
         }
 
@@ -25,7 +26,15 @@
 
         public Document CurrentModel
         {
-            get => _currentModel; set { _currentModel = value; OnPropertyChanged(); }
+            get => _currentModel;
+            set
+            {
+                if(Set(()=> CurrentModel, ref _currentModel, value))
+                {
+                   if(CurrentModel !=null)
+                        Levels = Utils.RevitUtils.ElementUtils.GetLevels(CurrentModel);
+                }
+            }
         }
         public IList<Level> Levels { get; set; }
 
@@ -56,15 +65,6 @@
 
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-            if (CurrentModel != null)
-                Levels = Utils.RevitUtils.ElementUtils.GetLevels(CurrentModel);
-        }
+ 
     }
 }
