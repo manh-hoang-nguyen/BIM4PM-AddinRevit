@@ -4,6 +4,7 @@
     using Newtonsoft.Json.Converters;
     using ProjectManagement.Models;
     using RestSharp;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Globalization;
@@ -15,6 +16,7 @@
     {
         private ProjectProvider()
         {
+            DicRevitElements = new ConcurrentDictionary<string, RevitElement>();
             AuthProvider.Instance.ConnectionChanged += (s, e) => Reset();
         }
 
@@ -26,7 +28,7 @@
 
         public IList<Project> UserProjects { get; set; }
 
-        public Dictionary<string, RevitElement> DicRevitElements { get; set; }
+        public ConcurrentDictionary<string, RevitElement> DicRevitElements { get; set; }
 
         public List<Version> Versions { get; set; }
 
@@ -51,7 +53,7 @@
                 ProjectMembers = null;
                 SelectedProject = null;
                 CurrentProject = null;
-                DicRevitElements = null;
+                DicRevitElements = new ConcurrentDictionary<string, RevitElement>();
                 Versions = null;
                 UserProjects = null;
                 CurrentVersion = null;
@@ -63,7 +65,7 @@
         /// </summary>
         public void Update()
         {
-            DicRevitElements = new Dictionary<string, RevitElement>();
+            DicRevitElements = new ConcurrentDictionary<string, RevitElement>();
             if (CurrentVersion == null)
             {
                 MessageBox.Show("Current version null, please select a project");
@@ -71,7 +73,7 @@
             }
             foreach (RevitElement e in GetRevitElementInCloud(CurrentVersion))
             {
-                DicRevitElements.Add(e.guid, e);
+                DicRevitElements.TryAdd(e.guid, e);
             }
         }
 

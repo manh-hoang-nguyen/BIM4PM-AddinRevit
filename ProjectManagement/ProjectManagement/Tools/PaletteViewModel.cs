@@ -23,7 +23,7 @@
                     Header = "Connect"
                 });
             }
-            AuthProvider.Instance.AuthenticationChanged += (s, e) => OnAuthentication();
+            //AuthProvider.Instance.AuthenticationChanged += (s, e) => OnAuthentication();
             AuthProvider.Instance.ConnectionChanged += (s, e) => AddTabsOnConnected();
            
         }
@@ -41,16 +41,20 @@
 
             if (AuthProvider.Instance.IsConnected == true)
             {
-                TabItems.Add(new TabItem
+                if(TabItems.Count < 3)
                 {
-                    Content = new HistoryView() { DataContext = new HistoryViewModel() },
-                    Header = "History"
-                });
-                TabItems.Add(new TabItem
-                {
-                    Content = new DiscussionView() { DataContext = new DiscussionViewModel() },
-                    Header = "Discussion"
-                });
+                    TabItems.Add(new TabItem
+                    {
+                        Content = new HistoryView() { DataContext = new HistoryViewModel() },
+                        Header = "History"
+                    });
+                    TabItems.Add(new TabItem
+                    {
+                        Content = new DiscussionView() { DataContext = new DiscussionViewModel() },
+                        Header = "Discussion"
+                    });
+                }
+              
             }
             else
             {

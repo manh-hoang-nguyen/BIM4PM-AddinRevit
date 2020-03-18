@@ -7,7 +7,6 @@
     using ProjectManagement.Models;
     using ProjectManagement.Tools.Synchronize;
     using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
@@ -134,18 +133,18 @@
         {
             if (ProjectProvider.Instance.CurrentVersion == null) return;
 
-            Thread thread = new Thread(() =>
+            //Thread thread = new Thread(() =>
+            //{
+            //ProjectProvider.Instance.DicRevitElements = new Dictionary<string, RevitElement>();
+            Parallel.ForEach(Model.GetRevitElementInCloud(ProjectProvider.Instance.CurrentVersion), e =>
             {
-                ProjectProvider.Instance.DicRevitElements = new Dictionary<string, RevitElement>();
-                foreach (RevitElement e in Model.GetRevitElementInCloud(ProjectProvider.Instance.CurrentVersion))
-                {
-                    ProjectProvider.Instance.DicRevitElements.Add(e.guid, e);
-                }
-
-                CbModelIsEnable = false;
-                CbProjectIsEnable = false;
+              ProjectProvider.Instance.DicRevitElements.TryAdd(e.guid, e);
             });
-            thread.Start();
+
+            CbModelIsEnable = false;
+            CbProjectIsEnable = false;
+            //});
+            //thread.Start();
 
             Model.GetParamterElement();
 
@@ -235,7 +234,7 @@
                 ProjectProvider.Instance.CurrentProject = selectedProject;
 
                 Versions = ProjectProvider.Instance.Versions;
-                 
+
                 ConnectCommand.RaiseCanExecuteChanged();
             }
             else

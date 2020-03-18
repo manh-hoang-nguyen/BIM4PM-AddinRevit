@@ -38,14 +38,24 @@
 
         public bool IsConnected
         {
-            get => _isConnected; set { _isConnected = value; OnConnectionChanged(); }
+            get => _isConnected;
+            set
+            {
+                if(_isConnected != value)
+                {
+                    _isConnected = value;
+                    OnConnectionChanged();
+                }
+             
+            }
         }
 
         public void Logout()
         {
             IsAuthenticated = false;
             token = null;
-            IsConnected = false; 
+            IsConnected = false;
+            PaletteViewModel.TabItems.RemoveAt(0);
            
         }
 
