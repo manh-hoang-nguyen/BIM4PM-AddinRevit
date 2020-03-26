@@ -6,6 +6,7 @@
     using ProjectManagement.Commun;
     using ProjectManagement.Models;
     using ProjectManagement.Tools.Synchronize;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Windows;
@@ -135,13 +136,13 @@
 
             //Thread thread = new Thread(() =>
             //{
-            //ProjectProvider.Instance.DicRevitElements = new Dictionary<string, RevitElement>();
+            ConcurrentDictionary<string, RevitElement> concurDic = new ConcurrentDictionary<string, RevitElement>();
             Parallel.ForEach(Model.GetRevitElementInCloud(ProjectProvider.Instance.CurrentVersion), e =>
             {
-              ProjectProvider.Instance.DicRevitElements.TryAdd(e.guid, e);
+              concurDic.TryAdd(e.guid, e);
             });
-
-            CbModelIsEnable = false;
+            if (ProjectProvider.Instance.DicRevitElements != null) ProjectProvider.Instance.DicRevitElements = concurDic;
+           CbModelIsEnable = false;
             CbProjectIsEnable = false;
             //});
             //thread.Start();

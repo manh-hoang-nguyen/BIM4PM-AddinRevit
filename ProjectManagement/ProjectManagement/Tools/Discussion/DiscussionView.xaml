@@ -104,7 +104,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>
-                        </Border> 
+                        </Border>
                     </StackPanel>
                 </ScrollViewer>
 
@@ -185,7 +185,7 @@
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="TextChanged">
                                 <i:InvokeCommandAction Command="{Binding TxbCommentChange}" CommandParameter="{Binding ElementName=Win}" />
-                            </i:EventTrigger> 
+                            </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <TextBox.Style>
                             <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="TextBox">
@@ -220,10 +220,10 @@
                 </Border>
                 <Button
                     Grid.Column="1"
-                    IsEnabled="{Binding BtnSendIsEnabled, FallbackValue=false}"
                     Command="{Binding SendComment}"
                     CommandParameter="{Binding ElementName=Win}"
                     Content="Send"
+                    IsEnabled="{Binding BtnSendIsEnabled, FallbackValue=false}"
                     Style="{StaticResource MHButton1}" />
             </Grid>
         </Grid>

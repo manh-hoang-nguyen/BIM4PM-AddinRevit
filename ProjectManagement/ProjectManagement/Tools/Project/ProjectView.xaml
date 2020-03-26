@@ -115,7 +115,7 @@
                 Margin="3"
                 BorderThickness="0"
                 ItemContainerStyle="{StaticResource MaterialDesignGridViewItem}"
-                ItemsSource="{Binding Versions}">
+                ItemsSource="{Binding Versions, IsAsync=True}">
                 <ListView.View>
                     <GridView>
 

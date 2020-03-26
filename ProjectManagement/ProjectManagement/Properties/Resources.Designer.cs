@@ -61,7 +61,7 @@ namespace ProjectManagement.Properties {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à f4621647-f928-422a-8afa-e08293305ec8.
+        ///   Recherche une chaîne localisée semblable à 73886cde-e90b-4072-b964-5f35af89f012.
         /// </summary>
         internal static string PaletteGuid {
             get {

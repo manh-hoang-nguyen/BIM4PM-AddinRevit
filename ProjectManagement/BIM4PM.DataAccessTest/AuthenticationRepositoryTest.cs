@@ -15,8 +15,10 @@ namespace BIM4PM.DataAccessTest
             var authenticationRepository = new AuthenticationRepository();
 
             var actual = authenticationRepository.Login("nguyenhoang56ksgt@gmail.com", "12345678");
-
-            Assert.AreEqual(true, actual);
+            bool IsAuthenticated = actual.Item1;
+            string token = actual.Item2;
+            Assert.IsTrue(IsAuthenticated);
+            Assert.IsNotNull(token);
         }
         [TestMethod]
         public void Unauthenticated()
@@ -26,8 +28,10 @@ namespace BIM4PM.DataAccessTest
             var authenticationRepository = new AuthenticationRepository();
 
             var actual = authenticationRepository.Login("nguyenhoang56ksgt@gmail.com", "123456789");
-
-            Assert.AreEqual(false, actual);
+            bool IsAuthenticated = actual.Item1;
+            string token = actual.Item2;
+            Assert.IsFalse(IsAuthenticated);
+            Assert.IsNull(token);
         }
 
         [TestMethod]

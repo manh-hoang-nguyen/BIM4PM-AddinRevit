@@ -41,7 +41,7 @@
 
             if (AuthProvider.Instance.IsConnected == true)
             {
-                if(TabItems.Count < 3)
+                if (TabItems.Count < 3)
                 {
                     TabItems.Add(new TabItem
                     {
@@ -54,7 +54,7 @@
                         Header = "Discussion"
                     });
                 }
-              
+
             }
             else
             {

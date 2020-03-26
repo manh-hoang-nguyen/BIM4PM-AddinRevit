@@ -2,9 +2,6 @@
 {
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Dynamic;
     using System.Windows.Data;
 
     public class HistoryViewModel : ViewModelBase
@@ -13,10 +10,7 @@
 
         public RelayCommand<HistoryView> Refresh { get; set; }
 
-       // public HistoryModel Model { get; set; }
-
-         
-
+        // public HistoryModel Model { get; set; }
         public HistoryViewModel()
         {
             //Model = new HistoryModel();
@@ -26,7 +20,7 @@
 
         private void OnRefresh(HistoryView view)
         {
-            HistoryModel.Instance.GetHistory();  
+            HistoryModel.Instance.GetHistory();
         }
 
         /// <summary>
@@ -35,7 +29,7 @@
         /// <param name="view">The view<see cref="HistoryView"/></param>
         private void OnWindowLoaded(HistoryView view)
         {
-             
+
             view.History.ItemsSource = HistoryModel.Instance.HistoriesByTypeChange;
             CollectionView collectionView = (CollectionView)CollectionViewSource.GetDefaultView(view.History.ItemsSource);
             PropertyGroupDescription group = new PropertyGroupDescription("type");
@@ -45,9 +39,6 @@
             collectionView.SortDescriptions.Clear();
             collectionView.SortDescriptions.Add(new System.ComponentModel.SortDescription("type", System.ComponentModel.ListSortDirection.Ascending));
             collectionView.SortDescriptions.Add(new System.ComponentModel.SortDescription("date", System.ComponentModel.ListSortDirection.Descending));
-          
-
-
         }
     }
 }

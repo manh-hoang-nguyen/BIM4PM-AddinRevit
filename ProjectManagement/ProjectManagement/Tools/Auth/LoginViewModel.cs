@@ -4,6 +4,7 @@
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
     using ProjectManagement.Commun;
+    using System;
     using System.Threading;
     using System.Windows;
     using Visibility = System.Windows.Visibility;
@@ -99,6 +100,7 @@
 
         private void OnLogin(LoginView win)
         {
+             
             if (win.cBSave.IsChecked == true)
             {
                 Properties.Settings.Default["UserEmail"] = win.tbEmail.Text;

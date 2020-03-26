@@ -53,7 +53,7 @@
                 ProjectMembers = null;
                 SelectedProject = null;
                 CurrentProject = null;
-                DicRevitElements = new ConcurrentDictionary<string, RevitElement>();
+                DicRevitElements = null;
                 Versions = null;
                 UserProjects = null;
                 CurrentVersion = null;

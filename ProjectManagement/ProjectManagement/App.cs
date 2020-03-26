@@ -1,6 +1,5 @@
 namespace ProjectManagement
 {
-    using Autodesk.Revit.Attributes;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.DB.Events;
     using Autodesk.Revit.UI;
@@ -16,7 +15,6 @@ namespace ProjectManagement
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Windows;
 
     internal class App : IExternalApplication
     {
@@ -44,20 +42,12 @@ namespace ProjectManagement
 
         private RibbonItem _button;
 
-        /// <summary>
-        /// Provide access to singleton class instance.
-        /// </summary>
         private PanelProprety _panelProprety = null;
 
         public static UIControlledApplication _uicapp = null;
 
         private Document _doc;
 
-        /// <summary>
-        /// The OnStartup
-        /// </summary>
-        /// <param name="uicapp">The uicapp<see cref="UIControlledApplication"/></param>
-        /// <returns>The <see cref="Result"/></returns>
         public Result OnStartup(UIControlledApplication uicapp)
         {
             Instance = this;
@@ -94,7 +84,7 @@ namespace ProjectManagement
             rbDatabase.Visible = false;
             ribbonPanel.Visible = false;
             rib_panelProprety.Visible = false;
-            
+
 
             PushButtonData login = new PushButtonData("Connecter", "Login", thisAssemblyPath, "ProjectManagement.CmdRevit.CmdLogin");
             login.AvailabilityClassName = "ProjectManagement.AvailabilityButtonLogin";
@@ -106,7 +96,10 @@ namespace ProjectManagement
             logout.AvailabilityClassName = "ProjectManagement.AvailabilityButtonLogout";
             rbAuth.AddItem(logout);
 
-             
+            PushButtonData Test = new PushButtonData("Test", "Test", thisAssemblyPath, "ProjectManagement.CmdRevit.CmdGetData");
+           
+            rbAuth.AddItem(Test);
+
 
             uicapp.ViewActivated += new EventHandler<ViewActivatedEventArgs>(onViewActivated); //for panel proprety 
             uicapp.ControlledApplication.DocumentOpened += OnDocumentOpened;
@@ -120,11 +113,6 @@ namespace ProjectManagement
             return Result.Succeeded;
         }
 
-        /// <summary>
-        /// The OnDocumentChanged: Update list revit element in model
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="args">The args<see cref="DocumentChangedEventArgs"/></param>
         private void OnDocumentChanged(object sender, DocumentChangedEventArgs args)
         {
             Document doc = args.GetDocument();
@@ -189,20 +177,10 @@ namespace ProjectManagement
             }
         }
 
-        /// <summary>
-        /// The OnDocumentSynchronized
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="args">The args<see cref="DocumentSynchronizedWithCentralEventArgs"/></param>
         private void OnDocumentSynchronized(object sender, DocumentSynchronizedWithCentralEventArgs args)
         {
         }
 
-        /// <summary>
-        /// The onViewActivated
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="ViewActivatedEventArgs"/></param>
         private void onViewActivated(object sender, ViewActivatedEventArgs e)
         {
             _doc = e.Document;
@@ -211,66 +189,38 @@ namespace ProjectManagement
             PanelProprety._uiDoc = new UIDocument(_doc);
         }
 
-        /// <summary>
-        /// The OnDocumentSave
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="args">The args<see cref="DocumentSavedEventArgs"/></param>
         private void OnDocumentSave(object sender, DocumentSavedEventArgs args)
         {
         }
 
-        /// <summary>
-        /// The OnDocumentCreated
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="args">The args<see cref="DocumentCreatedEventArgs"/></param>
         private static void OnDocumentCreated(object sender, DocumentCreatedEventArgs args)
         {
 
             ModelProvider.Instance.Models.Add(args.Document);
         }
 
-        /// <summary>
-        /// When DocumentOpened, update list model
-        /// </summary>
-        /// <param name="source">The source<see cref="object"/></param>
-        /// <param name="args">The args<see cref="DocumentOpenedEventArgs"/></param>
         private static void OnDocumentOpened(object source, DocumentOpenedEventArgs args)
         {
 
             ModelProvider.Instance.Models.Add(args.Document);
         }
 
-        /// <summary>
-        /// When DocumentClosing, update list models and disconnect to projects if models is current models
-        /// </summary>
-        /// <param name="source">The source<see cref="object"/></param>
-        /// <param name="args">The args<see cref="DocumentClosingEventArgs"/></param>
         private static void OnDocumentClosing(object source, DocumentClosingEventArgs args)
         {
             //if (args.Document.Title == ModelProvider.Instance.CurrentModel.Title) AuthProvider.Instance.Disconnect();
             if (ModelProvider.Instance.CurrentModel != null && args.Document.Title == ModelProvider.Instance.CurrentModel.Title)
             {
-                 
+
                 AuthProvider.Instance.Logout();
             }
             var docToRemove = ModelProvider.Instance.Models.Where(x => x.Title == args.Document.Title);
             if (docToRemove != null) ModelProvider.Instance.Models.Remove(docToRemove.FirstOrDefault());
         }
 
-        /// <summary>
-        /// The OnDocumentClosed
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="args">The args<see cref="DocumentClosedEventArgs"/></param>
         private void OnDocumentClosed(object sender, DocumentClosedEventArgs args)
         {
         }
 
-        /// <summary>
-        /// The DockablePanelActivated
-        /// </summary>
         private void DockablePanelActivated()
         {
 
@@ -280,11 +230,6 @@ namespace ProjectManagement
             _uicapp.RegisterDockablePane(paneId, "Historiques", (IDockablePaneProvider)panelPropreties);
         }
 
-        /// <summary>
-        /// The OnShutdown
-        /// </summary>
-        /// <param name="a">The a<see cref="UIControlledApplication"/></param>
-        /// <returns>The <see cref="Result"/></returns>
         public Result OnShutdown(UIControlledApplication a)
         {
             a.ControlledApplication.DocumentOpened -= OnDocumentOpened;
@@ -297,9 +242,6 @@ namespace ProjectManagement
             return Result.Succeeded;
         }
 
-        /// <summary>
-        /// The TextChangedButton
-        /// </summary>
         public void TextChangedButton()
         {
             string s = _button.ItemText;
@@ -309,12 +251,6 @@ namespace ProjectManagement
 
     public class AvailabilityButtonLogin : IExternalCommandAvailability
     {
-        /// <summary>
-        /// The IsCommandAvailable
-        /// </summary>
-        /// <param name="a">The a<see cref="UIApplication"/></param>
-        /// <param name="b">The b<see cref="CategorySet"/></param>
-        /// <returns>The <see cref="bool"/></returns>
         public bool IsCommandAvailable(UIApplication a, CategorySet b)
         {
             if (AuthProvider.Instance.IsAuthenticated == false)
@@ -327,12 +263,6 @@ namespace ProjectManagement
 
     public class AvailabilityButtonLogout : IExternalCommandAvailability
     {
-        /// <summary>
-        /// The IsCommandAvailable
-        /// </summary>
-        /// <param name="a">The a<see cref="UIApplication"/></param>
-        /// <param name="b">The b<see cref="CategorySet"/></param>
-        /// <returns>The <see cref="bool"/></returns>
         public bool IsCommandAvailable(UIApplication a, CategorySet b)
         {
             if (AuthProvider.Instance.IsAuthenticated == false)
@@ -342,6 +272,4 @@ namespace ProjectManagement
             else return true;
         }
     }
-     
-     
 }

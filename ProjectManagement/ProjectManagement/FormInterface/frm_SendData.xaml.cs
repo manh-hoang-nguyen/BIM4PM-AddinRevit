@@ -43,10 +43,8 @@ namespace ProjectManagement.FormInterface
             //{
             //    ddd += item + "\\n";
             //}
-            CmdRevit.CmdSendData.auteur = auteur.Text;
-            CmdRevit.CmdSendData.comment = ddd;
-            if (version.IsChecked == true) CmdRevit.CmdSendData.version = (ProjectProvider.Instance.Versions.Count+1).ToString();
-            else CmdRevit.CmdSendData.version = ProjectProvider.Instance.Versions.Count.ToString();
+         
+           
             Close();
         }
 

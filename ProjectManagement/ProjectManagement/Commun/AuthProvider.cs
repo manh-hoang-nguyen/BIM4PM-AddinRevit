@@ -24,8 +24,6 @@
 
         private bool _isAuthenticated;
 
-        private bool _isConnected;
-
         public bool IsAuthenticated
         {
             get => _isAuthenticated;
@@ -35,21 +33,19 @@
                 OnAuthenticationChanged();
             }
         }
-
+        private bool _isConnected;
         public bool IsConnected
         {
             get => _isConnected;
-            set
-            {
-                if(_isConnected != value)
-                {
-                    _isConnected = value;
-                    OnConnectionChanged();
-                }
-             
+
+            set {
+                _isConnected = value;
+                OnConnectionChanged();
             }
         }
+       
 
+        
         public void Logout()
         {
             IsAuthenticated = false;
