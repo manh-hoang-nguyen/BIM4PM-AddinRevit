@@ -1,8 +1,8 @@
-﻿namespace ProjectManagement.Tools.Project
+﻿namespace BIM4PM.UI.Tools.Project
 {
     using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
-    using ProjectManagement.Commun;
+    using BIM4PM.UI.Commun;
     using System;
     using System.Threading;
     using System.Windows;
@@ -49,12 +49,12 @@
 
         private void GetRevitElementData(UIApplication app)
         {
-            if (ModelProvider.Instance.CurrentModel == null)
-            {
-                MessageBox.Show("Select Revit model please!");
-                return;
-            }
-            ModelProvider.Instance.Update();
+            //if (ProjectModelConnect.SelectedRevitModel == null)
+            //{
+            //    MessageBox.Show("Select Revit model please!");
+            //    return;
+            //}
+            //ModelProvider.Instance.Update();
         }
 
         private void Message(UIApplication app)

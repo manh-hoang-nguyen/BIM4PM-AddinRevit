@@ -21,16 +21,7 @@
         [JsonProperty("members")]
         public List<Member> Members { get; set; }
          
-       
-
-        public override bool Validate()
-        {
-            var isValid = true;
-
-            if (string.IsNullOrWhiteSpace(Id)) isValid = false;
-
-            return isValid;
-        }
+        
     }
 
     public class ProjectRes

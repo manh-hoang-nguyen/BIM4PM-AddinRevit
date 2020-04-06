@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectManagement.Properties {
+namespace BIM4PM.UI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,49 +20,6 @@ namespace ProjectManagement.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")] 
-        public string   UserEmail
-        {
-            get
-            {
-                return  (this["UserEmail"]).ToString();
-            }
-            set
-            {
-                this["UserEmail"] = value;
-            }
-        }
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UserPassword
-        {
-            get
-            {
-                return (this["UserPassword"]).ToString();
-            }
-            set
-            {
-                this["UserPassword"] = value;
-            }
-        }
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public string IsSave
-        {
-            get
-            {
-                return (this["IsSave"]).ToString() ;
-            }
-            set
-            {
-                this["IsSave"] = value;
             }
         }
     }

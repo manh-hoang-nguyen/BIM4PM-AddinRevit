@@ -4,7 +4,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.ApplicationServices;
 using System;
 
-namespace ProjectManagement.CmdRevit
+namespace BIM4PM.UI.CmdRevit
 {
     [Transaction(TransactionMode.Manual)]
     public class Lab2_2_ModelElements : IExternalCommand
@@ -29,7 +29,7 @@ namespace ProjectManagement.CmdRevit
             //TaskDialog.Show("revit", xx);
             Reference reference = UIdoc.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element);
             Element element = UIdoc.Document.GetElement(reference);
-            ProjectManagement.Utils.RevitUtils.ParameterUtils.GetAllParametersElement(element);
+            BIM4PM.UI.Utils.RevitUtils.ParameterUtils.GetAllParametersElement(element);
             return Result.Succeeded;
         }
         private CategorySet CreateCategoryList(Document doc, Application app)

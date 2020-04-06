@@ -9,6 +9,6 @@ namespace BIM4PM.Model
    public class Token
     {
        public bool success { get; set; }
-        public string token { get; set; }
+       public string token { get; set; }
     }
 }

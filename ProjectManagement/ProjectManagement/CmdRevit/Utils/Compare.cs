@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjectManagement.Commun;
-using ProjectManagement.Models;
+using BIM4PM.UI.Commun;
+using BIM4PM.UI.Models;
 
-namespace ProjectManagement.CmdRevit.Utils
+namespace BIM4PM.UI.CmdRevit.Utils
 {
    public class Compare
     {

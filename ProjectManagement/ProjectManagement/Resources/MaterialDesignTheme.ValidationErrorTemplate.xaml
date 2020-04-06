@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf"
-                    xmlns:controlzEx="clr-namespace:ProjectManagement.Resources.Utils">
+                    xmlns:controlzEx="clr-namespace:BIM4PM.UI.Resources.Utils">
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <ControlTemplate x:Key="MaterialDesignValidationErrorTemplate">

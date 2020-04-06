@@ -1,10 +1,10 @@
-﻿namespace ProjectManagement.CmdRevit
+﻿namespace BIM4PM.UI.CmdRevit
 {
     using Autodesk.Revit.Attributes;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
     using Newtonsoft.Json;
-    using ProjectManagement.Commun;
+    using BIM4PM.UI.Commun;
     using RestSharp;
     using System;
     using System.Collections.Generic;
@@ -99,7 +99,7 @@
             }
 
             string filename = Path.Combine(path,name);
-            ProjectManagement.Utils.RevitUtils.ScheduleUtil.ScheduleDataParser parser = new ProjectManagement.Utils.RevitUtils.ScheduleUtil.ScheduleDataParser(filename);
+            BIM4PM.UI.Utils.RevitUtils.ScheduleUtil.ScheduleDataParser parser = new BIM4PM.UI.Utils.RevitUtils.ScheduleUtil.ScheduleDataParser(filename);
             var table = parser.Table;
 
             

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjectManagement.Utils.ProgressBar
+namespace BIM4PM.UI.Utils.ProgressBar
 {
     /// <summary>
     /// Logique d'interaction pour HorizontalProgressBar.xaml

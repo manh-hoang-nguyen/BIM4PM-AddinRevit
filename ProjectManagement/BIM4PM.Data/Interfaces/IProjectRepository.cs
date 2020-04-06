@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIM4PM.Common
+namespace BIM4PM.DataAccess.Interfaces
 {
-    public class Class1
+    interface IProjectRepository
     {
     }
 }

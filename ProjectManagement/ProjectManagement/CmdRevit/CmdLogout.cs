@@ -1,10 +1,10 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using ProjectManagement.Commun;
+using BIM4PM.UI.Commun;
 using System;
 
-namespace ProjectManagement.CmdRevit
+namespace BIM4PM.UI.CmdRevit
 {
     [Transaction(TransactionMode.Manual)]
     public class CmdLogout : IExternalCommand

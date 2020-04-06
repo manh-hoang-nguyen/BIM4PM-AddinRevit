@@ -1,8 +1,8 @@
-﻿namespace ProjectManagement.Commun
+﻿namespace BIM4PM.UI.Commun
 {
     using Autodesk.Revit.DB;
     using Newtonsoft.Json;
-    using ProjectManagement.Models;
+    using BIM4PM.UI.Models;
     using RestSharp;
     using System;
     using System.Collections.Generic;
@@ -74,16 +74,16 @@
             Deleted = new List<string>();
             New = new List<string>();
 
-            Deleted = ProjectProvider.Instance.DicRevitElements.Keys.Except(ModelProvider.Instance.DicRevitElements.Keys).ToList();
-            New = ModelProvider.Instance.DicRevitElements.Keys.Except(ProjectProvider.Instance.DicRevitElements.Keys).ToList();
+            Deleted = ProjectProvider.Instance.DicRevitElements.Keys.Except(ModelProvider.DicRevitElements.Keys).ToList();
+            New = ModelProvider.DicRevitElements.Keys.Except(ProjectProvider.Instance.DicRevitElements.Keys).ToList();
 
-            var EleToCompareGuid = ModelProvider.Instance.DicRevitElements.Keys.Except(New);
+            var EleToCompareGuid = ModelProvider.DicRevitElements.Keys.Except(New);
             //Parallel.ForEach(EleToCompareGuid, guid =>
             foreach (string guid in EleToCompareGuid)
 
             {
                 History history = new History();
-                RevitElement current = ModelProvider.Instance.DicRevitElements[guid];
+                RevitElement current = ModelProvider.DicRevitElements[guid];
                 RevitElement previous = ProjectProvider.Instance.DicRevitElements[guid];
                 bool geometryIsSame = GeometryCompare(current, previous);
                 bool revitParameterIsSame = ParameterCompare(current, previous);
@@ -146,7 +146,7 @@
             req.RequestFormat = RestSharp.DataFormat.Json;
             req.AddJsonBody(body);
             Route.Client.Timeout = Int32.MaxValue;
-            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
+            Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
             var res = await resTask;
         }
 
@@ -172,7 +172,7 @@
             req.RequestFormat = RestSharp.DataFormat.Json;
             req.AddJsonBody(body);
             Route.Client.Timeout = Int32.MaxValue;
-            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
+            Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
             var res = await resTask;
         }
 
@@ -188,7 +188,7 @@
             List<RevitElement> newElements = new List<RevitElement>();
             foreach (string guid in New)
             {
-                newElements.Add(ModelProvider.Instance.DicRevitElements[guid]);
+                newElements.Add(ModelProvider.DicRevitElements[guid]);
             }
 
             RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
@@ -199,7 +199,7 @@
             req.RequestFormat = RestSharp.DataFormat.Json;
             req.AddJsonBody(body);
             Route.Client.Timeout = Int32.MaxValue;
-            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
+            Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
 
             var res = await resTask;
         }

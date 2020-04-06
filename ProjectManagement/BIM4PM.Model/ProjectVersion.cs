@@ -3,13 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class VersionRes
-    {
-        public bool success { get; set; }
-
-        public List<VersionParent> data { get; set; }
-    }
-
+     
     public class VersionParent
     {
         public string _id { get; set; }
@@ -25,9 +19,6 @@
 
         public int version { get; set; }
 
-        public override bool Validate()
-        {
-            return true;
-        }
+       
     }
 }

@@ -1,7 +1,7 @@
-﻿namespace ProjectManagement.Tools.Synchronize
+﻿namespace BIM4PM.UI.Tools.Synchronize
 {
     using Newtonsoft.Json;
-    using ProjectManagement.Commun;
+    using BIM4PM.UI.Commun;
     using RestSharp;
     using System;
     using System.Windows.Forms;

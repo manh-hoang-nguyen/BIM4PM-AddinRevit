@@ -1,9 +1,9 @@
-﻿namespace ProjectManagement.Tools.Discussion
+﻿namespace BIM4PM.UI.Tools.Discussion
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-    using ProjectManagement.Commun;
-    using ProjectManagement.Models;
+    using BIM4PM.UI.Commun;
+    using BIM4PM.UI.Models;
     using RestSharp;
     using System.Collections.ObjectModel;
     using System.Globalization;

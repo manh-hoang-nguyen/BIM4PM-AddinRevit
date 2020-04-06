@@ -1,12 +1,12 @@
 ﻿<UserControl
-    x:Class="ProjectManagement.Tools.Project.ProjectView"
+    x:Class="BIM4PM.UI.Tools.Project.ProjectView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:local="clr-namespace:ProjectManagement.Tools.Project"
+    xmlns:local="clr-namespace:BIM4PM.UI.Tools.Project"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:progressBar="clr-namespace:ProjectManagement.Resources.UI.ProgressBar.CircularProgressBar"
+    xmlns:progressBar="clr-namespace:BIM4PM.UI.Resources.UI.ProgressBar.CircularProgressBar"
     x:Name="Win"
     d:DesignHeight="800"
     d:DesignWidth="450"
@@ -29,9 +29,9 @@
                 <Setter Property="Margin" Value="3" />
             </Style>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ProjectManagement;component/Resources/UI/ProgressBar/ProgressBarResource.xaml" />
-                <ResourceDictionary Source="/ProjectManagement;component/Resources/ResourceDictionary.xaml" />
-                <ResourceDictionary Source="/ProjectManagement;component/Resources/ComboBoxResource.xaml" />
+                <ResourceDictionary Source="/BIM4PM.UI;component/Resources/UI/ProgressBar/ProgressBarResource.xaml" />
+                <ResourceDictionary Source="/BIM4PM.UI;component/Resources/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="/BIM4PM.UI;component/Resources/ComboBoxResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -79,15 +79,11 @@
                     <ComboBox
                         x:Name="Projects"
                         BorderThickness="0"
+                        SelectedItem="{Binding SelectedProject}"
                         DisplayMemberPath="name"
                         IsEnabled="{Binding CbProjectIsEnable, FallbackValue=true}"
                         ItemsSource="{Binding Projects}"
-                        Style="{StaticResource MHComboBox}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ProjectSelectionCommand}" CommandParameter="{Binding ElementName=Win}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                        Style="{StaticResource MHComboBox}"> 
                     </ComboBox>
                 </Border>
             </StackPanel>
@@ -100,13 +96,10 @@
                     <ComboBox
                         x:Name="Models"
                         DisplayMemberPath="Title"
+                        SelectedItem="{Binding SelectedRevitModel}"
                         IsEnabled="{Binding CbModelIsEnable, FallbackValue=true}"
                         Style="{StaticResource MHComboBox}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ModelSelectionCommand}" CommandParameter="{Binding ElementName=Win}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                       
                     </ComboBox>
                 </Border>
             </StackPanel>

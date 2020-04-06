@@ -1,10 +1,10 @@
-﻿namespace ProjectManagement.Tools.Project
+﻿namespace BIM4PM.UI.Tools.Project
 {
     using Autodesk.Revit.DB;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-    using ProjectManagement.Commun;
-    using ProjectManagement.Models;
+    using BIM4PM.UI.Commun;
+    using BIM4PM.UI.Models;
     using RestSharp;
     using System.Collections.Generic;
     using System.Globalization;
@@ -30,7 +30,7 @@
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
 
-            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
+            Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
 
             var res = await resTask;
             UserRes User = JsonConvert.DeserializeObject<UserRes>(res.Content);
@@ -41,12 +41,12 @@
         /// The GetUserProjects
         /// </summary>
         /// <returns>The <see cref="Task{List{ProjectManagement.Models.Project}}"/></returns>
-        public async Task<List<ProjectManagement.Models.Project>> GetUserProjectsAsync()
+        public async Task<List<BIM4PM.UI.Models.Project>> GetUserProjectsAsync()
         {
             RestRequest req = new RestRequest(Route.UserProjects, Method.GET);
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
+            Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
             var res = await resTask;
             ProjectRes Project = JsonConvert.DeserializeObject<ProjectRes>(res.Content);
             return Project.data;
@@ -57,13 +57,13 @@
         /// </summary>
         /// <param name="id">The id<see cref="string"/></param>
         /// <returns>The <see cref="Task{List{ProjectManagement.Models.Project}}"/></returns>
-        public async Task<List<ProjectManagement.Models.Version>> GetVersionAsync(string id)
+        public async Task<List<BIM4PM.UI.Models.Version>> GetVersionAsync(string id)
         {
             string url = string.Format("{0}/{1}/versions", Route.UserProjects, id);
             RestRequest req = new RestRequest(url, Method.GET);
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-            Task<IRestResponse> resTask = Route.Client.ExecuteTaskAsync(req);
+            Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
             var res = await resTask;
             VersionRes Version = JsonConvert.DeserializeObject<VersionRes>(res.Content);
             return Version.data[0].versions;
@@ -136,7 +136,7 @@
             req.AddHeader("Content-Type", "application/json");
             req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
 
-            string body = JsonConvert.SerializeObject(ModelProvider.Instance.DicRevitElements);
+            string body = JsonConvert.SerializeObject(ModelProvider.DicRevitElements);
             req.RequestFormat = DataFormat.Json;
 
             req.AddJsonBody(body);

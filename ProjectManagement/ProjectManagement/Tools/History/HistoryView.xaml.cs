@@ -1,4 +1,4 @@
-﻿namespace ProjectManagement.Tools.History
+﻿namespace BIM4PM.UI.Tools.History
 {
     using System.Windows.Controls;
 
@@ -10,7 +10,7 @@
         //https://stackoverflow.com/questions/22108712/could-not-load-file-or-assembly-xceed-wpf-toolkit/25429824
         public HistoryView()
         {
-            InitializeComponent();
+             
         }
     }
 }

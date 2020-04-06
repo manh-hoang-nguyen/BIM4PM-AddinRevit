@@ -2,7 +2,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace ProjectManagement.CmdRevit
+namespace BIM4PM.UI.CmdRevit
 {
     [Transaction(TransactionMode.Manual)]
     public class CmdDeleteData : IExternalCommand

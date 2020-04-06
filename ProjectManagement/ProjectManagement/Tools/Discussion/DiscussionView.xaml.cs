@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjectManagement.Tools.Discussion
+namespace BIM4PM.UI.Tools.Discussion
 {
     /// <summary>
     /// Logique d'interaction pour TopicView.xaml

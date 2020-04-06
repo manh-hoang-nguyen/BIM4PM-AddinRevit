@@ -8,7 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace ProjectManagement.Resources.Utils
+namespace BIM4PM.UI.Resources.Utils
 {
     /// <summary>
     /// This custom popup can be used by validation error templates or something else.

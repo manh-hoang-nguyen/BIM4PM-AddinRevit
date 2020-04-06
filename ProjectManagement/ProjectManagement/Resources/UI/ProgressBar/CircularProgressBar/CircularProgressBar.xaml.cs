@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjectManagement.Resources.UI.ProgressBar.CircularProgressBar
+namespace BIM4PM.UI.Resources.UI.ProgressBar.CircularProgressBar
 {
     /// <summary>
     /// Logique d'interaction pour CircularProgressBar.xaml

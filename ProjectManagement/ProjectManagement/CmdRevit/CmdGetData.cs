@@ -9,7 +9,7 @@ using System.Text.Json;
 using GraphQL.Client.Serializer.Newtonsoft;
 using System.Collections.Generic;
 
-namespace ProjectManagement.CmdRevit
+namespace BIM4PM.UI.CmdRevit
 {
     [Transaction(TransactionMode.ReadOnly)]
     public class CmdGetData : IExternalCommand

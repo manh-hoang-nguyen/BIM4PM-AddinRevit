@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManagement.Models
+namespace BIM4PM.UI.Models
 {
     public class Topic
     {

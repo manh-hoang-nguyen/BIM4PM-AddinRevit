@@ -1,7 +1,7 @@
-﻿using ProjectManagement.Models;
+﻿using BIM4PM.UI.Models;
 using System.Collections.Generic;
 
-namespace ProjectManagement.Commun
+namespace BIM4PM.UI.Commun
 {
     public class UserData
     {

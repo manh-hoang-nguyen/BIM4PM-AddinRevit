@@ -1,4 +1,4 @@
-﻿namespace ProjectManagement.Tools.Project
+﻿namespace BIM4PM.UI.Tools.Project
 {
     using System.Windows;
     using System.Windows.Controls;

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ProjectManagement.Tools.Auth
+namespace BIM4PM.UI.Tools.Auth
 {
     /// <summary>
     /// Logique d'interaction pour LoginView.xaml

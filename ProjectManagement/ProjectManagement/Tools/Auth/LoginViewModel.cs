@@ -1,10 +1,13 @@
-﻿namespace ProjectManagement.Tools.Auth
+﻿namespace BIM4PM.UI.Tools.Auth
 {
     using Autodesk.Revit.UI;
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
-    using ProjectManagement.Commun;
+    using BIM4PM.UI.CmdRevit;
+    using BIM4PM.UI.Commun;
+
     using System;
+     
     using System.Threading;
     using System.Windows;
     using Visibility = System.Windows.Visibility;
@@ -99,7 +102,7 @@
         }
 
         private void OnLogin(LoginView win)
-        {
+        { 
              
             if (win.cBSave.IsChecked == true)
             {
@@ -119,14 +122,18 @@
 
             Thread thread = new Thread(() =>
             {
-                bool isAuthenticated = Model.LoginAsync(UserName, win.PasswordBox.Password);
-                if (isAuthenticated)
+                var subjet = new Auth();
+                LaunchPanel launchPanel = new LaunchPanel();
+                subjet.Attach(launchPanel);
+                subjet.Login(UserName, win.PasswordBox.Password);
+
+                if (Auth.IsAuthenticated)
                 {
                     VisiblityLoginWindow = Visibility.Hidden;
                     VisibilityProgressBar = Visibility.Hidden;
                     VisibilityNotAuthenticated = Visibility.Hidden;
                     VisibilityAuthenticated = Visibility.Visible;
-                    AuthProvider.Instance.IsAuthenticated = true;
+                    
                 }
                 else
                 {
@@ -134,7 +141,7 @@
                     VisibilityProgressBar = Visibility.Hidden;
                     VisibilityNotAuthenticated = Visibility.Visible;
                     VisibilityAuthenticated = Visibility.Hidden;
-                    AuthProvider.Instance.IsAuthenticated = false;
+                    
                 }
             });
 

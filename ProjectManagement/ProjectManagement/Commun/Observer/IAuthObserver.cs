@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManagement.Commun.Observer
+namespace BIM4PM.UI.Commun
 {
-    interface ISubject
+   public interface IAuthObserver
     {
+        // Receive update from subject
+        void Update(IAuth subject);
     }
 }

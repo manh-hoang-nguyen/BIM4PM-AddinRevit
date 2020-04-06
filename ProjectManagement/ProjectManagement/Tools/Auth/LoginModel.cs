@@ -1,7 +1,7 @@
-﻿namespace ProjectManagement.Tools.Auth
+﻿namespace BIM4PM.UI.Tools.Auth
 {
-    using ProjectManagement.Commun;
-    using ProjectManagement.Models;
+    using BIM4PM.UI.Commun;
+    using BIM4PM.UI.Models;
     using RestSharp;
     using System.Net;
     using System.Threading.Tasks;

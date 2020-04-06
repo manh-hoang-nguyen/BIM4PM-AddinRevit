@@ -11,13 +11,7 @@
 
         public List<RevitElement> data { get; set; }
     }
-
-    public class HistoryResParent
-    {
-        public bool success { get; set; }
-
-        public HistoryResChild data { get; set; }
-    }
+     
 
     public class HistoryResChild
     {
@@ -167,15 +161,6 @@
             }
         }
 
-        public override bool Validate()
-        {
-            var isValid = true;
-            if (string.IsNullOrWhiteSpace(Project)) isValid = false;
-            if (string.IsNullOrWhiteSpace(Version)) isValid = false;
-            if (string.IsNullOrWhiteSpace(Guid)) isValid = false;
-            if (string.IsNullOrWhiteSpace(Name)) isValid = false;
-            if (string.IsNullOrWhiteSpace(ElementId)) isValid = false;
-            return isValid;
-        }
+        
     }
 }

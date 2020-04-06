@@ -1,11 +1,11 @@
-﻿namespace ProjectManagement.Tools.Project
+﻿namespace BIM4PM.UI.Tools.Project
 {
     using Autodesk.Revit.DB;
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
-    using ProjectManagement.Commun;
-    using ProjectManagement.Models;
-    using ProjectManagement.Tools.Synchronize;
+    using BIM4PM.UI.Commun;
+    using BIM4PM.UI.Models;
+    using BIM4PM.UI.Tools.Synchronize;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -15,17 +15,29 @@
 
     public class ProjectViewModel : ViewModelBase
     {
+        private Document _selectedRevitModel;
+
+        public Document SelectedRevitModel
+        {
+            get { return _selectedRevitModel; }
+            set { _selectedRevitModel = value;  RaisePropertyChanged("SelectedRevitModel"); ConnectCommand.RaiseCanExecuteChanged(); }
+        }
+
+        private Project _selectedProject;
+
+        public Project SelectedProject
+        {
+            get { return _selectedProject; }
+            set { _selectedProject = value; RaisePropertyChanged("SelectedProject"); ConnectCommand.RaiseCanExecuteChanged(); }
+        }
+
         public RelayCommand<ProjectView> WindowLoaded { get; set; }
 
         public RelayCommand<UserControl> SendData { get; set; }
 
         public RelayCommand<ProjectView> ConnectCommand { get; set; }
 
-        public RelayCommand<ProjectView> DisconnectCommand { get; set; }
-
-        public RelayCommand<ProjectView> ModelSelectionCommand { get; set; }
-
-        public RelayCommand<ProjectView> ProjectSelectionCommand { get; set; }
+        public RelayCommand<ProjectView> DisconnectCommand { get; set; } 
 
         public RelayCommand<ProjectView> CompareCommand { get; set; }
 
@@ -35,7 +47,7 @@
 
         public User User
         {
-            get => _user; set { _user = value; RaisePropertyChanged(); }
+            get => _user; set { _user = value; RaisePropertyChanged("User"); }
         }
 
         public List<Models.Project> Projects
@@ -75,8 +87,7 @@
             Model = new ProjectModel();
             WindowLoaded = new RelayCommand<ProjectView>(OnWindowLoaded);
 
-            ProjectSelectionCommand = new RelayCommand<ProjectView>(OnProjectSelection);
-            ModelSelectionCommand = new RelayCommand<ProjectView>(OnModelSelection);
+            
             ConnectCommand = new RelayCommand<ProjectView>(OnConnect, CanConnect);
             DisconnectCommand = new RelayCommand<ProjectView>(OnDisconnect, CanDisconnect);
             SendData = new RelayCommand<UserControl>(OnSendData);
@@ -93,9 +104,10 @@
         private bool CanConnect(ProjectView arg)
         {
 
-            if (ModelProvider.Instance.CurrentModel != null
-                && ProjectProvider.Instance.CurrentProject != null
-                && AuthProvider.Instance.IsConnected == false) return true;
+            //if (ModelProvider.Instance.CurrentModel != null
+            //    && ProjectProvider.Instance.CurrentProject != null
+            //    && AuthProvider.Instance.IsConnected == false) return true;
+            if (SelectedRevitModel != null && SelectedProject!= null) return true;
             return false;
         }
 
@@ -107,7 +119,7 @@
 
         private void OnCompare(ProjectView view)
         {
-            if (ModelProvider.Instance.DicRevitElements == null || ProjectProvider.Instance.DicRevitElements == null)
+            if (ModelProvider.DicRevitElements == null || ProjectProvider.Instance.DicRevitElements == null)
             {
                 MessageBox.Show("You have to connect first!");
                 return;
@@ -154,6 +166,12 @@
             DisconnectCommand.RaiseCanExecuteChanged();
             SynchronizeCommand.RaiseCanExecuteChanged();
             CompareCommand.RaiseCanExecuteChanged();
+
+            //Test
+            PaletteViewModel paletteViewModel = new PaletteViewModel();
+            ModelProvider modelProvider = new ModelProvider();
+            ProjectModelConnect connect= new ProjectModelConnect(SelectedProject, SelectedRevitModel);
+            
         }
 
         /// <summary>
@@ -189,9 +207,9 @@
             {
                 Task<User> userTask = Model.GetUser();
                 Task<List<Project>> projects = Model.GetUserProjectsAsync();
-                view.Models.ItemsSource = ModelProvider.Instance.Models;
-                User = await userTask;
-                Projects = await projects;
+                view.Models.ItemsSource = ModelProvider.Models;
+               // User = await userTask;
+               // Projects = await projects;
 
                 CbProjectIsEnable = true;
                 CbModelIsEnable = true;
@@ -208,40 +226,6 @@
             Model.SendRevitElementToCloud();
         }
 
-        /// <summary>
-        /// The when select project, set current project
-        /// </summary>
-        /// <param name="view">The view<see cref="ProjectView"/></param>
-        private void OnModelSelection(ProjectView view)
-        {
-
-            if (view.Models.SelectedItem != null)
-            {
-                ModelProvider.Instance.CurrentModel = view.Models.SelectedItem as Document;
-                ConnectCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        /// <summary>
-        /// When select project, set provider of current project and current version of project too
-        /// </summary>
-        /// <param name="view">The view<see cref="ProjectView"/></param>
-        private void OnProjectSelection(ProjectView view)
-        {
-
-            if (view.Projects.SelectedItem != null)
-            {
-                Project selectedProject = view.Projects.SelectedItem as Project;
-                ProjectProvider.Instance.CurrentProject = selectedProject;
-
-                Versions = ProjectProvider.Instance.Versions;
-
-                ConnectCommand.RaiseCanExecuteChanged();
-            }
-            else
-            {
-                ProjectProvider.Instance.CurrentVersion = null;
-            }
-        }
+        
     }
 }

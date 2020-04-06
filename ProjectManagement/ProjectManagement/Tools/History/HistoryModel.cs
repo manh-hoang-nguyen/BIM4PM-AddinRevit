@@ -1,4 +1,4 @@
-﻿using ProjectManagement.Models;
+﻿using BIM4PM.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManagement.Tools.History
+namespace BIM4PM.UI.Tools.History
 {
    public class HistoryModel
     {

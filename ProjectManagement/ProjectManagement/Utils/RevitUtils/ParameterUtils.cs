@@ -1,4 +1,4 @@
-﻿namespace ProjectManagement.Utils.RevitUtils
+﻿namespace BIM4PM.UI.Utils.RevitUtils
 {
     using Autodesk.Revit.DB;
     using System.Collections.Generic;

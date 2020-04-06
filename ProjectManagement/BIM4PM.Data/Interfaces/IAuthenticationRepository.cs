@@ -11,7 +11,8 @@ namespace BIM4PM.DataAccess
     public interface IAuthenticationRepository
     {
         Task<IRestResponse<Token>> LoginAsync(string email, string password);
+        Tuple<bool, string> Login(string email, string password);
         Task LogoutAsync();
-        bool IsAuthenticated { get; set; }
+       
     }
 }

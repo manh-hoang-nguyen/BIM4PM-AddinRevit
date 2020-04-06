@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ProjectManagement")]
-[assembly: AssemblyDescription("Revit Add-In Description for ProjectManagement")]
+[assembly: AssemblyTitle("BIM4PM.UI")]
+[assembly: AssemblyDescription("Revit Add-In Description for BIM4PM.UI")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Autodesk Inc.")]
-[assembly: AssemblyProduct("ProjectManagement Revit C# .NET Add-In")]
+[assembly: AssemblyProduct("BIM4PM.UI Revit C# .NET Add-In")]
 [assembly: AssemblyCopyright("Copyright 2018 (C) Jeremy Tammik, Autodesk Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="ProjectManagement.Tools.Synchronize.SyncView"
+    x:Class="BIM4PM.UI.Tools.Synchronize.SyncView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -82,7 +82,7 @@
                 </StackPanel>
             </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ProjectManagement;component/Resources/ButtonResource.xaml" />
+                <ResourceDictionary Source="/BIM4PM.UI;component/Resources/ButtonResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

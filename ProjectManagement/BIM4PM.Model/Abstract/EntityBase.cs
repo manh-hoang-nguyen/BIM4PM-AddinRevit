@@ -12,10 +12,6 @@
         [JsonProperty("updatedAt")]
         public DateTime UpdatedAt { get; set; }
         [JsonProperty("__v")]
-        public int V { get; set; }
-       
-        public bool IsValid => Validate();
- 
-        public abstract bool Validate();
+        public int V { get; set; } 
     }
 }

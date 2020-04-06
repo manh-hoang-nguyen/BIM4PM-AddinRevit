@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManagement.CmdRevit.Utils
+namespace BIM4PM.UI.CmdRevit.Utils
 {
     public class PanelAvailability
     {

@@ -1,8 +1,8 @@
-﻿namespace ProjectManagement
+﻿namespace BIM4PM.UI
 {
     using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
-    using ProjectManagement.Models;
+    using BIM4PM.UI.Models;
     using System.Collections.Generic;
     using System.Linq;
 

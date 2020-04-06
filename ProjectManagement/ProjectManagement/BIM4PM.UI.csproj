@@ -13,8 +13,8 @@
     <ProjectGuid>{B6A257CE-526C-4D67-A450-9A2895F187F0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ProjectManagement</RootNamespace>
-    <AssemblyName>ProjectManagement</AssemblyName>
+    <RootNamespace>BIM4PM.UI</RootNamespace>
+    <AssemblyName>BIM4PM.UI</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -90,9 +90,8 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RestSharp, Version=106.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.10.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPI, Version=19.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\Revit.RevitApi.x64.2019.0.0\lib\net45\RevitAPI.dll</HintPath>
@@ -201,33 +200,16 @@
     <Compile Include="Commun\Mediator\AuthChangedEventArgs.cs" />
     <Compile Include="Commun\Mediator\Mediator.cs" />
     <Compile Include="Commun\ModelProvider.cs" />
+    <Compile Include="Commun\Observer\ProjectModelConnect.cs" />
+    <Compile Include="Commun\Observer\IAuthObserver.cs" />
+    <Compile Include="Commun\Observer\IAuth.cs" />
+    <Compile Include="Commun\Observer\IConnect.cs" />
+    <Compile Include="Commun\Observer\IConnectObserver.cs" />
+    <Compile Include="Commun\Observer\LaunchPanel.cs" />
+    <Compile Include="Commun\Observer\Auth.cs" />
     <Compile Include="Commun\ProjectProvider.cs" />
     <Compile Include="Commun\Route.cs" />
     <Compile Include="Commun\UserData.cs" />
-    <Compile Include="FormInterface\frm_CreateVersion.xaml.cs">
-      <DependentUpon>frm_CreateVersion.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FormInterface\frm_Login.xaml.cs">
-      <DependentUpon>frm_Login.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FormInterface\frm_ModificationWatcher.xaml.cs">
-      <DependentUpon>frm_ModificationWatcher.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FormInterface\frm_ProgressBar.xaml.cs">
-      <DependentUpon>frm_ProgressBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FormInterface\frm_SelectProject.xaml.cs">
-      <DependentUpon>frm_SelectProject.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FormInterface\frm_SendData.xaml.cs">
-      <DependentUpon>frm_SendData.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FormInterface\frm_UpdateDataInCloud.xaml.cs">
-      <DependentUpon>frm_UpdateDataInCloud.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FormInterface\PanelProprety.xaml.cs">
-      <DependentUpon>PanelProprety.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Comparison.cs" />
     <Compile Include="MethodeRevitApi.cs" />
@@ -293,12 +275,12 @@
       <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\History\HistoryViewModel.cs" />
-    <Compile Include="Tools\Project\ModelRequestHandler.cs" />
-    <Compile Include="Tools\Project\ProjectModel.cs" />
-    <Compile Include="Tools\Project\ProjectView.xaml.cs">
+    <Compile Include="Tools\ProjectConnect\ModelRequestHandler.cs" />
+    <Compile Include="Tools\ProjectConnect\ProjectModel.cs" />
+    <Compile Include="Tools\ProjectConnect\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\Project\ProjectViewModel.cs" />
+    <Compile Include="Tools\ProjectConnect\ProjectViewModel.cs" />
     <Compile Include="Tools\Synchronize\SyncModel.cs" />
     <Compile Include="Tools\Synchronize\SyncView.xaml.cs">
       <DependentUpon>SyncView.xaml</DependentUpon>
@@ -339,38 +321,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="FormInterface\frm_CreateVersion.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FormInterface\frm_Login.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FormInterface\frm_ModificationWatcher.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FormInterface\frm_ProgressBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FormInterface\frm_SelectProject.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FormInterface\frm_SendData.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FormInterface\frm_UpdateDataInCloud.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FormInterface\PanelProprety.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\BorderResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -439,7 +389,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tools\Project\ProjectView.xaml">
+    <Page Include="Tools\ProjectConnect\ProjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

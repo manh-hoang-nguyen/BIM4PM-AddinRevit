@@ -1,9 +1,9 @@
-﻿namespace ProjectManagement.Tools.Synchronize
+﻿namespace BIM4PM.UI.Tools.Synchronize
 {
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
-    using ProjectManagement.Commun;
-    using ProjectManagement.Models;
+    using BIM4PM.UI.Commun;
+    using BIM4PM.UI.Models;
     using System.Collections.ObjectModel;
     using System.Windows;
 
@@ -107,14 +107,14 @@
         private void OnWindowLoaded(SyncView view)
         {
 
-            if (ProjectProvider.Instance.DicRevitElements == null || ModelProvider.Instance.DicRevitElements == null)
+            if (ProjectProvider.Instance.DicRevitElements == null || ModelProvider.DicRevitElements == null)
             {
                 MessageBox.Show("You have to connect to project first!");
                 view.Win.Close();
             }
             else
             {
-                if (ModelProvider.Instance.DicRevitElements.Count == 0)
+                if (ModelProvider.DicRevitElements.Count == 0)
                 {
                     MessageBox.Show("No element in models");
                     view.Win.Close();

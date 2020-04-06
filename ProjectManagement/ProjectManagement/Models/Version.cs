@@ -1,4 +1,4 @@
-﻿namespace ProjectManagement.Models
+﻿namespace BIM4PM.UI.Models
 {
     using System;
     using System.Collections.Generic;

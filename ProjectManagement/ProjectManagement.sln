@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagement", "ProjectManagement\ProjectManagement.csproj", "{B6A257CE-526C-4D67-A450-9A2895F187F0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MH.Core", "MH.Core\MH.Core.csproj", "{0308719C-AD7C-4B39-ABA9-A3FC9AB349A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIM4PM.UI", "ProjectManagement\BIM4PM.UI.csproj", "{B6A257CE-526C-4D67-A450-9A2895F187F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIM4PM.DataAccess", "BIM4PM.Data\BIM4PM.DataAccess.csproj", "{B9019A62-37BD-4F63-A93E-7EEBA2475651}"
 EndProject
@@ -27,10 +25,6 @@ Global
 		{B6A257CE-526C-4D67-A450-9A2895F187F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6A257CE-526C-4D67-A450-9A2895F187F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6A257CE-526C-4D67-A450-9A2895F187F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0308719C-AD7C-4B39-ABA9-A3FC9AB349A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0308719C-AD7C-4B39-ABA9-A3FC9AB349A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0308719C-AD7C-4B39-ABA9-A3FC9AB349A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0308719C-AD7C-4B39-ABA9-A3FC9AB349A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B9019A62-37BD-4F63-A93E-7EEBA2475651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9019A62-37BD-4F63-A93E-7EEBA2475651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9019A62-37BD-4F63-A93E-7EEBA2475651}.Release|Any CPU.ActiveCfg = Release|Any CPU

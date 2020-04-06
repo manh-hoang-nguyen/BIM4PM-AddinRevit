@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProjectManagement.Models
+namespace BIM4PM.UI.Models
 {
     public class Historyx
     {

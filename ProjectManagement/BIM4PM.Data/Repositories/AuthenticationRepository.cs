@@ -16,8 +16,7 @@ namespace BIM4PM.DataAccess
 
         }
         public static string Token {get;set;}
-        public bool IsAuthenticated { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        
         public Tuple<bool,string> Login(string email, string password)
         {
             bool isAuthenticated = true;

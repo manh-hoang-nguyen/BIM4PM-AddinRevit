@@ -1,16 +1,16 @@
-namespace ProjectManagement
+namespace BIM4PM.UI
 {
     using Autodesk.Revit.DB;
     using Autodesk.Revit.DB.Events;
     using Autodesk.Revit.UI;
     using Autodesk.Revit.UI.Events;
-    using ProjectManagement.Commun;
-    using ProjectManagement.FormInterface;
-    using ProjectManagement.Models;
-    using ProjectManagement.Tools;
-    using ProjectManagement.Tools.Discussion;
-    using ProjectManagement.Tools.History;
-    using ProjectManagement.Tools.Project;
+    using BIM4PM.UI.Commun;
+    
+    using BIM4PM.UI.Models;
+    using BIM4PM.UI.Tools;
+    using BIM4PM.UI.Tools.Discussion;
+    using BIM4PM.UI.Tools.History;
+    using BIM4PM.UI.Tools.Project;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -37,12 +37,11 @@ namespace ProjectManagement
         public static DocumentSet DocumentSet { get; set; }
 
         public static string _projectName;
-
-        internal static App _app = null;
+ 
 
         private RibbonItem _button;
 
-        private PanelProprety _panelProprety = null;
+       
 
         public static UIControlledApplication _uicapp = null;
 
@@ -51,6 +50,7 @@ namespace ProjectManagement
         public Result OnStartup(UIControlledApplication uicapp)
         {
             Instance = this;
+             
             ModelHandler = new ModelRequestHandler();
             ModelEvent = ExternalEvent.Create(ModelHandler);
             HistoryHandler = new HistoryRequestHandler();
@@ -86,17 +86,17 @@ namespace ProjectManagement
             rib_panelProprety.Visible = false;
 
 
-            PushButtonData login = new PushButtonData("Connecter", "Login", thisAssemblyPath, "ProjectManagement.CmdRevit.CmdLogin");
-            login.AvailabilityClassName = "ProjectManagement.AvailabilityButtonLogin";
+            PushButtonData login = new PushButtonData("Connecter", "Login", thisAssemblyPath, "BIM4PM.UI.CmdRevit.CmdLogin");
+            login.AvailabilityClassName = "BIM4PM.UI.AvailabilityButtonLogin";
             _button = rbAuth.AddItem(login);
 
             rbAuth.AddSeparator();
 
-            PushButtonData logout = new PushButtonData("Logout", "Logout", thisAssemblyPath, "ProjectManagement.CmdRevit.CmdLogout");
-            logout.AvailabilityClassName = "ProjectManagement.AvailabilityButtonLogout";
+            PushButtonData logout = new PushButtonData("Logout", "Logout", thisAssemblyPath, "BIM4PM.UI.CmdRevit.CmdLogout");
+            logout.AvailabilityClassName = "BIM4PM.UI.AvailabilityButtonLogout";
             rbAuth.AddItem(logout);
 
-            PushButtonData Test = new PushButtonData("Test", "Test", thisAssemblyPath, "ProjectManagement.CmdRevit.CmdGetData");
+            PushButtonData Test = new PushButtonData("Test", "Test", thisAssemblyPath, "BIM4PM.UI.CmdRevit.CmdGetData");
            
             rbAuth.AddItem(Test);
 
@@ -116,11 +116,11 @@ namespace ProjectManagement
         private void OnDocumentChanged(object sender, DocumentChangedEventArgs args)
         {
             Document doc = args.GetDocument();
-            if (ModelProvider.Instance.CurrentModel == null
-                || ModelProvider.Instance.DicRevitElements == null)
+            if (ProjectModelConnect.SelectedRevitModel == null
+                || ModelProvider.DicRevitElements == null)
                 return;
 
-            if (doc.Title == ModelProvider.Instance.CurrentModel.Title)
+            if (doc.Title == ProjectModelConnect.SelectedRevitModel.Title)
             {
                 List<ElementId> elementIds = new List<ElementId>();
 
@@ -133,23 +133,23 @@ namespace ProjectManagement
                     {
                         RevitElement revitElement = new RevitElement(e);
 
-                        if (ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
+                        if (ModelProvider.DicRevitElements.ContainsKey(e.UniqueId))
                         {
-                            ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId);
-                            ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
+                            ModelProvider.DicRevitElements.Remove(e.UniqueId);
+                            ModelProvider.DicRevitElements.Add(e.UniqueId, revitElement);
                         }
 
                         else
-                            ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
+                            ModelProvider.DicRevitElements.Add(e.UniqueId, revitElement);
                     }
                 }
                 foreach (ElementId id in args.GetDeletedElementIds())
                 {
-                    foreach (RevitElement item in ModelProvider.Instance.DicRevitElements.Values)
+                    foreach (RevitElement item in ModelProvider.DicRevitElements.Values)
                     {
                         if (item.elementId == id.ToString())
                         {
-                            ModelProvider.Instance.DicRevitElements.Remove(item.guid);
+                            ModelProvider.DicRevitElements.Remove(item.guid);
                             break;
                         }
                     }
@@ -166,10 +166,10 @@ namespace ProjectManagement
                     {
                         RevitElement revitElement = new RevitElement(e);
 
-                        if (ModelProvider.Instance.DicRevitElements.ContainsKey(e.UniqueId))
+                        if (ModelProvider.DicRevitElements.ContainsKey(e.UniqueId))
                         {
-                            ModelProvider.Instance.DicRevitElements.Remove(e.UniqueId);
-                            ModelProvider.Instance.DicRevitElements.Add(e.UniqueId, revitElement);
+                            ModelProvider.DicRevitElements.Remove(e.UniqueId);
+                            ModelProvider.DicRevitElements.Add(e.UniqueId, revitElement);
                         }
                     }
 
@@ -185,8 +185,7 @@ namespace ProjectManagement
         {
             _doc = e.Document;
 
-            //_uiDoc = new UIDocument(doc);
-            PanelProprety._uiDoc = new UIDocument(_doc);
+            
         }
 
         private void OnDocumentSave(object sender, DocumentSavedEventArgs args)
@@ -196,39 +195,32 @@ namespace ProjectManagement
         private static void OnDocumentCreated(object sender, DocumentCreatedEventArgs args)
         {
 
-            ModelProvider.Instance.Models.Add(args.Document);
+            ModelProvider.Models.Add(args.Document);
         }
 
         private static void OnDocumentOpened(object source, DocumentOpenedEventArgs args)
         {
 
-            ModelProvider.Instance.Models.Add(args.Document);
+            ModelProvider.Models.Add(args.Document);
         }
 
         private static void OnDocumentClosing(object source, DocumentClosingEventArgs args)
         {
             //if (args.Document.Title == ModelProvider.Instance.CurrentModel.Title) AuthProvider.Instance.Disconnect();
-            if (ModelProvider.Instance.CurrentModel != null && args.Document.Title == ModelProvider.Instance.CurrentModel.Title)
+            if (ProjectModelConnect.SelectedRevitModel != null && args.Document.Title == ProjectModelConnect.SelectedRevitModel.Title)
             {
 
                 AuthProvider.Instance.Logout();
             }
-            var docToRemove = ModelProvider.Instance.Models.Where(x => x.Title == args.Document.Title);
-            if (docToRemove != null) ModelProvider.Instance.Models.Remove(docToRemove.FirstOrDefault());
+            var docToRemove = ModelProvider.Models.Where(x => x.Title == args.Document.Title);
+            if (docToRemove != null) ModelProvider.Models.Remove(docToRemove.FirstOrDefault());
         }
 
         private void OnDocumentClosed(object sender, DocumentClosedEventArgs args)
         {
         }
 
-        private void DockablePanelActivated()
-        {
-
-            PanelProprety panelPropreties = new PanelProprety();
-            _panelProprety = panelPropreties;
-            DockablePaneId paneId = new DockablePaneId(new Guid("{D7C963CE-B7CA-426A-8D51-6E8254D21157}"));
-            _uicapp.RegisterDockablePane(paneId, "Historiques", (IDockablePaneProvider)panelPropreties);
-        }
+        
 
         public Result OnShutdown(UIControlledApplication a)
         {
@@ -253,7 +245,7 @@ namespace ProjectManagement
     {
         public bool IsCommandAvailable(UIApplication a, CategorySet b)
         {
-            if (AuthProvider.Instance.IsAuthenticated == false)
+            if (Auth.IsAuthenticated == false)
             {
                 return true;
             }
@@ -265,7 +257,7 @@ namespace ProjectManagement
     {
         public bool IsCommandAvailable(UIApplication a, CategorySet b)
         {
-            if (AuthProvider.Instance.IsAuthenticated == false)
+            if (Auth.IsAuthenticated == false)
             {
                 return false;
             }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManagement.Commun
+namespace BIM4PM.UI.Commun
 {
   public  class AuthChangedEventArgs:EventArgs
     {

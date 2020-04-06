@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjectManagement.Tools
+namespace BIM4PM.UI.Tools
 {
     /// <summary>
     /// Logique d'interaction pour PaletteMainView.xaml

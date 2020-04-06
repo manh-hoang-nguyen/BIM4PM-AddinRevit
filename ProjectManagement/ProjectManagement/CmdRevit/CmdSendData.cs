@@ -6,10 +6,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GraphQL.Client.Serializer.Newtonsoft;
 using System;
-using ProjectManagement.Models;
+using BIM4PM.UI.Models;
 using GraphQL.Client.Http;
 
-namespace ProjectManagement.CmdRevit
+namespace BIM4PM.UI.CmdRevit
 {
     [Transaction(TransactionMode.ReadOnly)]
     public class CmdSendData : IExternalCommand

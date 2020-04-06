@@ -1,9 +1,9 @@
-﻿namespace ProjectManagement.Commun
+﻿namespace BIM4PM.UI.Commun
 {
     using GalaSoft.MvvmLight;
     using Newtonsoft.Json;
-    using ProjectManagement.Models;
-    using ProjectManagement.Tools;
+    using BIM4PM.UI.Models;
+    using BIM4PM.UI.Tools;
     using RestSharp;
     using System;
     using System.ComponentModel;
@@ -63,7 +63,7 @@
             (AuthenticationChanged as EventHandler)?.Invoke(this, EventArgs.Empty);
             if (IsAuthenticated == true)
             {
-                new Thread(() => PaletteUtilities.LaunchCommunicator())
+                new Thread(() => PaletteUtilities.LaunchPanel())
                 {
                     Priority = ThreadPriority.BelowNormal,
                     IsBackground = true

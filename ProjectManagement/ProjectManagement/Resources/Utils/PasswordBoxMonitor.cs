@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using TextBox = System.Windows.Controls.TextBox;
 
-namespace ProjectManagement.Resources.Utils
+namespace BIM4PM.UI.Resources.Utils
 {
     public class PasswordBoxMonitor : DependencyObject
     {

@@ -1,4 +1,4 @@
-﻿namespace ProjectManagement.Tools.History
+﻿namespace BIM4PM.UI.Tools.History
 {
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;

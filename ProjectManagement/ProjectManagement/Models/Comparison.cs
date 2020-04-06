@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProjectManagement.Models
+namespace BIM4PM.UI.Models
 {
     public class Comparison
     {

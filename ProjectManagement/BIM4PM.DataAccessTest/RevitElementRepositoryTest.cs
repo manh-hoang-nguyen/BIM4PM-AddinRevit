@@ -29,7 +29,7 @@
         }
 
         /// <summary>
-        /// The GetRevitElements
+        /// The GetAllElementsOfVersion
         /// </summary>
         [TestMethod]
         public void GetRevitElements()

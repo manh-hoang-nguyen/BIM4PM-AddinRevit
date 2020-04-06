@@ -1,8 +1,8 @@
-﻿namespace ProjectManagement.Tools.Discussion
+﻿namespace BIM4PM.UI.Tools.Discussion
 {
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
-    using ProjectManagement.Commun;
+    using BIM4PM.UI.Commun;
     using System;
     using System.Windows.Media;
 

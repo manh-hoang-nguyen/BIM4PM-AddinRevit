@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManagement.Commun.Observer
+namespace BIM4PM.UI.Commun
 {
-    interface IObserver
+   public interface IConnectObserver
     {
+        void Update(IConnect connect);
     }
 }

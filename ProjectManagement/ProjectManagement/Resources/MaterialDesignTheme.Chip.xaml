@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary
-    x:Class="ProjectManagement.Resources.MaterialDesignTheme"
+    x:Class="BIM4PM.UI.Resources.MaterialDesignTheme"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters"

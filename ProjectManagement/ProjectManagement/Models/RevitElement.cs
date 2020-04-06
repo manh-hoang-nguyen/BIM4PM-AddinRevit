@@ -1,8 +1,8 @@
-﻿namespace ProjectManagement.Models
+﻿namespace BIM4PM.UI.Models
 {
     using Autodesk.Revit.DB;
-    using ProjectManagement.Commun;
-    using ProjectManagement.Utils.RevitUtils;
+    using BIM4PM.UI.Commun;
+    using BIM4PM.UI.Utils.RevitUtils;
     using System;
     using System.Collections.Generic;
 
@@ -103,7 +103,7 @@
 
         public RevitElement(Element element)
         {
-            if (ModelProvider.Instance.CurrentModel !=null && ProjectProvider.Instance.CurrentProject != null)
+            if (ProjectModelConnect.SelectedRevitModel !=null && ProjectModelConnect.SelectedProject != null)
             {
                 project = ProjectProvider.Instance.CurrentProject._id;
                 version = ProjectProvider.Instance.CurrentVersion._id;
@@ -111,10 +111,10 @@
                 name = element.Name;
                 elementId = element.Id.IntegerValue.ToString();
                 category = element.Category.Name;
-                level = ElementUtils.GetElementLevel(ModelProvider.Instance.Levels, element);
+                level = ElementUtils.GetElementLevel(ModelProvider.Levels, element);
                 parameters = ParameterUtils.SerializeRevitParameters(element);
                 geometryParameters = ParameterUtils.SerializeGeoParameters(element); 
-                sharedParameters = ParameterUtils.SerializeSharedParameters(element, ModelProvider.Instance.CurrentModel);
+                sharedParameters = ParameterUtils.SerializeSharedParameters(element, ProjectModelConnect.SelectedRevitModel);
                 worksetId = element.WorksetId.ToString();
                 location = ElementUtils.SerializeLocation(element);
                 boundingBox = ElementUtils.SerializeBoundingBox(element.get_BoundingBox(null));

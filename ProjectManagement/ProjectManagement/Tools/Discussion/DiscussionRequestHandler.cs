@@ -3,8 +3,8 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectManagement.Commun;
-using ProjectManagement.Models;
+using BIM4PM.UI.Commun;
+using BIM4PM.UI.Models;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ProjectManagement.Tools.Discussion
+namespace BIM4PM.UI.Tools.Discussion
 {
 
     public class DiscussionRequestHandler : IExternalEventHandler

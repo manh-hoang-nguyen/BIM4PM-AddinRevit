@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 namespace BIM4PM.DataAccess
 {
    public class RestRequestBase
-    {
-       
-        
+    { 
         public RestRequestBase(string Url, Method method)
         {
             Request = new RestRequest(Url, method);

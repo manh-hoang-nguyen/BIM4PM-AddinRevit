@@ -25,7 +25,7 @@ namespace BIM4PM.DataAccess
             throw new NotImplementedException();
         }
 
-        public RevitElement GetRevitElement(int id)
+        public RevitElement GetElement(string guid)
         {
             throw new NotImplementedException();
         }
@@ -47,7 +47,7 @@ namespace BIM4PM.DataAccess
             return revitElements.data;
         }
 
-        public IEnumerable<RevitElement> GetRevitElements()
+        public IEnumerable<RevitElement> GetAllElementsOfVersion(string projectId, int version)
         {
             throw new NotImplementedException();
         }
@@ -70,14 +70,7 @@ namespace BIM4PM.DataAccess
         public bool Save(RevitElement revitElement)
         {
             var success = true;
-            if (revitElement.IsValid)
-            {
-                //Code to save revit element in db
-            }
-            else
-            {
-                success = false;
-            }
+            
             return success;
         }
       

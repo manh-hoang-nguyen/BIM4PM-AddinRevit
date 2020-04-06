@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary
-    x:Class="ProjectManagement.Resources.ListViewResource"
+    x:Class="BIM4PM.UI.Resources.ListViewResource"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters"
