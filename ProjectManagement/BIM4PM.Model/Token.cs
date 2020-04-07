@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,12 @@ namespace BIM4PM.Model
 {
    public class Token
     {
-       public bool success { get; set; }
-       public string token { get; set; }
+        [JsonProperty("accessToken")]
+        public string AccessToken { get; set; }
+        [JsonProperty("refreshToken")]
+        public string RefreshToken { get; set; } 
+        [JsonProperty("expiresIn")]
+        public string ExpiresIn { get; set; }
     }
+ 
 }

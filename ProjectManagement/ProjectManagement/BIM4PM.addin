@@ -2,10 +2,10 @@
 <RevitAddIns>
   
   <AddIn Type="Application">
-    <Name>ProjectManagement</Name>
-    <Assembly>BIM4PM\ProjectManagement.dll</Assembly>
-    <FullClassName>ProjectManagement.App</FullClassName>
-    <ClientId>58fa283c-ad79-42db-b93e-6c540a7f1a46</ClientId>
+    <Name>BIM Team</Name>
+    <Assembly>BIM4PM\BIM4PM.UI.dll</Assembly>
+    <FullClassName>BIM4PM.UI.App</FullClassName>
+    <ClientId>58fa283c-ad79-42db-b93e-6c540a7f1a48</ClientId>
     <VendorId>Manh Hoang NGUYEN</VendorId>
     <VendorDescription>manhhoang.nguyen@estp.fr</VendorDescription>
   </AddIn>

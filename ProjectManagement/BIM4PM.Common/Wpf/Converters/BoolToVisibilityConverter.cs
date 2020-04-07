@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace BIM4PM.Common.Converters
+namespace BIM4PM.Common.Wpf.Converters
 {
     public class BoolToVisibilityConverter : IValueConverter
     {

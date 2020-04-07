@@ -35,14 +35,9 @@ namespace BIM4PM.UI
         public static PaletteMainView PaletteWindow { get; set; }
 
         public static DocumentSet DocumentSet { get; set; }
-
-        public static string _projectName;
- 
-
+         
         private RibbonItem _button;
-
-       
-
+         
         public static UIControlledApplication _uicapp = null;
 
         private Document _doc;
@@ -234,11 +229,7 @@ namespace BIM4PM.UI
             return Result.Succeeded;
         }
 
-        public void TextChangedButton()
-        {
-            string s = _button.ItemText;
-            _button.ItemText = s.Equals("Login") ? ("Vous êtes connecté au projet" + Environment.NewLine + _projectName) : "Login";
-        }
+       
     }
 
     public class AvailabilityButtonLogin : IExternalCommandAvailability

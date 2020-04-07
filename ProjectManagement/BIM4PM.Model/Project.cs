@@ -6,34 +6,13 @@
 
     
     public class Project: EntityBase
-    {
-        public Project()
-        {
-            Members = new List<Member>();
-        }
-
+    { 
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
         [JsonProperty("owner")]
-        public string Owner { get; set; }
-        [JsonProperty("members")]
-        public List<Member> Members { get; set; }
-         
-        
+        public string Owner { get; set; } 
     }
-
-    public class ProjectRes
-    {
-        public bool success { get; set; }
-
-        public List<Project> data { get; set; }
-    }
-    public class SingleProjectRes
-    {
-        public bool success { get; set; }
-
-        public Project data { get; set; }
-    }
+ 
 }

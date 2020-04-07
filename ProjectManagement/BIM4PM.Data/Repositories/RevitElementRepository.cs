@@ -33,18 +33,18 @@ namespace BIM4PM.DataAccess
         public IEnumerable<RevitElement> GetRevitElements(Project project, ProjectVersion version)
         {
            
-            RevitElementRoute route = new RevitElementRoute(project.Id);
-            RestRequestBase reqBase = new RestRequestBase(route.url(), Method.GET);
-            RestRequest req = reqBase.Request;
-            req.AddParameter("version", version.version);
-            IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
-            string format = "0000-12-31T23:50:39.000Z"; // datetime format
-            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
+            //RevitElementRoute route = new RevitElementRoute(project.Id);
+            //RestRequestBase reqBase = new RestRequestBase(route.url(), Method.GET);
+            //RestRequest req = reqBase.Request;
+            //req.AddParameter("version", version.version);
+            //IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
+            //string format = "0000-12-31T23:50:39.000Z"; // datetime format
+            //var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
             
-            //RevitElement revitElement = new RevitElement(Element element);
-            RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content, dateTimeConverter);
+            ////RevitElement revitElement = new RevitElement(Element element);
+            //RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content, dateTimeConverter);
 
-            return revitElements.data;
+            return new List<RevitElement>();
         }
 
         public IEnumerable<RevitElement> GetAllElementsOfVersion(string projectId, int version)

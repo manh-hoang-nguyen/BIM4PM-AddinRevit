@@ -66,24 +66,6 @@
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="GraphQL.Client, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphQL.Client.2.1.2\lib\net461\GraphQL.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="GraphQL.Client.Abstractions, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphQL.Client.Abstractions.2.1.2\lib\netstandard2.0\GraphQL.Client.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="GraphQL.Client.Abstractions.Websocket, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphQL.Client.Abstractions.Websocket.2.1.2\lib\netstandard2.0\GraphQL.Client.Abstractions.Websocket.dll</HintPath>
-    </Reference>
-    <Reference Include="GraphQL.Client.Serializer.Newtonsoft, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphQL.Client.Serializer.Newtonsoft.2.1.2\lib\netstandard2.0\GraphQL.Client.Serializer.Newtonsoft.dll</HintPath>
-    </Reference>
-    <Reference Include="GraphQL.Primitives, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphQL.Primitives.2.1.2\lib\netstandard2.0\GraphQL.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -106,6 +88,7 @@
       <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -154,9 +137,6 @@
     </Reference>
     <Reference Include="System.Text.Encodings.Web, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.7.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.4.7.1\lib\net461\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -258,6 +238,9 @@
     <Compile Include="Resources\Utils\TextFieldHintVisibilityConverter.cs" />
     <Compile Include="Resources\Utils\ValidationAssist.cs" />
     <Compile Include="RevitUI.cs" />
+    <Compile Include="Tools\Auth\BindableBase.cs" />
+    <Compile Include="Tools\Auth\TestDataValidattion.cs" />
+    <Compile Include="Tools\Auth\ValidatableBindableBase.cs" />
     <Compile Include="Tools\Auth\LoginModel.cs" />
     <Compile Include="Tools\Auth\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -291,15 +274,6 @@
       <DependentUpon>DiscussionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\Discussion\DiscussionViewModel.cs" />
-    <Compile Include="Utils\ProgressBar\CircularProgressBar.xaml.cs">
-      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Utils\ProgressBar\HorizontalProgressBar.xaml.cs">
-      <DependentUpon>HorizontalProgressBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Utils\ProgressBar\VerticalProgressBar.xaml.cs">
-      <DependentUpon>VerticalProgressBar.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Utils\RevitUtils\DocumentUtils.cs" />
     <Compile Include="Utils\RevitUtils\ElementUtils.cs" />
     <Compile Include="Utils\RevitUtils\FilterUtils.cs" />
@@ -307,13 +281,25 @@
     <Compile Include="Utils\RevitUtils\ScheduleUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ProjectManagement.addin" />
+    <Content Include="BIM4PM.addin" />
     <Content Include="Resources\Images\avatar.png" />
     <Content Include="Resources\Images\BIM.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\BIM4PM.Model.EntityBase.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.History.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.Member.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.Model.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.Project.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.ProjectVersion.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.RevitElement.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.Synchronization.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.SyncRvtEleLink.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.Token.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.Model.User.datasource" />
+    <None Include="Properties\DataSources\BIM4PM.UI.Tools.Auth.TestDataValidattion.datasource" />
     <None Include="Properties\DataSources\ProjectManagement.Models.Authentication.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -401,18 +387,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Utils\ProgressBar\CircularProgressBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Utils\ProgressBar\HorizontalProgressBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Utils\ProgressBar\VerticalProgressBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -427,9 +401,17 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BIM4PM.Common\BIM4PM.Common.csproj">
+      <Project>{f1cbc246-98f8-45e3-a301-57cb65f5e994}</Project>
+      <Name>BIM4PM.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BIM4PM.Data\BIM4PM.DataAccess.csproj">
       <Project>{b9019a62-37bd-4f63-a93e-7eeba2475651}</Project>
       <Name>BIM4PM.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BIM4PM.Model\BIM4PM.Model.csproj">
+      <Project>{52752596-3b00-48d8-9681-763558ff4e0e}</Project>
+      <Name>BIM4PM.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

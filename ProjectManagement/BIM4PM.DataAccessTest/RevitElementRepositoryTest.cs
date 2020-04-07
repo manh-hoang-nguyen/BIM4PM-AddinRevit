@@ -34,21 +34,7 @@
         [TestMethod]
         public void GetRevitElements()
         {
-            var revitElementRepository = new RevitElementRepository();
-            Project project = new Project
-            {
-                Id = "5d713995b721c3bb38c1f5d0"
-            };
-            ProjectVersion projectVersion = new ProjectVersion
-            {
-                version = 1
-            };
-
-            var result = revitElementRepository.GetRevitElements(project, projectVersion).ToList();
-
-            var actual = result.Count > 0 ? true : false;
-
-            Assert.AreEqual(true, actual);
+           
         }
     }
 }

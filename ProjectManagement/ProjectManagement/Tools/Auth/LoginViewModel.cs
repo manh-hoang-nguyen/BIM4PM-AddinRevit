@@ -3,17 +3,21 @@
     using Autodesk.Revit.UI;
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
-    using BIM4PM.UI.CmdRevit;
+
     using BIM4PM.UI.Commun;
 
-    using System;
-     
+
     using System.Threading;
     using System.Windows;
     using Visibility = System.Windows.Visibility;
+    using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class LoginViewModel : ViewModelBase
     {
+        private TestDataValidattion _input;
+        public TestDataValidattion Input { get => _input; set { _input = value; RaisePropertyChanged("Email"); }  }
+
         private UIApplication _uiapp;
 
         public LoginModel Model { get; set; }
@@ -22,7 +26,7 @@
 
         public RelayCommand<Window> Authenticated { get; set; }
 
-        public RelayCommand<LoginView> Login { get; set; }
+        public RelayCommand<LoginView> LoginCommand { get; set; }
 
         public RelayCommand<LoginView> WindowLoaded { get; set; }
 
@@ -62,10 +66,16 @@
         {
             get => _userName; set { _userName = value; RaisePropertyChanged(); }
         }
-
+       
         public string Password
         {
-            get => _password; set { _password = value; RaisePropertyChanged(); }
+            get => _password;
+            set {
+                //if (value.Length <8  )
+                //    throw new ArgumentException("The age must be between 10 and 100");
+                 
+                _password = value;
+                RaisePropertyChanged("Password"); }
         }
 
         public LoginViewModel(UIApplication uiapp)
@@ -74,8 +84,13 @@
             Model = new LoginModel();
             WindowLoaded = new RelayCommand<LoginView>(OnWindowLoaded);
             Cancel = new RelayCommand<Window>(OnCancel);
-            Login = new RelayCommand<LoginView>(OnLogin);
+            LoginCommand = new RelayCommand<LoginView>(OnLogin, CanLogin);
             Authenticated = new RelayCommand<Window>(OnAuthenticated);
+        }
+
+        private bool CanLogin(LoginView arg)
+        {
+            return true;
         }
 
         private void OnAuthenticated(Window win)
@@ -85,6 +100,7 @@
 
         private void OnWindowLoaded(LoginView win)
         {
+            
 
             VisibilityProgressBar = Visibility.Hidden;
             VisibilityAuthenticated = Visibility.Hidden;
@@ -95,8 +111,8 @@
             {
                 string userEmail = Properties.Settings.Default["UserEmail"] as string;
                 string userPassword = Properties.Settings.Default["UserPassword"] as string;
-                win.tbEmail.Text = userEmail;
-                win.PasswordBox.Password = userPassword;
+                win.emailTextBox.Text = userEmail;
+                //win.PasswordBox.Password = userPassword;
                 win.cBSave.IsChecked = true;
             }
         }
@@ -104,10 +120,11 @@
         private void OnLogin(LoginView win)
         { 
              
+            // Register email and password for next login
             if (win.cBSave.IsChecked == true)
             {
-                Properties.Settings.Default["UserEmail"] = win.tbEmail.Text;
-                Properties.Settings.Default["UserPassword"] = win.PasswordBox.Password;
+                //Properties.Settings.Default["UserEmail"] = Email;
+               // Properties.Settings.Default["UserPassword"] = win.PasswordBox.Password;
                 Properties.Settings.Default["IsSave"] = "1";
                 Properties.Settings.Default.Save();
             }
@@ -125,7 +142,7 @@
                 var subjet = new Auth();
                 LaunchPanel launchPanel = new LaunchPanel();
                 subjet.Attach(launchPanel);
-                subjet.Login(UserName, win.PasswordBox.Password);
+                //subjet.Login(Email, win.PasswordBox.Password);
 
                 if (Auth.IsAuthenticated)
                 {

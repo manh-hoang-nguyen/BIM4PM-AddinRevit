@@ -32,7 +32,7 @@
                 <Setter Property="Cursor" Value="Hand" />
             </Style>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ProjectManagement;component/Resources/ButtonResource.xaml" />
+                <ResourceDictionary Source="/BIM4PM.UI;component/Resources/ButtonResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
