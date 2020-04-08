@@ -232,6 +232,7 @@
     <Compile Include="Resources\Utils\HintAssist.cs" />
     <Compile Include="Resources\Utils\ListViewAssist.cs" />
     <Compile Include="Resources\Utils\ListViewGridViewConverter.cs" />
+    <Compile Include="Resources\Utils\PasswordBoxAssistant.cs" />
     <Compile Include="Resources\Utils\PasswordBoxMonitor.cs" />
     <Compile Include="Resources\Utils\ControlzEx\PopupEx.cs" />
     <Compile Include="Resources\Utils\ScrollViewerAssist.cs" />

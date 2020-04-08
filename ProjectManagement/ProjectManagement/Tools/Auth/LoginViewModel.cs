@@ -111,58 +111,58 @@
             {
                 string userEmail = Properties.Settings.Default["UserEmail"] as string;
                 string userPassword = Properties.Settings.Default["UserPassword"] as string;
-                win.emailTextBox.Text = userEmail;
-                //win.PasswordBox.Password = userPassword;
-                win.cBSave.IsChecked = true;
+                //win.emailTextBox.Text = userEmail;
+                ////win.PasswordBox.Password = userPassword;
+                //win.cBSave.IsChecked = true;
             }
         }
 
         private void OnLogin(LoginView win)
         { 
              
-            // Register email and password for next login
-            if (win.cBSave.IsChecked == true)
-            {
-                //Properties.Settings.Default["UserEmail"] = Email;
-               // Properties.Settings.Default["UserPassword"] = win.PasswordBox.Password;
-                Properties.Settings.Default["IsSave"] = "1";
-                Properties.Settings.Default.Save();
-            }
-            else
-            {
-                Properties.Settings.Default["UserEmail"] = "";
-                Properties.Settings.Default["UserPassword"] = "";
-                Properties.Settings.Default["IsSave"] = "0";
-                Properties.Settings.Default.Save();
-            }
-            VisibilityProgressBar = Visibility.Visible;
+            //// Register email and password for next login
+            //if (win.cBSave.IsChecked == true)
+            //{
+            //    //Properties.Settings.Default["UserEmail"] = Email;
+            //   // Properties.Settings.Default["UserPassword"] = win.PasswordBox.Password;
+            //    Properties.Settings.Default["IsSave"] = "1";
+            //    Properties.Settings.Default.Save();
+            //}
+            //else
+            //{
+            //    Properties.Settings.Default["UserEmail"] = "";
+            //    Properties.Settings.Default["UserPassword"] = "";
+            //    Properties.Settings.Default["IsSave"] = "0";
+            //    Properties.Settings.Default.Save();
+            //}
+            //VisibilityProgressBar = Visibility.Visible;
 
-            Thread thread = new Thread(() =>
-            {
-                var subjet = new Auth();
-                LaunchPanel launchPanel = new LaunchPanel();
-                subjet.Attach(launchPanel);
-                //subjet.Login(Email, win.PasswordBox.Password);
+            //Thread thread = new Thread(() =>
+            //{
+            //    var subjet = new Auth();
+            //    LaunchPanel launchPanel = new LaunchPanel();
+            //    subjet.Attach(launchPanel);
+            //    //subjet.Login(Email, win.PasswordBox.Password);
 
-                if (Auth.IsAuthenticated)
-                {
-                    VisiblityLoginWindow = Visibility.Hidden;
-                    VisibilityProgressBar = Visibility.Hidden;
-                    VisibilityNotAuthenticated = Visibility.Hidden;
-                    VisibilityAuthenticated = Visibility.Visible;
+            //    if (Auth.IsAuthenticated)
+            //    {
+            //        VisiblityLoginWindow = Visibility.Hidden;
+            //        VisibilityProgressBar = Visibility.Hidden;
+            //        VisibilityNotAuthenticated = Visibility.Hidden;
+            //        VisibilityAuthenticated = Visibility.Visible;
                     
-                }
-                else
-                {
-                    VisiblityLoginWindow = Visibility.Hidden;
-                    VisibilityProgressBar = Visibility.Hidden;
-                    VisibilityNotAuthenticated = Visibility.Visible;
-                    VisibilityAuthenticated = Visibility.Hidden;
+            //    }
+            //    else
+            //    {
+            //        VisiblityLoginWindow = Visibility.Hidden;
+            //        VisibilityProgressBar = Visibility.Hidden;
+            //        VisibilityNotAuthenticated = Visibility.Visible;
+            //        VisibilityAuthenticated = Visibility.Hidden;
                     
-                }
-            });
+            //    }
+            //});
 
-            thread.Start();
+            //thread.Start();
         }
 
         private void OnCancel(Window win)

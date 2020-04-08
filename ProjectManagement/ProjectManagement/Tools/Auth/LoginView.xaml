@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:progressBar="clr-namespace:BIM4PM.UI.Resources.UI.ProgressBar.CircularProgressBar"
         xmlns:Model="clr-namespace:BIM4PM.Model;assembly=BIM4PM.Model"
-        xmlns:commonWpf="clr-namespace:BIM4PM.Common.Wpf;assembly=BIM4PM.Common"
+        xmlns:wpf="clr-namespace:BIM4PM.UI.Resources.Utils"
         x:Class="BIM4PM.UI.Tools.Auth.LoginView"
         x:Name="Win"
         Title="Login"
@@ -108,7 +108,7 @@
                          Height="23"
                          Margin="3"
                          Grid.Row="1"
-                         commonWpf:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,
+                         wpf:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,
         Mode=TwoWay,
         UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
