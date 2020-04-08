@@ -25,7 +25,62 @@
                 <ResourceDictionary Source="/BIM4PM.UI;component/Resources/PasswordResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="MyBoolToVisibilityConverter" />
-
+            <Style x:Key="TextErrorStyle"
+                   TargetType="{x:Type TextBox}">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError"
+                             Value="True">
+                        <Setter Property="Validation.ErrorTemplate">
+                            <Setter.Value>
+                                <ControlTemplate x:Name="TextErrorTemplate">
+                                    <StackPanel>
+                                        <Border BorderBrush="Red"
+                                                BorderThickness="1">
+                                            <AdornedElementPlaceholder />
+                                        </Border>
+                                        <TextBlock Foreground="Red">Email incorrect</TextBlock>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ToolTip"
+                                Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+             Path=(Validation.Errors)[0].ErrorContent}"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="PasswordBoxErrorStyle"
+                   TargetType="{x:Type PasswordBox}">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError"
+                             Value="True">
+                        <Setter Property="Validation.ErrorTemplate">
+                            <Setter.Value>
+                                <ControlTemplate x:Name="TextErrorTemplate">
+                                    <DockPanel>
+                                        <Border BorderBrush="Red"
+                                                BorderThickness="1">
+                                            <AdornedElementPlaceholder />
+                                        </Border>
+                                        <TextBlock  Foreground="Red">*</TextBlock>
+                                    </DockPanel>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ToolTip"
+                                Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                                Path=(Validation.Errors)[0].ErrorContent}"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ErrorStyle"
+                   TargetType="FrameworkElement">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError"
+                             Value="True"> 
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
 
     </Window.Resources>
@@ -35,10 +90,6 @@
             <i:InvokeCommandAction Command="{Binding WindowLoaded}"
                                    CommandParameter="{Binding ElementName=Win}" />
         </i:EventTrigger>
-        <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding WindowClosed}"
-                                   CommandParameter="{Binding ElementName=Win}" />
-        </i:EventTrigger>
     </i:Interaction.Triggers>
 
     <Grid Margin="3">
@@ -46,8 +97,6 @@
             <RowDefinition />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
-
-
 
         <StackPanel Grid.Row="1"
                     Margin="3"
@@ -70,8 +119,9 @@
                                          Visibility="{Binding VisibilityProgressBar, FallbackValue=Hidden}" />
         <Grid x:Name="grid1"
               HorizontalAlignment="Left"
-              Margin="85,10,0,0"
-              VerticalAlignment="Top">
+              Margin="31,21,0,0"
+              VerticalAlignment="Top"
+              Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -86,15 +136,19 @@
                    Margin="3"
                    Grid.Row="0"
                    VerticalAlignment="Center" />
+
             <TextBox x:Name="emailTextBox"
                      Grid.Column="1"
                      HorizontalAlignment="Left"
                      Height="23"
                      Margin="3"
+                     Style="{StaticResource ErrorStyle}"
                      Grid.Row="0"
-                     Text="{Binding Email,  ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                     Text="{Binding Email,   Mode=TwoWay,NotifyOnValidationError=True,
+                         ValidatesOnDataErrors= True,  
+                         UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center"
-                     Width="120" />
+                     Width="200" />
             <Label Content="Password:"
                    Grid.Column="0"
                    HorizontalAlignment="Left"
@@ -108,11 +162,12 @@
                          Height="23"
                          Margin="3"
                          Grid.Row="1"
-                         wpf:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,
-        Mode=TwoWay,
-        UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource ErrorStyle}"
+                         wpf:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,  Mode=TwoWay,NotifyOnValidationError=True,
+                         ValidatesOnDataErrors= True,  
+                         UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
-                         Width="120" />
+                         Width="200" />
         </Grid>
 
 

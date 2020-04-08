@@ -8,9 +8,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIM4PM.UI.Tools.Auth
+namespace BIM4PM.UI.Resources.Utils
 {
-    public class ValidatableBindableBase : BindableBase, INotifyDataErrorInfo
+    //https://d-fens.ch/2018/01/05/wpf-series-7-viewmodel-validation-using-dataannotations/
+    public class DataValidationBase : BindableBase, INotifyDataErrorInfo
     {
         private Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
 
@@ -31,11 +32,6 @@ namespace BIM4PM.UI.Tools.Auth
         {
             base.SetProperty(ref member, val, propertyName);
             ValidateProperty(propertyName, val);
-        }
-
-        IEnumerable INotifyDataErrorInfo.GetErrors(string propertyName)
-        {
-            throw new NotImplementedException();
         }
 
         private void ValidateProperty<T>(string propertyName, T val)

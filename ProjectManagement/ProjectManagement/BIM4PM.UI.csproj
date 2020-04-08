@@ -223,8 +223,10 @@
     <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\NotZeroConverter.cs" />
     <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\RotateTransformCentreConverter.cs" />
     <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\StartPointConverter.cs" />
+    <Compile Include="Resources\Utils\BindableBase.cs" />
     <Compile Include="Resources\Utils\BrushRoundConverter.cs" />
     <Compile Include="Resources\Utils\Chip.cs" />
+    <Compile Include="Resources\Utils\DataValidationBase.cs" />
     <Compile Include="Resources\Utils\NullableToVisibilityConverter.cs" />
     <Compile Include="Resources\Utils\DataGridAssist.cs" />
     <Compile Include="Resources\Utils\EqualityToVisibilityConverter.cs" />
@@ -239,9 +241,6 @@
     <Compile Include="Resources\Utils\TextFieldHintVisibilityConverter.cs" />
     <Compile Include="Resources\Utils\ValidationAssist.cs" />
     <Compile Include="RevitUI.cs" />
-    <Compile Include="Tools\Auth\BindableBase.cs" />
-    <Compile Include="Tools\Auth\TestDataValidattion.cs" />
-    <Compile Include="Tools\Auth\ValidatableBindableBase.cs" />
     <Compile Include="Tools\Auth\LoginModel.cs" />
     <Compile Include="Tools\Auth\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
