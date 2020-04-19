@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BIM4PM.DataAccess.Interfaces
 {
-    interface IUserRepository 
+   public interface IUserRepository
     {
-        User GetUser();
+        Task<User> GetMeAsync();
     }
 }

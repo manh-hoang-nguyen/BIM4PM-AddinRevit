@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIM4PM.DataAccess
+namespace BIM4PM.Tests
 {
-    public class CommentRepository
+    public class Class1
     {
-        
     }
 }

@@ -10,9 +10,9 @@ namespace BIM4PM.DataAccess
 {
     public interface IAuthenticationRepository
     {
-        Task<IRestResponse<Token>> LoginAsync(string email, string password);
-        Tuple<bool, Token> Login(string email, string password);
-        Task LogoutAsync();
-       
+        bool Login(string email, string password);
+     
+        void Logout();
+         
     }
 }

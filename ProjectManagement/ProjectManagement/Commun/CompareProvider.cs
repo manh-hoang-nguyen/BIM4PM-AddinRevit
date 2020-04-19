@@ -138,16 +138,16 @@
         {
             if (Modified.Count == 0) return;
 
-            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
-            RestRequest req = new RestRequest(route.url(), Method.PUT);
-            req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-            string body = JsonConvert.SerializeObject(ModifiedElementToSynchonize.Values);
-            req.RequestFormat = RestSharp.DataFormat.Json;
-            req.AddJsonBody(body);
-            Route.Client.Timeout = Int32.MaxValue;
-            Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
-            var res = await resTask;
+            //RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
+            //RestRequest req = new RestRequest(route.url(), Method.PUT);
+            //req.AddHeader("Content-Type", "application/json");
+            //req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+            //string body = JsonConvert.SerializeObject(ModifiedElementToSynchonize.Values);
+            //req.RequestFormat = RestSharp.DataFormat.Json;
+            //req.AddJsonBody(body);
+            //Route.Client.Timeout = Int32.MaxValue;
+            //Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
+            //var res = await resTask;
         }
 
         /// <summary>
@@ -164,16 +164,16 @@
             {
                 delElements.Add(ProjectProvider.Instance.DicRevitElements[guid]);
             }
-            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
-            RestRequest req = new RestRequest(route.url(), Method.DELETE);
-            req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-            string body = JsonConvert.SerializeObject(delElements);
-            req.RequestFormat = RestSharp.DataFormat.Json;
-            req.AddJsonBody(body);
-            Route.Client.Timeout = Int32.MaxValue;
-            Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
-            var res = await resTask;
+            //RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
+            //RestRequest req = new RestRequest(route.url(), Method.DELETE);
+            //req.AddHeader("Content-Type", "application/json");
+            //req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+            //string body = JsonConvert.SerializeObject(delElements);
+            //req.RequestFormat = RestSharp.DataFormat.Json;
+            //req.AddJsonBody(body);
+            //Route.Client.Timeout = Int32.MaxValue;
+            //Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
+            //var res = await resTask;
         }
 
         /// <summary>
@@ -191,17 +191,17 @@
                 newElements.Add(ModelProvider.DicRevitElements[guid]);
             }
 
-            RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
-            RestRequest req = new RestRequest(route.url(), Method.POST);
-            req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-            string body = JsonConvert.SerializeObject(newElements);
-            req.RequestFormat = RestSharp.DataFormat.Json;
-            req.AddJsonBody(body);
-            Route.Client.Timeout = Int32.MaxValue;
-            Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
+            //RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
+            //RestRequest req = new RestRequest(route.url(), Method.POST);
+            //req.AddHeader("Content-Type", "application/json");
+            //req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+            //string body = JsonConvert.SerializeObject(newElements);
+            //req.RequestFormat = RestSharp.DataFormat.Json;
+            //req.AddJsonBody(body);
+            //Route.Client.Timeout = Int32.MaxValue;
+            //Task<IRestResponse> resTask = Route.Client.ExecuteAsync(req);
 
-            var res = await resTask;
+            //var res = await resTask;
         }
 
         /// <summary>

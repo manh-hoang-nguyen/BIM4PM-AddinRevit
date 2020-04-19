@@ -15,5 +15,6 @@ namespace BIM4PM.Model
         public string Discipline { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
+         
     }
 }

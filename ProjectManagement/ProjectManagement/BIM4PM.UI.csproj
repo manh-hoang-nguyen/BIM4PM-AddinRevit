@@ -188,7 +188,6 @@
     <Compile Include="Commun\Observer\LaunchPanel.cs" />
     <Compile Include="Commun\Observer\Auth.cs" />
     <Compile Include="Commun\ProjectProvider.cs" />
-    <Compile Include="Commun\Route.cs" />
     <Compile Include="Commun\UserData.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Comparison.cs" />
@@ -238,9 +237,6 @@
     <Compile Include="Resources\Utils\TextFieldHintVisibilityConverter.cs" />
     <Compile Include="Resources\Utils\ValidationAssist.cs" />
     <Compile Include="RevitUI.cs" />
-    <Compile Include="Tools\Auth\BindableBase.cs" />
-    <Compile Include="Tools\Auth\TestDataValidattion.cs" />
-    <Compile Include="Tools\Auth\ValidatableBindableBase.cs" />
     <Compile Include="Tools\Auth\LoginModel.cs" />
     <Compile Include="Tools\Auth\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -396,9 +392,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CmdRevit\DockableWindow\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BIM4PM.Common\BIM4PM.Common.csproj">

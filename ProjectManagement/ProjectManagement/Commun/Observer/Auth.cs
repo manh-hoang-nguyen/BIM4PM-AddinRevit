@@ -41,12 +41,13 @@ namespace BIM4PM.UI.Commun
 
         public void Login(string email, string password)
         {
-            IsAuthenticated = _authenticationRepository.Login(email, password).Item1;
+            IsAuthenticated =  _authenticationRepository.Login(email, password);
              
             this.Notify();
         }
         public void Logout()
         {
+            _authenticationRepository.Logout();
             IsAuthenticated = false;
 
             this.Notify();

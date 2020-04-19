@@ -61,7 +61,7 @@ namespace BIM4PM.UI.Properties {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 73886cde-e90b-4072-b964-5f35af89f012.
+        ///   Recherche une chaîne localisée semblable à 73886cde-e90b-4072-b964-5f35af89f010.
         /// </summary>
         internal static string PaletteGuid {
             get {

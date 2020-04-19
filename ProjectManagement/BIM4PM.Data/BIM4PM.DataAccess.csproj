@@ -62,18 +62,33 @@
   <ItemGroup>
     <Compile Include="Interfaces\IAuthenticationRepository.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Interfaces\IGroupProjectRepository.cs" />
+    <Compile Include="Interfaces\IModelRepository.cs" />
     <Compile Include="Interfaces\IProjectRepository.cs" />
     <Compile Include="Interfaces\IRevitElementRepository.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
+    <Compile Include="Interfaces\ISynchronizationRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Interfaces\IVersionRepository.cs" />
     <Compile Include="Repositories\AuthenticationRepository.cs" />
-    <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\RestSharpBase.cs" />
+    <Compile Include="Repositories\GroupProjectRepository.cs" />
+    <Compile Include="Repositories\ModelRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\RevitElementRepository.cs" />
+    <Compile Include="Repositories\SynchronizationRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\VersionRepository.cs" />
-    <Compile Include="Routes\Route.cs" />
+    <Compile Include="Routes\AuthRoute.cs" />
+    <Compile Include="Routes\GroupProjectRoute.cs" />
+    <Compile Include="Routes\ModelRoute.cs" />
+    <Compile Include="Routes\ProjectRoute.cs" />
+    <Compile Include="Routes\RevitElementRoute.cs" />
+    <Compile Include="Routes\RouteBase.cs" />
+    <Compile Include="Routes\SynchronizationRoute.cs" />
+    <Compile Include="Routes\UserRoute.cs" />
+    <Compile Include="Routes\VersionRoute.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BIM4PM.Model\BIM4PM.Model.csproj">

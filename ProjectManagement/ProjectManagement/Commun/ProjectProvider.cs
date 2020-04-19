@@ -87,14 +87,14 @@
 
             if (CurrentProject != null)
             {
-                string url = string.Format("{0}/{1}/versions", Route.UserProjects, CurrentProject._id);
-                RestRequest req = new RestRequest(url, Method.GET);
-                req.AddHeader("Content-Type", "application/json");
-                req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-                IRestResponse res = Route.Client.Execute(req);
+                //string url = string.Format("{0}/{1}/versions", Route.UserProjects, CurrentProject._id);
+                //RestRequest req = new RestRequest(url, Method.GET);
+                //req.AddHeader("Content-Type", "application/json");
+                //req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+                //IRestResponse res = Route.Client.Execute(req);
 
-                VersionRes Version = JsonConvert.DeserializeObject<VersionRes>(res.Content);
-                Versions = Version.data[0].versions;
+                //VersionRes Version = JsonConvert.DeserializeObject<VersionRes>(res.Content);
+                //Versions = Version.data[0].versions;
 
                 if (Versions.Count == 0)
                 {
@@ -105,14 +105,14 @@
 
                 Thread thread = new Thread(() =>
                 {
-                    //Get project information
-                    string url0 = string.Format("{0}/{1}", Route.UserProjects, CurrentProject._id);
-                    RestRequest req0 = new RestRequest(url0, Method.GET);
-                    req0.AddHeader("Content-Type", "application/json");
-                    req0.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-                    IRestResponse res0 = Route.Client.Execute(req0);
-                    SingleProjectRes project = JsonConvert.DeserializeObject<SingleProjectRes>(res0.Content);
-                    SelectedProject = project.data;
+                    ////Get project information
+                    //string url0 = string.Format("{0}/{1}", Route.UserProjects, CurrentProject._id);
+                    //RestRequest req0 = new RestRequest(url0, Method.GET);
+                    //req0.AddHeader("Content-Type", "application/json");
+                    //req0.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+                    //IRestResponse res0 = Route.Client.Execute(req0);
+                    //SingleProjectRes project = JsonConvert.DeserializeObject<SingleProjectRes>(res0.Content);
+                    //SelectedProject = project.data;
                     ProjectMembers = SelectedProject.members;
                 });
                 thread.Start();
@@ -126,18 +126,18 @@
                 MessageBox.Show("Select a project please");
                 return new List<RevitElement>();
             }
-            RevitElementRoute route = new RevitElementRoute(CurrentProject._id);
-            RestRequest req = new RestRequest(route.url(), Method.GET);
-            req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-            req.AddParameter("version", version.version);
-            IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
-            string format = "0000-12-31T23:50:39.000Z"; // datetime format
-            var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
+            //RevitElementRoute route = new RevitElementRoute(CurrentProject._id);
+            //RestRequest req = new RestRequest(route.url(), Method.GET);
+            //req.AddHeader("Content-Type", "application/json");
+            //req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+            //req.AddParameter("version", version.version);
+            //IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
+            //string format = "0000-12-31T23:50:39.000Z"; // datetime format
+            //var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
 
-            RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content, dateTimeConverter);
+            //RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content, dateTimeConverter);
 
-            return revitElements.data;
+            return null;
         }
     }
 }

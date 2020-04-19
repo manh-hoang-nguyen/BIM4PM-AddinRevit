@@ -9,9 +9,7 @@ namespace BIM4PM.DataAccess
 {
    public interface IRevitElementRepository
     {
-        IEnumerable<RevitElement> GetAllElementsOfVersion(string projectId, int version);
-        RevitElement GetElement(string guid);
-        void Post(IEnumerable<RevitElement> revitElements);
-        void Delete(IEnumerable<RevitElement> revitElements);
+        Task<IEnumerable<RevitElement>> GetAllElementsOfVersion(string versionId);
+        Task<IEnumerable<RevitElement>> GetRevitElementsInPeriod(string versionId, string startDate, string endDate);
     }
 }

@@ -1,80 +1,41 @@
-﻿
-using Autodesk.Revit.DB;
-using BIM4PM.Model;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BIM4PM.DataAccess
+﻿namespace BIM4PM.DataAccess
 {
-   public class RevitElementRepository:IRevitElementRepository
+    using BIM4PM.Model;
+    using RestSharp;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    public class RevitElementRepository : IRevitElementRepository
     {
-        
+        RestClient _client;
         public RevitElementRepository()
         {
-
+            _client = RestSharpBase.Client;
         }
-        public void Delete(IEnumerable<RevitElement> revitElements)
+        public async Task<IEnumerable<RevitElement>> GetAllElementsOfVersion(string versionId)
         {
-            throw new NotImplementedException();
+            var route = new RevitElementRoute(versionId);
+            RestSharpBase reqBase = new RestSharpBase(route.GetElementsUrl, Method.GET);
+            IRestResponse<IEnumerable<RevitElement>> response = await _client.ExecuteAsync<IEnumerable<RevitElement>>(reqBase.Request);
+            return response.Data;
         }
 
-        public RevitElement GetElement(string guid)
+        public async Task<IEnumerable<RevitElement>> GetRevitElementsInPeriod(string versionId,string startDate, string endDate)
         {
-            throw new NotImplementedException();
+            var route = new RevitElementRoute(versionId);
+            RestSharpBase reqBase = new RestSharpBase(route.GetEleInPeriodUrl, Method.GET);
+            RestRequest req = reqBase.Request;
+            req.AddQueryParameter("startDate", startDate);
+            req.AddQueryParameter("endDate", endDate);
+
+            IRestResponse<IEnumerable<RevitElement>> response = await _client.ExecuteAsync<IEnumerable<RevitElement>>(req);
+
+            if((int)response.StatusCode == 400)
+            {
+                throw new ArgumentException("StartDate and endDate are similar.");
+            }
+            else return response.Data;
         }
-
-        public IEnumerable<RevitElement> GetRevitElements(Project project, ProjectVersion version)
-        {
-           
-            //RevitElementRoute route = new RevitElementRoute(project.Id);
-            //RestRequestBase reqBase = new RestRequestBase(route.url(), Method.GET);
-            //RestRequest req = reqBase.Request;
-            //req.AddParameter("version", version.version);
-            //IRestResponse<RevitElementRes> res = Route.Client.Execute<RevitElementRes>(req);
-            //string format = "0000-12-31T23:50:39.000Z"; // datetime format
-            //var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
-            
-            ////RevitElement revitElement = new RevitElement(Element element);
-            //RevitElementRes revitElements = JsonConvert.DeserializeObject<RevitElementRes>(res.Content, dateTimeConverter);
-
-            return new List<RevitElement>();
-        }
-
-        public IEnumerable<RevitElement> GetAllElementsOfVersion(string projectId, int version)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Post(IEnumerable<RevitElement> revitElements)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RevitElement Retrieve(string guid)
-        {
-            return new RevitElement();
-        }
-
-        public List<RevitElement> Retrieve()
-        {
-            return new List<RevitElement>();
-        }
-
-        public bool Save(RevitElement revitElement)
-        {
-            var success = true;
-            
-            return success;
-        }
-      
-        
-
     }
 }

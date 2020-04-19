@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
+
 [assembly: AssemblyTitle("BIM4PM.UI")]
 [assembly: AssemblyDescription("Revit Add-In Description for BIM4PM.UI")]
 [assembly: AssemblyConfiguration("")]
@@ -34,3 +35,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2019.0.0.0")]
 [assembly: AssemblyFileVersion("2019.0.0.0")]
+
+ 

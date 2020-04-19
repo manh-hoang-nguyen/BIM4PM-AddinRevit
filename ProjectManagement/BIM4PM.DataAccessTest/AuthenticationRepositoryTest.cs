@@ -1,48 +1,34 @@
-﻿using System;
-using System.Threading.Tasks;
-using BIM4PM.DataAccess;
-using BIM4PM.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace BIM4PM.DataAccessTest
+﻿namespace BIM4PM.DataAccessTest
 {
+    using BIM4PM.DataAccess;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Threading.Tasks;
+
     [TestClass]
     public class AuthenticationRepositoryTest
     {
         [TestMethod]
-        public void Authenticated()
+        public void UnauthenticatedAsync()
         {
-            var authenticationRepository = new AuthenticationRepository(); 
-            var actual = authenticationRepository.Login("nguyenhoang56ksgt@gmail.com", "12345678");
-            bool IsAuthenticated = actual.Item1;
-            Token token = actual.Item2;
-            Assert.IsTrue(IsAuthenticated);
-            Assert.IsNotNull(token);
-        }
-        [TestMethod]
-        public void Unauthenticated()
-        { 
             var authenticationRepository = new AuthenticationRepository();
 
-            var actual = authenticationRepository.Login("nguyenhoang56ksgt@gmail.com", "123456789");
-            bool IsAuthenticated = actual.Item1;
-            Token token = actual.Item2;
-            Assert.IsFalse(IsAuthenticated);
-            Assert.IsNull(token);
+            var isAuth = authenticationRepository.Login("nguyenhoang56ksgt@gmail.com", "123456789");
+
+
+            Assert.IsFalse(isAuth);
         }
 
         [TestMethod]
-        public async Task AuthenticatedAsync()
+        public void AuthenticatedAsync()
         {
-            
-           // var authenticationRepository = new AuthenticationRepository();
 
-           // var actual = await authenticationRepository.LoginAsync("nguyenhoang56ksgt@gmail.com", "12345678");
+            var authenticationRepository = new AuthenticationRepository();
 
-           //var  token = actual.Data as Token;
+            var isAuth = authenticationRepository.Login("nguyenhoang56ksgt@gmail.com", "12345678");
 
-           // Assert.IsNotNull(token.token);
+            Assert.IsTrue(isAuth);
         }
 
+       
     }
 }

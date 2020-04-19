@@ -2,18 +2,16 @@
 {
     using Autodesk.Revit.DB;
     using Newtonsoft.Json;
-    using System;
     using System.Collections.Generic;
-  
+    
 
     public class RevitElement : EntityBase
     {
         [JsonProperty("guid")]
-        public string Guid { get; set; } 
+        public string Guid { get; set; }
 
         [JsonProperty("versionId")]
         public string VersionId { get; set; }
-         
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -26,6 +24,9 @@
 
         [JsonProperty("level")]
         public string Level { get; set; }
+
+        [JsonProperty("modifications")]
+        public Modifications Modifications { get; set; }
 
         [JsonProperty("parameters")]
         public string Parameters { get; set; }
@@ -54,17 +55,15 @@
         [JsonProperty("volume")]
         public string Volume { get; set; }
 
-      
-
         public RevitElement(Element element)
-        {  
+        {
         }
 
         public RevitElement(RevitElement project, RevitElement model, List<History> history)
         {
-            Id = project.Id; 
+            Id = project.Id;
             VersionId = project.VersionId;
-            Guid = project.Guid; 
+            Guid = project.Guid;
             Name = model.Name;
             ElementId = model.ElementId;
             Category = model.Category;
@@ -96,7 +95,6 @@
                 && string.Equals(Centroid, other.Centroid)
                 && string.Equals(Volume, other.Volume)
                 && string.Equals(TypeId, other.TypeId);
-        } 
-    } 
-   
         }
+    }
+}

@@ -78,6 +78,8 @@
     <Compile Include="AuthenticationRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RevitElementRepositoryTest.cs" />
+    <Compile Include="GroupProjectRepositoryTest.cs" />
+    <Compile Include="UserRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

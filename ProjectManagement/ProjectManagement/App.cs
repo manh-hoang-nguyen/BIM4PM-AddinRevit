@@ -113,8 +113,7 @@ namespace BIM4PM.UI
             Document doc = args.GetDocument();
             if (ProjectModelConnect.SelectedRevitModel == null
                 || ModelProvider.DicRevitElements == null)
-                return;
-
+                return; 
             if (doc.Title == ProjectModelConnect.SelectedRevitModel.Title)
             {
                 List<ElementId> elementIds = new List<ElementId>();

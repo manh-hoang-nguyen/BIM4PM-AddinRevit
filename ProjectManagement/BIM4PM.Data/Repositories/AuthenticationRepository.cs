@@ -1,51 +1,77 @@
-﻿using BIM4PM.Model;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace BIM4PM.DataAccess
+﻿namespace BIM4PM.DataAccess
 {
-    public class AuthenticationRepository:IAuthenticationRepository
+    using BIM4PM.Model;
+    using RestSharp;
+    using System;
+    using System.Threading.Tasks;
+
+    public class AuthenticationRepository : IAuthenticationRepository
     {
+        RestClient _client;
+
         public AuthenticationRepository()
         {
-
-        }
-        public static string Token {get;set;}
-        
-        public Tuple<bool,Token> Login(string email, string password)
-        {
-            bool isAuthenticated = true;
-            RestRequest req = new RestRequest(Route.Login, Method.POST);
-            
-            string body = "{\"email\":\"" + email + "\",\"" + "password" + "\":\"" + password + "\"}";
-            req.RequestFormat = RestSharp.DataFormat.Json; 
-            req.AddJsonBody(body);
-            IRestResponse<Token> res = Route.Client.Execute<Token>(req); 
-            if ((int)res.StatusCode == 401) isAuthenticated = false; 
-            return  new Tuple<bool, Token>(isAuthenticated, res.Data);
+            _client = RestSharpBase.Client;
         }
 
-        public Task<IRestResponse<Token>> LoginAsync(string email, string password)
-        {
-            RestRequest req = new RestRequest(Route.Login, Method.POST);
+        private static Token _token;
 
-            string body = "{\"email\":\"" + email + "\",\"" + "password" + "\":\"" + password + "\"}";
+        public static Token Token
+        {
+            get
+            {
+                var now = DateTime.Now;
+                TimeSpan timeSpan = now.Subtract(LoginTime);
+                if (timeSpan.Minutes <= 59)
+                {
+                    return _token;
+                }
+                else
+                {
+                    Token token = RefreshToken();
+                    Token = token;
+                    return token;
+                }
+            }
+            set
+            {
+                LoginTime = DateTime.Now;
+                _token = value;
+            }
+        }
+
+        static DateTime LoginTime { get; set; }
+
+      
+
+        public bool Login(string email, string password)
+        {
+            RestRequest req = new RestRequest(AuthRoute.Login, Method.POST);
+            string body = "{\"email\":\"" + email + "\",\"" +
+                           "password" + "\":\"" + password + "\"}";
             req.RequestFormat = RestSharp.DataFormat.Json;
-
-            req.AddJsonBody(body); 
-
-            return Route.Client.ExecuteAsync<Token>(req);
+            req.AddJsonBody(body);
+            IRestResponse<Token> res = _client.Execute<Token>(req);
+             
+            if ((int)res.StatusCode == 200)
+            {
+                Token = res.Data;
+                return true;
+            }
+            else return false;
         }
-         
-        public Task LogoutAsync()
+
+        public void Logout()
         {
-            throw new NotImplementedException();
+            Token = null;
+        }
+
+        static Token RefreshToken()
+        {
+            RestRequest req = new RestRequest(AuthRoute.RefreshToken, Method.POST);
+            req.AddHeader("token", _token.RefreshToken);
+            IRestResponse<Token> response = RouteBase.Client.Execute<Token>(req);
+            return response.Data;
         }
     }
 }

@@ -69,15 +69,15 @@
                     IsBackground = true
                 }.Start();
 
-                RestRequest req = new RestRequest(Route.GetMe, Method.GET);
-                req.AddHeader("Content-Type", "application/json");
-                req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+                //RestRequest req = new RestRequest(Route.GetMe, Method.GET);
+                //req.AddHeader("Content-Type", "application/json");
+                //req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
 
-                IRestResponse res = Route.Client.Execute(req);
+                //IRestResponse res = Route.Client.Execute(req);
 
-                UserRes User = JsonConvert.DeserializeObject<UserRes>(res.Content);
+                //UserRes User = JsonConvert.DeserializeObject<UserRes>(res.Content);
 
-                CurrentUser = User.data;
+                //CurrentUser = User.data;
             }
         }
         
