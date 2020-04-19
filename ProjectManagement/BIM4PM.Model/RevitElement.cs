@@ -5,7 +5,13 @@
     using System;
     using System.Collections.Generic;
   
-
+   
+    public enum RevitElementStatus
+    {
+        New,
+        InProgress,
+        Deleted
+    }
     public class RevitElement : EntityBase
     {
         [JsonProperty("guid")]
@@ -13,7 +19,9 @@
 
         [JsonProperty("versionId")]
         public string VersionId { get; set; }
-         
+
+        [JsonProperty("status")]
+        public RevitElementStatus Status { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -98,5 +106,4 @@
                 && string.Equals(TypeId, other.TypeId);
         } 
     } 
-   
-        }
+   }
