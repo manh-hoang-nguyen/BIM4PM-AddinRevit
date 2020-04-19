@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-﻿<Window
-    x:Class="BIM4PM.UI.Tools.Auth.LoginView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Model="clr-namespace:BIM4PM.Model;assembly=BIM4PM.Model"
-    xmlns:commonWpf="clr-namespace:BIM4PM.Common.Wpf;assembly=BIM4PM.Common"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:local="clr-namespace:BIM4PM.UI.Tools.Auth"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:progressBar="clr-namespace:BIM4PM.UI.Resources.UI.ProgressBar.CircularProgressBar"
-    x:Name="Win"
-    Title="Login"
-    Width="380"
-    Height="170"
-    WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
-=======
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -34,7 +15,6 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
     <Window.Resources>
 
         <ResourceDictionary>

@@ -20,11 +20,7 @@
 
     public class LoginViewModel : ViewModelBase, INotifyDataErrorInfo
     {
-<<<<<<< HEAD
-
-=======
         
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
 
         private UIApplication _uiapp;
          
@@ -36,21 +32,12 @@
 
         public RelayCommand<LoginView> LoginCommand { get; set; }
 
-<<<<<<< HEAD
-        public RelayCommand<LoginView> WindowLoaded { get; set; }
-
-        private string _email { get; set; }
-
-        private string _password { get; set; }
-
-=======
         public RelayCommand<LoginView> WindowLoaded { get; set; } 
 
         private string _email { get; set; }
 
         private string _password { get; set; } 
         
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
         public string Email
         {
             get => _email;
@@ -69,11 +56,7 @@
                 LoginCommand.RaiseCanExecuteChanged();
             }
         }
-<<<<<<< HEAD
-
-=======
         
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
         public string Password
         {
             get => _password;
@@ -95,15 +78,9 @@
         Task<List<string>> GetErrorPassword(string value)
         {
             return Task.Factory.StartNew(() =>
-<<<<<<< HEAD
-            {
-
-                if (string.IsNullOrEmpty(value) || value.Length < 8)
-=======
             { 
                 
                 if (string.IsNullOrEmpty(value) || value.Length <8)
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
                     return new List<string> { "Invalid Email" };
                 return null;
             });
@@ -112,11 +89,7 @@
         {
             return Task.Factory.StartNew(() =>
             {
-<<<<<<< HEAD
-
-=======
                  
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
                 Regex regex = new Regex(@"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
                 @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$");
                 if (regex.Match(email) == Match.Empty)
@@ -127,13 +100,7 @@
         }
         
 
-<<<<<<< HEAD
-
-        public bool HasErrors
-        {
-=======
         public bool HasErrors {
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
             get { return PropertyErrorsPresent(); }
         }
         Dictionary<string, List<string>> _PropertyErrors = new Dictionary<string, List<string>>();
@@ -166,11 +133,7 @@
 
         private bool CanLogin(LoginView arg)
         {
-<<<<<<< HEAD
-            return !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password) && !HasErrors;
-=======
             return !string.IsNullOrWhiteSpace( Email) && !string.IsNullOrWhiteSpace (Password) && !HasErrors;
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
         }
 
         private void OnAuthenticated(Window win)
@@ -179,13 +142,8 @@
         }
 
         private void OnWindowLoaded(LoginView win)
-<<<<<<< HEAD
-        {
-
-=======
         { 
          
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
             string isSave = Properties.Settings.Default["IsSave"] as string;
             if (isSave == "1")
             {
@@ -198,36 +156,6 @@
         }
 
         private void OnLogin(LoginView win)
-<<<<<<< HEAD
-        {
-
-            // Register email and password for next login
-            if (win.cBSave.IsChecked == true)
-            {
-                Properties.Settings.Default["UserEmail"] = Email;
-                Properties.Settings.Default["UserPassword"] = Password;
-                Properties.Settings.Default["IsSave"] = "1";
-                Properties.Settings.Default.Save();
-            }
-            else
-            {
-                Properties.Settings.Default["UserEmail"] = "";
-                Properties.Settings.Default["UserPassword"] = "";
-                Properties.Settings.Default["IsSave"] = "0";
-                Properties.Settings.Default.Save();
-            }
-           
-
-            Thread thread = new Thread(() =>
-            {
-                var subjet = new Auth();
-                LaunchPanel launchPanel = new LaunchPanel();
-                subjet.Attach(launchPanel);
-                subjet.Login(Email, Password);
-
-               
-            });
-=======
         { 
              
             //// Register email and password for next login
@@ -271,7 +199,6 @@
                     
             //    }
             //});
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
 
             //thread.Start();
         }
