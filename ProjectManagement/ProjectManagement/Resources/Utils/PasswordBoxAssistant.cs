@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace BIM4PM.Common.Wpf
+namespace BIM4PM.UI.Resources.Utils
 {
     //https://www.codeproject.com/Articles/37167/Binding-Passwords
     public class PasswordBoxAssistant

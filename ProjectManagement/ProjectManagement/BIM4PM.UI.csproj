@@ -222,8 +222,10 @@
     <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\NotZeroConverter.cs" />
     <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\RotateTransformCentreConverter.cs" />
     <Compile Include="Resources\UI\ProgressBar\CircularProgressBar\StartPointConverter.cs" />
+    <Compile Include="Resources\Utils\BindableBase.cs" />
     <Compile Include="Resources\Utils\BrushRoundConverter.cs" />
     <Compile Include="Resources\Utils\Chip.cs" />
+    <Compile Include="Resources\Utils\DataValidationBase.cs" />
     <Compile Include="Resources\Utils\NullableToVisibilityConverter.cs" />
     <Compile Include="Resources\Utils\DataGridAssist.cs" />
     <Compile Include="Resources\Utils\EqualityToVisibilityConverter.cs" />
@@ -231,6 +233,7 @@
     <Compile Include="Resources\Utils\HintAssist.cs" />
     <Compile Include="Resources\Utils\ListViewAssist.cs" />
     <Compile Include="Resources\Utils\ListViewGridViewConverter.cs" />
+    <Compile Include="Resources\Utils\PasswordBoxAssistant.cs" />
     <Compile Include="Resources\Utils\PasswordBoxMonitor.cs" />
     <Compile Include="Resources\Utils\ControlzEx\PopupEx.cs" />
     <Compile Include="Resources\Utils\ScrollViewerAssist.cs" />

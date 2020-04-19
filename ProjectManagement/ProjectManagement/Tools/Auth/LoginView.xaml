@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<Window
     x:Class="BIM4PM.UI.Tools.Auth.LoginView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -15,6 +16,25 @@
     Height="170"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+=======
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:BIM4PM.UI.Tools.Auth"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:progressBar="clr-namespace:BIM4PM.UI.Resources.UI.ProgressBar.CircularProgressBar"
+        xmlns:Model="clr-namespace:BIM4PM.Model;assembly=BIM4PM.Model"
+        xmlns:wpf="clr-namespace:BIM4PM.UI.Resources.Utils"
+        x:Class="BIM4PM.UI.Tools.Auth.LoginView"
+        x:Name="Win"
+        Title="Login"
+        Width="380"
+        Height="170"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d">
+>>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
     <Window.Resources>
 
         <ResourceDictionary>
@@ -25,7 +45,62 @@
                 <ResourceDictionary Source="/BIM4PM.UI;component/Resources/PasswordResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="MyBoolToVisibilityConverter" />
-
+            <Style x:Key="TextErrorStyle"
+                   TargetType="{x:Type TextBox}">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError"
+                             Value="True">
+                        <Setter Property="Validation.ErrorTemplate">
+                            <Setter.Value>
+                                <ControlTemplate x:Name="TextErrorTemplate">
+                                    <StackPanel>
+                                        <Border BorderBrush="Red"
+                                                BorderThickness="1">
+                                            <AdornedElementPlaceholder />
+                                        </Border>
+                                        <TextBlock Foreground="Red">Email incorrect</TextBlock>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ToolTip"
+                                Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+             Path=(Validation.Errors)[0].ErrorContent}"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="PasswordBoxErrorStyle"
+                   TargetType="{x:Type PasswordBox}">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError"
+                             Value="True">
+                        <Setter Property="Validation.ErrorTemplate">
+                            <Setter.Value>
+                                <ControlTemplate x:Name="TextErrorTemplate">
+                                    <DockPanel>
+                                        <Border BorderBrush="Red"
+                                                BorderThickness="1">
+                                            <AdornedElementPlaceholder />
+                                        </Border>
+                                        <TextBlock  Foreground="Red">*</TextBlock>
+                                    </DockPanel>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ToolTip"
+                                Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                                Path=(Validation.Errors)[0].ErrorContent}"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ErrorStyle"
+                   TargetType="FrameworkElement">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError"
+                             Value="True"> 
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
 
     </Window.Resources>
@@ -34,9 +109,12 @@
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding WindowLoaded}" CommandParameter="{Binding ElementName=Win}" />
         </i:EventTrigger>
+<<<<<<< HEAD
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding WindowClosed}" CommandParameter="{Binding ElementName=Win}" />
         </i:EventTrigger>
+=======
+>>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
     </i:Interaction.Triggers>
 
     <Grid Margin="3">
@@ -45,6 +123,7 @@
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
+<<<<<<< HEAD
 
 
         <StackPanel
@@ -74,6 +153,32 @@
             Margin="85,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top">
+=======
+        <StackPanel Grid.Row="1"
+                    Margin="3"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Visibility="{Binding VisiblityLoginWindow}">
+            <CheckBox x:Name="cBSave"
+                      VerticalAlignment="Center"
+                      Content="Save user name and password" />
+            <Button Command="{Binding LoginCommand}"
+                    CommandParameter="{Binding ElementName=Win}"
+                    Content="Login"
+                    Style="{StaticResource MHButton1}" />
+            <Button Command="{Binding Cancel}"
+                    CommandParameter="{Binding ElementName=Win}"
+                    Content="Cancel"
+                    Style="{StaticResource MHButton1}" />
+        </StackPanel>
+        <progressBar:CircularProgressBar Grid.RowSpan="2"
+                                         Visibility="{Binding VisibilityProgressBar, FallbackValue=Hidden}" />
+        <Grid x:Name="grid1"
+              HorizontalAlignment="Left"
+              Margin="31,21,0,0"
+              VerticalAlignment="Top"
+              Grid.RowSpan="2">
+>>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -82,6 +187,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+<<<<<<< HEAD
             <Label
                 Grid.Row="0"
                 Grid.Column="0"
@@ -117,6 +223,46 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 commonWpf:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+=======
+            <Label Content="Email:"
+                   Grid.Column="0"
+                   HorizontalAlignment="Left"
+                   Margin="3"
+                   Grid.Row="0"
+                   VerticalAlignment="Center" />
+
+            <TextBox x:Name="emailTextBox"
+                     Grid.Column="1"
+                     HorizontalAlignment="Left"
+                     Height="23"
+                     Margin="3"
+                     Style="{StaticResource ErrorStyle}"
+                     Grid.Row="0"
+                     Text="{Binding Email,   Mode=TwoWay,NotifyOnValidationError=True,
+                         ValidatesOnDataErrors= True,  
+                         UpdateSourceTrigger=PropertyChanged}"
+                     VerticalAlignment="Center"
+                     Width="200" />
+            <Label Content="Password:"
+                   Grid.Column="0"
+                   HorizontalAlignment="Left"
+                   Margin="3"
+                   Grid.Row="1"
+                   VerticalAlignment="Center" />
+
+            <PasswordBox x:Name="PasswordBox"
+                         Grid.Column="1"
+                         HorizontalAlignment="Left"
+                         Height="23"
+                         Margin="3"
+                         Grid.Row="1"
+                         Style="{StaticResource ErrorStyle}"
+                         wpf:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,  Mode=TwoWay,NotifyOnValidationError=True,
+                         ValidatesOnDataErrors= True,  
+                         UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center"
+                         Width="200" />
+>>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
         </Grid>
 
 

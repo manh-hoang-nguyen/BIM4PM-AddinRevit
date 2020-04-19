@@ -137,9 +137,9 @@
             }
 
 
-            levles.OrderBy(a => a.Elevation).Select(a => a.Name).ToList();
+            //levles.OrderBy(a => a.Elevation).Select(a => a.Name).ToList();
 
-            /*
+            
             //Sap xep level theo thu tu tang dan
             Level tmp;//bien trung gian
             for (int i = 0; i < levles.Count; i++)
@@ -156,7 +156,7 @@
                     }
                 }
             }
-            */
+            
             return levles;
         }
 
@@ -313,12 +313,7 @@
 
             return centroidElement;
         }
-
-        /// <summary>
-        /// The GetBoundingBox
-        /// </summary>
-        /// <param name="e">The e<see cref="Element"/></param>
-        /// <returns>The <see cref="BoundingBoxElement"/></returns>
+ 
         public static BoundingBoxElement GetBoundingBox(Element e)
         {
             BoundingBoxElement boundingbox = new BoundingBoxElement() { status = "0" };

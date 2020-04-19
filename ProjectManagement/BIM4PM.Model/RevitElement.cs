@@ -3,8 +3,19 @@
     using Autodesk.Revit.DB;
     using Newtonsoft.Json;
     using System.Collections.Generic;
+<<<<<<< HEAD
     
 
+=======
+  
+   
+    public enum RevitElementStatus
+    {
+        New,
+        InProgress,
+        Deleted
+    }
+>>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
     public class RevitElement : EntityBase
     {
         [JsonProperty("guid")]
@@ -12,6 +23,12 @@
 
         [JsonProperty("versionId")]
         public string VersionId { get; set; }
+<<<<<<< HEAD
+=======
+
+        [JsonProperty("status")]
+        public RevitElementStatus Status { get; set; }
+>>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -95,6 +112,12 @@
                 && string.Equals(Centroid, other.Centroid)
                 && string.Equals(Volume, other.Volume)
                 && string.Equals(TypeId, other.TypeId);
+<<<<<<< HEAD
         }
     }
 }
+=======
+        } 
+    } 
+   }
+>>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
