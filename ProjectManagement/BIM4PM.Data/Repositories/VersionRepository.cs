@@ -15,23 +15,23 @@
         {
             _client = RestSharpBase.Client;
         }
-        public async Task<ProjectVersion> GetCurrentVersion(string modelId)
+        public async Task<ModelVersion> GetCurrentVersion(string modelId)
         {
             var route = new VersionRoute();
             RestSharpBase requestBase = new RestSharpBase(route.GetCurrentVersion, Method.GET);
             RestRequest req = requestBase.Request;
             req.AddHeader("modelid", modelId);
-            IRestResponse<ProjectVersion> response = await _client.ExecuteAsync<ProjectVersion>(req);
+            IRestResponse<ModelVersion> response = await _client.ExecuteAsync<ModelVersion>(req);
             return response.Data;
         }
 
-        public async Task<IEnumerable<ProjectVersion>> GetVersions(string modelId)
+        public async Task<IEnumerable<ModelVersion>> GetVersions(string modelId)
         {
             var route = new VersionRoute();
             RestSharpBase requestBase = new RestSharpBase(route.GetVersions, Method.GET);
             RestRequest req = requestBase.Request;
             req.AddHeader("modelid", modelId);
-            IRestResponse<IEnumerable<ProjectVersion>> response = await _client.ExecuteAsync<IEnumerable<ProjectVersion>>(req);
+            IRestResponse<IEnumerable<ModelVersion>> response = await _client.ExecuteAsync<IEnumerable<ModelVersion>>(req);
             return response.Data;
         }
     }

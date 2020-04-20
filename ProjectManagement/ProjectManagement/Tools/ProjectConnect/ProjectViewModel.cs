@@ -45,7 +45,7 @@
 
         public ProjectModel Model { get; set; }
 
-        public User User
+        public object User
         {
             get => _user; set { _user = value; RaisePropertyChanged("User"); }
         }
@@ -64,7 +64,7 @@
 
         private List<Models.Version> _versions;
 
-        private User _user;
+        private object _user;
 
         private bool cbProjectIsEnable;
 
@@ -84,7 +84,7 @@
         {
             CbProjectIsEnable = true;
             CbModelIsEnable = true;
-            Model = new ProjectModel();
+            //Model = new ProjectModel();
             WindowLoaded = new RelayCommand<ProjectView>(OnWindowLoaded);
 
             
@@ -149,13 +149,13 @@
             //Thread thread = new Thread(() =>
             //{
             ConcurrentDictionary<string, RevitElement> concurDic = new ConcurrentDictionary<string, RevitElement>();
-            Parallel.ForEach(Model.GetRevitElementInCloud(ProjectProvider.Instance.CurrentVersion), e =>
-            {
-              concurDic.TryAdd(e.guid, e);
-            });
-            if (ProjectProvider.Instance.DicRevitElements != null) ProjectProvider.Instance.DicRevitElements = concurDic;
-           CbModelIsEnable = false;
-            CbProjectIsEnable = false;
+           // Parallel.ForEach(Model.GetRevitElementInCloud(ProjectProvider.Instance.CurrentVersion), e =>
+           // {
+           //   concurDic.TryAdd(e.guid, e);
+           // });
+           // if (ProjectProvider.Instance.DicRevitElements != null) ProjectProvider.Instance.DicRevitElements = concurDic;
+           //CbModelIsEnable = false;
+           // CbProjectIsEnable = false;
             //});
             //thread.Start();
 
@@ -205,8 +205,8 @@
         {
             if (AuthProvider.Instance.IsConnected == false)
             {
-                Task<User> userTask = Model.GetUser();
-                Task<List<Project>> projects = Model.GetUserProjectsAsync();
+                //Task<User> userTask = Model.GetUser();
+                //Task<List<Project>> projects = Model.GetProjectsOfUserAsync();
                 view.Models.ItemsSource = ModelProvider.Models;
                // User = await userTask;
                // Projects = await projects;
@@ -223,7 +223,7 @@
         /// <param name="win">The win<see cref="UserControl"/></param>
         private void OnSendData(UserControl win)
         {
-            Model.SendRevitElementToCloud();
+            //Model.SendRevitElementToCloud();
         }
 
         

@@ -26,7 +26,7 @@ namespace BIM4PM.UI.Models
     {
         public string _id { get; set; }
         public TypeComment type { get; set; }
-        public User user { get; set; } 
+       
         public string text { get; set; }
         public DateTime createdAt { get; set; }
         public DateTime updatedAt { get; set; }
@@ -36,7 +36,7 @@ namespace BIM4PM.UI.Models
     {
         public string _id { get; set; }
         public TypeComment type { get; set; }
-        public User user { get; set; }
+         
         
         public string text { get; set; }
         public DateTime createdAt { get; set; }

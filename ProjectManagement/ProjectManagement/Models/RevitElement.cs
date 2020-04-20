@@ -30,7 +30,7 @@
 
         public DateTime modifiedAt { get; set; }
 
-        public User user { get; set; }
+         
 
         public bool isFirstCommit { get; set; }
 

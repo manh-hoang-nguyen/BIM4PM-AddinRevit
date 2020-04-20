@@ -8,7 +8,7 @@ namespace BIM4PM.DataAccess.Interfaces
 {
    public interface IVersionRepository
     {
-        Task<IEnumerable<ProjectVersion>> GetVersions(string modelId);
-        Task<ProjectVersion> GetCurrentVersion(string modelId);
+        Task<IEnumerable<ModelVersion>> GetVersions(string modelId);
+        Task<ModelVersion> GetCurrentVersion(string modelId);
     }
 }

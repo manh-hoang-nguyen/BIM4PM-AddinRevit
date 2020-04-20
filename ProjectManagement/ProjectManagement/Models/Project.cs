@@ -6,7 +6,7 @@
     public class Member
     {
         public string _id { get; set; }
-        public User user { get; set; }
+        
         public string role { get; set; }
     }
     public class Project

@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5F067074-1C2D-40E2-A1E5-F038EDC1468F}</ProjectGuid>
+    <ProjectGuid>{7B677A56-4B61-4528-841C-E00244E80EDF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BIM4PM.UITests</RootNamespace>
-    <AssemblyName>BIM4PM.UITests</AssemblyName>
+    <RootNamespace>BIM4PM.DataAccessTests</RootNamespace>
+    <AssemblyName>BIM4PM.DataAccessTests</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -36,21 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq, Version=4.13.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.13.1\lib\net45\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,25 +58,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\ProjectConnect\ProjectModelTests.cs" />
+    <Compile Include="Repositories\AuthenticationRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BIM4PM.Data\BIM4PM.DataAccess.csproj">
-      <Project>{B9019A62-37BD-4F63-A93E-7EEBA2475651}</Project>
-      <Name>BIM4PM.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BIM4PM.Model\BIM4PM.Model.csproj">
-      <Project>{52752596-3B00-48D8-9681-763558FF4E0E}</Project>
-      <Name>BIM4PM.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ProjectManagement\BIM4PM.UI.csproj">
-      <Project>{b6a257ce-526c-4d67-a450-9a2895f187f0}</Project>
-      <Name>BIM4PM.UI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -97,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BIM4PM.Data\BIM4PM.DataAccess.csproj">
+      <Project>{B9019A62-37BD-4F63-A93E-7EEBA2475651}</Project>
+      <Name>BIM4PM.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

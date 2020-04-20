@@ -8,6 +8,6 @@ namespace BIM4PM.UI.Commun
          
         public static List<UserProject> userProject;
         public static string idProjectActive;
-        public static User user;
+        
     }
 }

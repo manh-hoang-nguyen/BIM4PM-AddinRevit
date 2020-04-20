@@ -137,13 +137,13 @@
             }
             string body ="{\"name\":\"" + namex +"\",\""+"isShared\":\"true\"," + "\"data\":"   + bodychild + "}";
 
-            string url = string.Format("{0}/{1}/schedules", Route.UserProjects, ProjectProvider.Instance.CurrentProject._id);
-            RestRequest req = new RestRequest(url, Method.POST);
-            req.AddHeader("Content-Type", "application/json");
-            req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-            req.RequestFormat = DataFormat.Json;
-            req.AddJsonBody(body);
-            IRestResponse res = Route.Client.Execute(req);
+            //string url = string.Format("{0}/{1}/schedules", Route.UserProjects, ProjectProvider.Instance.CurrentProject._id);
+            //RestRequest req = new RestRequest(url, Method.POST);
+            //req.AddHeader("Content-Type", "application/json");
+            //req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+            //req.RequestFormat = DataFormat.Json;
+            //req.AddJsonBody(body);
+            //IRestResponse res = Route.Client.Execute(req);
             System.GC.Collect();
             System.GC.WaitForPendingFinalizers();
             File.Delete(@filename);

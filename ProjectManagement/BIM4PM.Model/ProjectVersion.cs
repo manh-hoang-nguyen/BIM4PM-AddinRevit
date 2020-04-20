@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BIM4PM.Model
 {
-   public class ProjectVersion: EntityBase
+   public class ModelVersion: EntityBase
     {
         [JsonProperty("modelId")]
         public string ModelId { get; set; }

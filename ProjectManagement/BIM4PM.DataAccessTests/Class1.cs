@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIM4PM.UITests
+namespace BIM4PM.DataAccessTests
 {
     public class Class1
     {

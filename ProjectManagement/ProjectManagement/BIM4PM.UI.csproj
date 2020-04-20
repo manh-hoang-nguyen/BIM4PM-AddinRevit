@@ -50,6 +50,9 @@
       <HintPath>C:\Program Files\Autodesk\Revit 2019\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Autofac, Version=5.1.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.5.1.2\lib\net461\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.5\lib\net47\CommonServiceLocator.dll</HintPath>
       <Private>False</Private>
@@ -65,6 +68,9 @@
     <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -189,6 +195,7 @@
     <Compile Include="Commun\Observer\Auth.cs" />
     <Compile Include="Commun\ProjectProvider.cs" />
     <Compile Include="Commun\UserData.cs" />
+    <Compile Include="DI\BootStrapper.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Comparison.cs" />
     <Compile Include="MethodeRevitApi.cs" />
@@ -197,10 +204,8 @@
     <Compile Include="Models\RevitElement.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\Topic.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserProject.cs" />
     <Compile Include="Models\Version.cs" />
-    <Compile Include="Models\View.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -16,7 +16,7 @@ namespace BIM4PM.UI.Models
 
         public List<string> elements { get; set; }
 
-        public User user { get; set; }
+        
 
         public List<ChildComment> comments { get;set;}
     }

@@ -18,7 +18,7 @@
 
         public static AuthProvider Instance { get; } = new AuthProvider();
 
-        public User CurrentUser { get; set; }
+        public object CurrentUser { get; set; }
 
         public Token token { get; set; }
 

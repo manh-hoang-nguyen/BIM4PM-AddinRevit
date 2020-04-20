@@ -22,10 +22,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-<<<<<<< HEAD
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-=======
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

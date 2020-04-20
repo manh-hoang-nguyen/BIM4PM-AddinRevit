@@ -89,12 +89,6 @@
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding WindowLoaded}" CommandParameter="{Binding ElementName=Win}" />
         </i:EventTrigger>
-<<<<<<< HEAD
-        <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding WindowClosed}" CommandParameter="{Binding ElementName=Win}" />
-        </i:EventTrigger>
-=======
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
     </i:Interaction.Triggers>
 
     <Grid Margin="3">
@@ -103,37 +97,6 @@
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
-<<<<<<< HEAD
-
-
-        <StackPanel
-            Grid.Row="1"
-            Margin="3"
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Visibility="{Binding VisiblityLoginWindow}">
-            <CheckBox
-                x:Name="cBSave"
-                VerticalAlignment="Center"
-                Content="Save user name and password" />
-            <Button
-                Command="{Binding LoginCommand}"
-                CommandParameter="{Binding ElementName=Win}"
-                Content="Login"
-                Style="{StaticResource MHButton1}" />
-            <Button
-                Command="{Binding Cancel}"
-                CommandParameter="{Binding ElementName=Win}"
-                Content="Cancel"
-                Style="{StaticResource MHButton1}" />
-        </StackPanel>
-        <progressBar:CircularProgressBar Grid.RowSpan="2" Visibility="{Binding VisibilityProgressBar, FallbackValue=Hidden}" />
-        <Grid
-            x:Name="grid1"
-            Margin="85,10,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top">
-=======
         <StackPanel Grid.Row="1"
                     Margin="3"
                     HorizontalAlignment="Center"
@@ -158,7 +121,6 @@
               Margin="31,21,0,0"
               VerticalAlignment="Top"
               Grid.RowSpan="2">
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -167,43 +129,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-<<<<<<< HEAD
-            <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                Margin="3"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Content="Email:" />
-            <TextBox
-                x:Name="emailTextBox"
-                Grid.Row="0"
-                Grid.Column="1"
-                Width="120"
-                Height="23"
-                Margin="3"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{Binding Email, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
-            <Label
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="3"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Content="Password:" />
-
-            <PasswordBox
-                x:Name="PasswordBox"
-                Grid.Row="1"
-                Grid.Column="1"
-                Width="120"
-                Height="23"
-                Margin="3"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                commonWpf:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-=======
             <Label Content="Email:"
                    Grid.Column="0"
                    HorizontalAlignment="Left"
@@ -242,7 +167,6 @@
                          UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center"
                          Width="200" />
->>>>>>> 73bfcb4c68f91e0dc1e6a03b4d488c2b3ff6d3d2
         </Grid>
 
 

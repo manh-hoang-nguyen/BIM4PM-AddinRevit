@@ -70,44 +70,44 @@
                     MessageBox.Show("Please select an element");
                     break;
                 case 1:
-                    RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
-                    Element e = doc.GetElement(selectedIds.First());
-                    if ((null != e.Category
-                            && 0 < e.Parameters.Size
-                            && (e.Category.HasMaterialQuantities)) == false)
-                    {
-                        MessageBox.Show("This element is NOT SUPPORTED by us. Sorry!");
-                        return;
-                    }
-                     string guid = e.UniqueId;
-                    RestRequest req = new RestRequest(route.historyUrl(guid), Method.GET);
-                    req.AddHeader("Content-Type", "application/json");
-                    req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
-                    IRestResponse<Models.History> res = Route.Client.Execute<Models.History>(req);
+                    //RevitElementRoute route = new RevitElementRoute(ProjectProvider.Instance.CurrentProject._id);
+                    //Element e = doc.GetElement(selectedIds.First());
+                    //if ((null != e.Category
+                    //        && 0 < e.Parameters.Size
+                    //        && (e.Category.HasMaterialQuantities)) == false)
+                    //{
+                    //    MessageBox.Show("This element is NOT SUPPORTED by us. Sorry!");
+                    //    return;
+                    //}
+                    // string guid = e.UniqueId;
+                    //RestRequest req = new RestRequest(route.historyUrl(guid), Method.GET);
+                    //req.AddHeader("Content-Type", "application/json");
+                    //req.AddHeader("Authorization", "Bearer " + AuthProvider.Instance.token.token);
+                    //IRestResponse<Models.History> res = Route.Client.Execute<Models.History>(req);
 
-                    if(res.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    {
-                        MessageBox.Show("Element is not synchronized on cloud yet.");
-                        return;
-                    }
-                    if(res.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        string format = "0000-12-31T23:50:39.000Z";
-                        var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
-                        HistoryResParent revitElements = JsonConvert.DeserializeObject<HistoryResParent>(res.Content, dateTimeConverter);
+                    //if(res.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    //{
+                    //    MessageBox.Show("Element is not synchronized on cloud yet.");
+                    //    return;
+                    //}
+                    //if(res.StatusCode == System.Net.HttpStatusCode.OK)
+                    //{
+                    //    string format = "0000-12-31T23:50:39.000Z";
+                    //    var dateTimeConverter = new IsoDateTimeConverter { DateTimeFormat = format, Culture = CultureInfo.InvariantCulture };
+                    //    HistoryResParent revitElements = JsonConvert.DeserializeObject<HistoryResParent>(res.Content, dateTimeConverter);
 
-                        HistoryModel.Instance.HistoriesByTypeChange.Clear();
-                        foreach (HistoryByTypeChange item in GetHistoryByType(revitElements.data.history))
-                        {
-                            HistoryModel.Instance.HistoriesByTypeChange.Add(item);
-                        }
+                    //    HistoryModel.Instance.HistoriesByTypeChange.Clear();
+                    //    foreach (HistoryByTypeChange item in GetHistoryByType(revitElements.data.history))
+                    //    {
+                    //        HistoryModel.Instance.HistoriesByTypeChange.Add(item);
+                    //    }
 
-                    }
-                    else
-                    {
-                        MessageBox.Show("Some error on getting element history.");
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show("Some error on getting element history.");
                         
-                    }
+                    //}
 
                   
                     break;
@@ -126,57 +126,57 @@
         {
             List<HistoryByTypeChange> hisByChange = new List<HistoryByTypeChange>();
 
-            foreach (Models.History history in Histories)
-            {
-                DateTime date = history.modifiedAt;
-                string userName = history.user.name.fullName();
+            //foreach (Models.History history in Histories)
+            //{
+            //    DateTime date = history.modifiedAt;
+            //    string userName = history.user.name.fullName();
 
-                if (history.isFirstCommit == true)
-                {
-                    HistoryByTypeChange firstCommit = new HistoryByTypeChange()
-                    {
-                        date = date,
-                        userName = userName,
-                        type = TypeChange.CreatedOn
-                    };
-                    hisByChange.Add(firstCommit);
-                    continue;
-                }
+            //    if (history.isFirstCommit == true)
+            //    {
+            //        HistoryByTypeChange firstCommit = new HistoryByTypeChange()
+            //        {
+            //            date = date,
+            //            userName = userName,
+            //            type = TypeChange.CreatedOn
+            //        };
+            //        hisByChange.Add(firstCommit);
+            //        continue;
+            //    }
 
-                if (history.geometryChange == true)
-                {
-                    HistoryByTypeChange geo = new HistoryByTypeChange()
-                    {
-                        date = date,
-                        userName = userName,
-                        type = TypeChange.Geometry
+            //    if (history.geometryChange == true)
+            //    {
+            //        HistoryByTypeChange geo = new HistoryByTypeChange()
+            //        {
+            //            date = date,
+            //            userName = userName,
+            //            type = TypeChange.Geometry
 
-                    };
-                    hisByChange.Add(geo);
-                }
-                if (history.parameterChange == true)
-                {
-                    HistoryByTypeChange para = new HistoryByTypeChange()
-                    {
-                        date = date,
-                        userName = userName,
-                        type = TypeChange.Parameters
+            //        };
+            //        hisByChange.Add(geo);
+            //    }
+            //    if (history.parameterChange == true)
+            //    {
+            //        HistoryByTypeChange para = new HistoryByTypeChange()
+            //        {
+            //            date = date,
+            //            userName = userName,
+            //            type = TypeChange.Parameters
 
-                    };
-                    hisByChange.Add(para);
-                }
-                if (history.sharedParameterChange == true)
-                {
-                    HistoryByTypeChange sharedPara = new HistoryByTypeChange()
-                    {
-                        date = date,
-                        userName = userName,
-                        type = TypeChange.SharedParameters
+            //        };
+            //        hisByChange.Add(para);
+            //    }
+            //    if (history.sharedParameterChange == true)
+            //    {
+            //        HistoryByTypeChange sharedPara = new HistoryByTypeChange()
+            //        {
+            //            date = date,
+            //            userName = userName,
+            //            type = TypeChange.SharedParameters
 
-                    };
-                    hisByChange.Add(sharedPara);
-                }
-            }
+            //        };
+            //        hisByChange.Add(sharedPara);
+            //    }
+            //}
 
             return hisByChange;
         }
