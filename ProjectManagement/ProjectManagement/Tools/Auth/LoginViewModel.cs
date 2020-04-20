@@ -17,10 +17,13 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using System.Collections;
+    using Prism.Events;
+    using BIM4PM.UI.Events;
 
     public class LoginViewModel : ViewModelBase, INotifyDataErrorInfo
     {
-        
+
+        private IEventAggregator _eventAggregator;
 
         private UIApplication _uiapp;
          
@@ -121,8 +124,9 @@
          
 
 
-        public LoginViewModel(UIApplication uiapp)
+        public LoginViewModel(UIApplication uiapp, IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _uiapp = uiapp;
             Model = new LoginModel();
             WindowLoaded = new RelayCommand<LoginView>(OnWindowLoaded);
@@ -156,8 +160,8 @@
         }
 
         private void OnLogin(LoginView win)
-        { 
-             
+        {
+
             //// Register email and password for next login
             //if (win.cBSave.IsChecked == true)
             //{
@@ -177,26 +181,16 @@
 
             //Thread thread = new Thread(() =>
             //{
-            //    var subjet = new Auth();
-            //    LaunchPanel launchPanel = new LaunchPanel();
-            //    subjet.Attach(launchPanel);
-            //    //subjet.Login(Email, win.PasswordBox.Password);
+            var subjet = new Auth();
+            LaunchPanel launchPanel = new LaunchPanel();
+            subjet.Attach(launchPanel);
+            var isAuth = subjet.Login(Email, Password);
+            if (isAuth)
+            {
+                _eventAggregator.GetEvent<AuthEvent>().Publish(true);
+            }
+            else _eventAggregator.GetEvent<AuthEvent>().Publish(true);
 
-            //    if (Auth.IsAuthenticated)
-            //    {
-            //        VisiblityLoginWindow = Visibility.Hidden;
-            //        VisibilityProgressBar = Visibility.Hidden;
-            //        VisibilityNotAuthenticated = Visibility.Hidden;
-            //        VisibilityAuthenticated = Visibility.Visible;
-                    
-            //    }
-            //    else
-            //    {
-            //        VisiblityLoginWindow = Visibility.Hidden;
-            //        VisibilityProgressBar = Visibility.Hidden;
-            //        VisibilityNotAuthenticated = Visibility.Visible;
-            //        VisibilityAuthenticated = Visibility.Hidden;
-                    
             //    }
             //});
 

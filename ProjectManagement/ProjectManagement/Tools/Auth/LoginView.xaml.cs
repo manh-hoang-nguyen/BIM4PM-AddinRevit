@@ -11,13 +11,15 @@ namespace BIM4PM.UI.Tools.Auth
     /// </summary>
     public partial class LoginView : Window
     {
-        public LoginView()
+        private LoginViewModel _loginViewModel;
+        public LoginView(LoginViewModel loginViewModel)
         {
              
-            InitializeComponent();
-           
+            InitializeComponent(); 
+            _loginViewModel = loginViewModel;
+            DataContext = _loginViewModel;
         }
 
-        
+       
     }
 }

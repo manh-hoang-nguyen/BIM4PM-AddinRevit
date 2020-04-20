@@ -1,4 +1,7 @@
 ﻿using Autofac;
+using BIM4PM.DataAccess;
+using BIM4PM.DataAccess.Interfaces;
+using BIM4PM.UI.Tools.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +15,19 @@ namespace BIM4PM.UI.DI
         public IContainer BootStrap()
         {
             var builder = new ContainerBuilder();
-            //builder.RegisterType<MainWindow>().AsSelf();
+            builder.RegisterType<LoginView>().AsSelf();
             //builder.RegisterType<MainViewModel>().AsSelf();
 
-            //builder.RegisterType<NavigationViewModel>()
-            //  .As<INavigationViewModel>();
+            builder.RegisterType<AuthenticationRepository>()
+             .As<IAuthenticationRepository>();
 
-            //builder.RegisterType<NavigationDataProvider>()
-            //  .As<INavigationDataProvider>();
+            builder.RegisterType<ProjectRepository>()
+              .As<IProjectRepository>();
 
-            //builder.RegisterType<FileDataService>()
-            //  .As<IDataService>();
+            builder.RegisterType<UserRepository>()
+              .As<IUserRepository>();
+            builder.RegisterType<VersionRepository>()
+             .As<IVersionRepository>();
 
             return builder.Build();
         }
