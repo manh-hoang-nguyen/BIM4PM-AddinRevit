@@ -4,10 +4,12 @@
     using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
     using BIM4PM.UI.Commun;
-    using BIM4PM.UI.DI;
+    
     using BIM4PM.UI.Tools.Auth;
     using System;
-    using Autofac;
+    
+    using Prism.Events;
+
     [Transaction(TransactionMode.ReadOnly)]
     public class CmdLogin : IExternalCommand
     {
@@ -16,14 +18,10 @@
         {
             UIApplication uiapp = commandData.Application;
 
-            var bootstrapper = new BootStrapper();
-            var container = bootstrapper.BootStrap();
-            var loginView1 = container.Resolve<LoginView>();
-            //LoginView loginView = new LoginView()
-            //{
-            //    DataContext = new LoginViewModel(uiapp)
-            //};
-            loginView1.ShowDialog();
+            
+            LoginView loginView = new LoginView(new LoginViewModel(uiapp, EventProvider.Instance.EventAggregator));
+
+            loginView.ShowDialog();
 
             // Todo: Check if token != null
             DockablePaneId dpid = new DockablePaneId(new Guid(Properties.Resources.PaletteGuid));

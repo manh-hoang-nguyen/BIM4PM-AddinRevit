@@ -50,13 +50,6 @@
       <HintPath>C:\Program Files\Autodesk\Revit 2019\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Autofac, Version=5.1.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.5.1.2\lib\net461\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.2.0.5\lib\net47\CommonServiceLocator.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
       <Private>True</Private>
@@ -186,6 +179,7 @@
     <Compile Include="Commun\AuthProvider.cs" />
     <Compile Include="Commun\CompareProvider.cs" />
     <Compile Include="Commun\DiscussionProvider.cs" />
+    <Compile Include="Commun\EventProvider.cs" />
     <Compile Include="Commun\Mediator\AuthChangedEventArgs.cs" />
     <Compile Include="Commun\Mediator\Mediator.cs" />
     <Compile Include="Commun\ModelProvider.cs" />
@@ -198,7 +192,6 @@
     <Compile Include="Commun\Observer\Auth.cs" />
     <Compile Include="Commun\ProjectProvider.cs" />
     <Compile Include="Commun\UserData.cs" />
-    <Compile Include="DI\BootStrapper.cs" />
     <Compile Include="Events\AuthEvent.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Comparison.cs" />
@@ -266,6 +259,7 @@
       <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\History\HistoryViewModel.cs" />
+    <Compile Include="Tools\ProjectConnect\IProjectModel.cs" />
     <Compile Include="Tools\ProjectConnect\ModelRequestHandler.cs" />
     <Compile Include="Tools\ProjectConnect\ProjectModel.cs" />
     <Compile Include="Tools\ProjectConnect\ProjectView.xaml.cs">

@@ -201,7 +201,7 @@
         /// TWhen load window, load user and user's projects too
         /// </summary>
         /// <param name="view">The view<see cref="ProjectView"/></param>
-        private async void OnWindowLoaded(ProjectView view)
+        private  void OnWindowLoaded(ProjectView view)
         {
             if (AuthProvider.Instance.IsConnected == false)
             {

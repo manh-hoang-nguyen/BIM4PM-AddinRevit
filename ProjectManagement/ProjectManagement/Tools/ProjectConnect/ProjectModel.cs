@@ -6,7 +6,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public class ProjectModel
+    public class ProjectModel : IProjectModel
     {
         IUserRepository _userRepository;
 

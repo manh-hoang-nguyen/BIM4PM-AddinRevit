@@ -1,32 +1,25 @@
 ﻿namespace BIM4PM.UI.Tools.Auth
 {
     using Autodesk.Revit.UI;
+    using BIM4PM.UI.Commun;
+    using BIM4PM.UI.Events;
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
-
-    using BIM4PM.UI.Commun;
-    using System.Threading;
-    using System.Windows;
-
+    using Prism.Events;
     using System;
-    using System.ComponentModel.DataAnnotations;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Net.Mail;
-    using BIM4PM.UI.Resources.Utils;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
-    using System.Collections.Generic;
-    using System.Collections;
-    using Prism.Events;
-    using BIM4PM.UI.Events;
+    using System.Windows;
 
     public class LoginViewModel : ViewModelBase, INotifyDataErrorInfo
     {
-
         private IEventAggregator _eventAggregator;
 
         private UIApplication _uiapp;
-         
+
         public LoginModel Model { get; set; }
 
         public RelayCommand<Window> Cancel { get; set; }
@@ -35,12 +28,12 @@
 
         public RelayCommand<LoginView> LoginCommand { get; set; }
 
-        public RelayCommand<LoginView> WindowLoaded { get; set; } 
+        public RelayCommand<LoginView> WindowLoaded { get; set; }
 
         private string _email { get; set; }
 
-        private string _password { get; set; } 
-        
+        private string _password { get; set; }
+
         public string Email
         {
             get => _email;
@@ -59,7 +52,7 @@
                 LoginCommand.RaiseCanExecuteChanged();
             }
         }
-        
+
         public string Password
         {
             get => _password;
@@ -74,39 +67,43 @@
                         _PropertyErrors["Password"] = errorsTask.Result;
                         ErrorsChanged(this, new DataErrorsChangedEventArgs("Password"));
                     }
+                    LoginCommand.RaiseCanExecuteChanged();
                 });
-                LoginCommand.RaiseCanExecuteChanged();
+               
             }
         }
+
         Task<List<string>> GetErrorPassword(string value)
         {
             return Task.Factory.StartNew(() =>
-            { 
-                
-                if (string.IsNullOrEmpty(value) || value.Length <8)
+            {
+
+                if (string.IsNullOrEmpty(value) || value.Length < 8)
                     return new List<string> { "Invalid Email" };
                 return null;
             });
         }
+
         Task<List<string>> GetErrorsForEmail(string email)
         {
             return Task.Factory.StartNew(() =>
             {
-                 
+
                 Regex regex = new Regex(@"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
                 @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$");
                 if (regex.Match(email) == Match.Empty)
                     return new List<string> { "Invalid Email" };
                 return null;
             });
-
         }
-        
 
-        public bool HasErrors {
+        public bool HasErrors
+        {
             get { return PropertyErrorsPresent(); }
         }
+
         Dictionary<string, List<string>> _PropertyErrors = new Dictionary<string, List<string>>();
+
         private bool PropertyErrorsPresent()
         {
             bool errors = false;
@@ -121,8 +118,6 @@
 
             return errors;
         }
-         
-
 
         public LoginViewModel(UIApplication uiapp, IEventAggregator eventAggregator)
         {
@@ -137,7 +132,7 @@
 
         private bool CanLogin(LoginView arg)
         {
-            return !string.IsNullOrWhiteSpace( Email) && !string.IsNullOrWhiteSpace (Password) && !HasErrors;
+            return !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password) && !HasErrors;
         }
 
         private void OnAuthenticated(Window win)
@@ -146,8 +141,8 @@
         }
 
         private void OnWindowLoaded(LoginView win)
-        { 
-         
+        {
+
             string isSave = Properties.Settings.Default["IsSave"] as string;
             if (isSave == "1")
             {
@@ -190,18 +185,15 @@
                 _eventAggregator.GetEvent<AuthEvent>().Publish(true);
             }
             else _eventAggregator.GetEvent<AuthEvent>().Publish(true);
-
-            //    }
-            //});
-
-            //thread.Start();
         }
 
         private void OnCancel(Window win)
         {
             win.Close();
         }
+
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged = delegate { };
+
         public IEnumerable GetErrors(string propertyName)
         {
             lock (_PropertyErrors)

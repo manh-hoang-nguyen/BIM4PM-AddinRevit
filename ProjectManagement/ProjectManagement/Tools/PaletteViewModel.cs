@@ -23,8 +23,6 @@
                     Header = "Connect"
                 });
             }
-            
-            //AuthProvider.Instance.ConnectionChanged += (s, e) => AddTabsOnConnected();
            
         }
          
