@@ -8,6 +8,6 @@ namespace BIM4PM.UI.Commun
 {
   public  class AuthChangedEventArgs:EventArgs
     {
-        public AuthProvider AuthProvider { get; set; }
+        //public AuthProvider AuthProvider { get; set; }
     }
 }

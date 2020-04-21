@@ -10,7 +10,7 @@ namespace BIM4PM.DataAccess.Routes
     {
         public ModelRoute(string projectId)
         {
-            GetProjectsUrl = $"{RouteBase.BaseUrl}/projects/{projectId}/models";
+            GetProjectsUrl = $"{RouteBase.ApiPrefix}/projects/{projectId}/models";
         }
         public string GetProjectsUrl { get; set; }
     }

@@ -14,7 +14,7 @@
     {
         private CompareProvider()
         {
-            AuthProvider.Instance.ConnectionChanged += (s, e) => Reset();
+            
 
             ElementToExamine = new List<ElementId>();
             Deleted = new List<string>();
@@ -52,15 +52,14 @@
         /// </summary>
         public void Reset()
         {
-            if (AuthProvider.Instance.IsConnected == false)
-            {
+             
                 ElementToExamine = new List<ElementId>();
                 Deleted = new List<string>();
                 Modified = new List<string>();
                 New = new List<string>();
                 Same = new List<string>();
                 ModifiedElementToSynchonize = null;
-            }
+            
         }
 
         /// <summary>
@@ -158,7 +157,7 @@
         {
             if (ProjectProvider.Instance.CurrentProject == null
                 || Deleted.Count == 0
-                || AuthProvider.Instance.token == null) return;
+                ) return;
             List<RevitElement> delElements = new List<RevitElement>();
             foreach (string guid in Deleted)
             {
@@ -184,7 +183,7 @@
         {
             if (ProjectProvider.Instance.CurrentProject == null
                || New.Count == 0
-               || AuthProvider.Instance.token == null) return;
+                ) return;
             List<RevitElement> newElements = new List<RevitElement>();
             foreach (string guid in New)
             {

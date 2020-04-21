@@ -20,7 +20,13 @@ namespace BIM4PM.DataAccess
         {
             RestSharpBase requestBase = new RestSharpBase(ProjectRoute.ProjectsOfUserUrl, Method.GET);
             IRestResponse<IEnumerable<Project>> response = await _client.ExecuteAsync<IEnumerable<Project>>(requestBase.Request);
-            return response.Data;
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    return response.Data;
+                default:
+                    throw new System.Exception(response.StatusDescription);
+            }
         }
     }
 }

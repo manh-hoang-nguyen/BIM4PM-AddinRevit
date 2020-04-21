@@ -10,7 +10,7 @@ namespace BIM4PM.DataAccess.Routes
     {
         public SynchronizationRoute(string modelId)
         {
-            PostGetUrl = $"{RouteBase.BaseUrl}/models/{modelId}/synchronizations";
+            PostGetUrl = $"{RouteBase.ApiPrefix}/models/{modelId}/synchronizations";
             GetLastUrl = $"{PostGetUrl}/last";
         }
         public string PostGetUrl { get; set; } 

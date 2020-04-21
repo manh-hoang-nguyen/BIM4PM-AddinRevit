@@ -8,8 +8,8 @@ namespace BIM4PM.DataAccess
 {
    public class AuthRoute
     {
-        public static string Login = $"{RouteBase.BaseUrl}/auth/login";
-        public static string RefreshToken = $"{RouteBase.BaseUrl}/auth/token";
+        public static string Login = $"{RouteBase.ApiPrefix}/auth/login";
+        public static string RefreshToken = $"{RouteBase.ApiPrefix}/auth/token";
         
     }
 }

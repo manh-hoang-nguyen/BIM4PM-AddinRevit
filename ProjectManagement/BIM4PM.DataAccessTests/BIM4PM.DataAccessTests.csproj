@@ -61,8 +61,14 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuthenticationRepositoryTest.cs" />
+    <Compile Include="Repositories\GroupProjectRepositoryTest.cs" />
+    <Compile Include="Repositories\ModelRepositoryTest.cs" />
+    <Compile Include="Repositories\RevitElementRepositoryTest.cs" />
+    <Compile Include="Repositories\UserRepositoryTest.cs" />
+    <Compile Include="SocketClient\SocketClientTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -75,6 +81,10 @@
     <ProjectReference Include="..\BIM4PM.Data\BIM4PM.DataAccess.csproj">
       <Project>{B9019A62-37BD-4F63-A93E-7EEBA2475651}</Project>
       <Name>BIM4PM.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BIM4PM.Model\BIM4PM.Model.csproj">
+      <Project>{52752596-3B00-48D8-9681-763558FF4E0E}</Project>
+      <Name>BIM4PM.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

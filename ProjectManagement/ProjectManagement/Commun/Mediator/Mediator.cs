@@ -16,9 +16,9 @@ namespace BIM4PM.UI.Commun
 
         public event EventHandler<AuthChangedEventArgs> AuthChanged;
 
-        public void OnAuthChanged(object sender, AuthProvider authProvider)
-        {
-            (AuthChanged as EventHandler<AuthChangedEventArgs>)?.Invoke(sender, new AuthChangedEventArgs {AuthProvider = authProvider});
-        }
+        //public void OnAuthChanged(object sender, AuthProvider authProvider)
+        //{
+        //    (AuthChanged as EventHandler<AuthChangedEventArgs>)?.Invoke(sender, new AuthChangedEventArgs {AuthProvider = authProvider});
+        //}
     }
 }

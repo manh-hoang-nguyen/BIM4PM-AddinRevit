@@ -20,7 +20,14 @@
             RestSharpBase reqBase = new RestSharpBase(UserRoute.GetMe, Method.GET);
             RestRequest req = reqBase.Request;
             IRestResponse<User> response = await _client.ExecuteAsync<User>(req);
-            return response.Data;
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    return response.Data;
+                default:
+                    throw new System.Exception(response.StatusDescription);
+            }
+            
         }
     }
 }

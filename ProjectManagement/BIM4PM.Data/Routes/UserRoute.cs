@@ -8,6 +8,6 @@ namespace BIM4PM.DataAccess.Routes
 {
   public  class UserRoute
     {
-        public static string GetMe = $"{RouteBase.BaseUrl}/users/me";
+        public static string GetMe = $"{RouteBase.ApiPrefix}/users/me";
     }
 }

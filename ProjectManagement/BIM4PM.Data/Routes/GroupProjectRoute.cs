@@ -9,6 +9,6 @@ namespace BIM4PM.DataAccess.Routes
    public class GroupProjectRoute
     {
        
-        public string GetUrl { get; set; } = $"{RouteBase.BaseUrl}/groupprojects";
+        public string GetUrl { get; set; } = $"{RouteBase.ApiPrefix}/groupprojects";
     }
 }

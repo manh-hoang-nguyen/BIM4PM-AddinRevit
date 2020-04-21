@@ -200,12 +200,7 @@ namespace BIM4PM.UI
 
         private static void OnDocumentClosing(object source, DocumentClosingEventArgs args)
         {
-            //if (args.Document.Title == ModelProvider.Instance.CurrentModel.Title) AuthProvider.Instance.Disconnect();
-            if (ProjectModelConnect.SelectedRevitModel != null && args.Document.Title == ProjectModelConnect.SelectedRevitModel.Title)
-            {
-
-                AuthProvider.Instance.Logout();
-            }
+            
             var docToRemove = ModelProvider.Models.Where(x => x.Title == args.Document.Title);
             if (docToRemove != null) ModelProvider.Models.Remove(docToRemove.FirstOrDefault());
         }

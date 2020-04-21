@@ -52,13 +52,17 @@
             req.RequestFormat = RestSharp.DataFormat.Json;
             req.AddJsonBody(body);
             IRestResponse<Token> res = _client.Execute<Token>(req);
-             
+
             if ((int)res.StatusCode == 200)
             {
                 Token = res.Data;
                 return true;
             }
-            else return false;
+            else
+            {
+                Token = null;
+                return false;
+            } 
         }
 
         public void Logout()

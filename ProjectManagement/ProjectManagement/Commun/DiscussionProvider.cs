@@ -12,7 +12,7 @@ namespace BIM4PM.UI.Commun
     {
         private DiscussionProvider()
         {
-            AuthProvider.Instance.ConnectionChanged += (s, e) => Reset(); 
+            
 
             Comments = new ObservableCollection<Comment>();
         }
@@ -26,11 +26,11 @@ namespace BIM4PM.UI.Commun
 
         public void Reset()
         {
-            if (AuthProvider.Instance.IsConnected == false)
-            {
+            
+             
                 RevitElement = null;
                 Comments = new ObservableCollection<Comment>();
-            } 
+            
         }
     }
   

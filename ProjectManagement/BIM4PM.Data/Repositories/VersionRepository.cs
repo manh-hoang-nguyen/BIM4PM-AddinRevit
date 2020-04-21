@@ -22,7 +22,14 @@
             RestRequest req = requestBase.Request;
             req.AddHeader("modelid", modelId);
             IRestResponse<ModelVersion> response = await _client.ExecuteAsync<ModelVersion>(req);
-            return response.Data;
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    return response.Data;
+                default:
+                    throw new System.Exception(response.StatusDescription);
+            }
+
         }
 
         public async Task<IEnumerable<ModelVersion>> GetVersions(string modelId)
@@ -32,7 +39,14 @@
             RestRequest req = requestBase.Request;
             req.AddHeader("modelid", modelId);
             IRestResponse<IEnumerable<ModelVersion>> response = await _client.ExecuteAsync<IEnumerable<ModelVersion>>(req);
-            return response.Data;
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    return response.Data;
+                default:
+                    throw new System.Exception(response.StatusDescription);
+            }
+
         }
     }
 }

@@ -21,7 +21,13 @@
             var route = new ModelRoute(projectId);
             RestSharpBase restSharpBase = new RestSharpBase(route.GetProjectsUrl, Method.GET);
             IRestResponse<IEnumerable<Model>> response = await _client.ExecuteAsync<IEnumerable<Model>>(restSharpBase.Request);
-            return response.Data;
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    return response.Data;
+                default:
+                    throw new System.Exception(response.StatusDescription);
+            }
         }
 
          

@@ -10,7 +10,7 @@ namespace BIM4PM.DataAccess.Routes
     {
         public VersionRoute()
         {
-            GetVersions = $"{RouteBase.BaseUrl}/versions";
+            GetVersions = $"{RouteBase.ApiPrefix}/versions";
             GetCurrentVersion = $"{GetVersions}/current";
         }
         public string GetVersions { get; set; }

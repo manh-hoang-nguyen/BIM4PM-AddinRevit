@@ -97,8 +97,8 @@
 
         private bool CanDisconnect(ProjectView arg)
         {
-            if (AuthProvider.Instance.IsConnected == true) return true;
-            return false;
+             return true;
+           
         }
 
         private bool CanConnect(ProjectView arg)
@@ -161,7 +161,7 @@
 
             Model.GetParamterElement();
 
-            AuthProvider.Instance.IsConnected = true;
+           
             ConnectCommand.RaiseCanExecuteChanged();
             DisconnectCommand.RaiseCanExecuteChanged();
             SynchronizeCommand.RaiseCanExecuteChanged();
@@ -180,7 +180,7 @@
         /// <param name="view">The view<see cref="ProjectView"/></param>
         private void OnDisconnect(ProjectView view)
         {
-            AuthProvider.Instance.IsConnected = false;
+            
 
             Versions = null;
 
@@ -203,8 +203,7 @@
         /// <param name="view">The view<see cref="ProjectView"/></param>
         private  void OnWindowLoaded(ProjectView view)
         {
-            if (AuthProvider.Instance.IsConnected == false)
-            {
+            
                 //Task<User> userTask = Model.GetUser();
                 //Task<List<Project>> projects = Model.GetProjectsOfUserAsync();
                 view.Models.ItemsSource = ModelProvider.Models;
@@ -214,7 +213,7 @@
                 CbProjectIsEnable = true;
                 CbModelIsEnable = true;
                 view.EllipseUpToDate.Fill = new SolidColorBrush(Colors.White);
-            }
+            
         }
 
         /// <summary>

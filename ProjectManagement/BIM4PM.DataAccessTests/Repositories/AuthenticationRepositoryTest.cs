@@ -20,8 +20,10 @@ namespace BIM4PM.DataAccessTests.Repositories
 
             var actual = authenticationRepository.Login(email, password);
 
-
-            Assert.Equal(expect,actual);
+            //Assert
+            Assert.Equal(expect,actual); 
+            if (expect == true) Assert.NotNull(AuthenticationRepository.Token);
+            else Assert.Null(AuthenticationRepository.Token);
         }
     }
 }

@@ -22,7 +22,13 @@
             RestRequest req = restSharpBase.Request;
             req.AddJsonBody(body);
             var response = await _client.ExecuteAsync<SynchroResponse>(req);
-            return response.Data;
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    return response.Data;
+                default:
+                    throw new System.Exception(response.StatusDescription);
+            }
         }
 
         public async Task<Synchronization> GetLastSynchronization(string modelId)
@@ -31,7 +37,13 @@
             RestSharpBase requestBase = new RestSharpBase(url.GetLastUrl, RestSharp.Method.GET);
 
             var response = await _client.ExecuteAsync<Synchronization>(requestBase.Request);
-            return response.Data;
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    return response.Data;
+                default:
+                    throw new System.Exception(response.StatusDescription);
+            }
         }
 
         public async Task<IEnumerable<Synchronization>> GetSynchronizations(string modelId)
@@ -39,7 +51,13 @@
             var url = new SynchronizationRoute(modelId);
             RestSharpBase requestBase = new RestSharpBase(url.PostGetUrl, Method.GET);
             var response = await _client.ExecuteAsync<IEnumerable<Synchronization>>(requestBase.Request);
-            return response.Data;
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    return response.Data;
+                default:
+                    throw new System.Exception(response.StatusDescription);
+            }
         }
     }
 }

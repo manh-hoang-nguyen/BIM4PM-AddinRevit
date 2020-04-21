@@ -4,7 +4,7 @@
     {
         public RevitElementRoute(string versionId)
         {
-            GetElementsUrl = $"{RouteBase.BaseUrl}/versions/{versionId}/revitelements";
+            GetElementsUrl = $"{RouteBase.ApiPrefix}/versions/{versionId}/revitelements";
             GetEleInPeriodUrl = $"{GetElementsUrl}/period";
         }
 

@@ -10,9 +10,11 @@ namespace BIM4PM.DataAccess
 
   public class RouteBase
     {
-        //public static RestClient Client = new RestClient("https://bim-team.herokuapp.com/");
-        public static RestClient Client = new RestClient("http://localhost:5000"); 
-        public static string BaseUrl = "/api/v1"; 
+        public static string BaseUrl = "http://localhost:5000";
+        //public static string BaseUrl = "https://bim-team.herokuapp.com"; 
+        public static RestClient Client = new RestClient(BaseUrl); 
+        public static string ApiPrefix = "/api/v1"; 
+       
     }
   
 }

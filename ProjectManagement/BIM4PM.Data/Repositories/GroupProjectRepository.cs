@@ -21,7 +21,13 @@
             var route = new GroupProjectRoute(); 
             RestSharpBase restSharpBase = new RestSharpBase(route.GetUrl, Method.GET); 
             var response = await _client.ExecuteAsync<IEnumerable<GroupProject>>(restSharpBase.Request);
-            return response.Data;
+            switch ((int)response.StatusCode)
+            {
+                case 200:
+                    return response.Data;
+                default:
+                    throw new System.Exception(response.StatusDescription);
+            }
         }
     }
 }

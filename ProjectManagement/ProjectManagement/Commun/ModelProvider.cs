@@ -14,7 +14,7 @@
         public ModelProvider()
         {
             DicRevitElements = new Dictionary<string, RevitElement>();
-            AuthProvider.Instance.ConnectionChanged += (s, e) =>  Reset();
+           
            
         }
 
@@ -83,14 +83,10 @@
         }
 
         private void Reset()
-        {
-            if((AuthProvider.Instance.IsConnected == false))
-            {
+        { 
                 DicRevitElements = null;
                 CurrentModel = null;
-                Levels = null;
-            }
-          
+                Levels = null; 
         }
     }
 }
