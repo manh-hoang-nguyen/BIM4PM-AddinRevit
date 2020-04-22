@@ -8,13 +8,30 @@
     using System.Collections.ObjectModel;
     using System.Threading;
     using System.Windows.Controls;
+    using Prism.Events;
+    using BIM4PM.UI.Events;
+    using System;
 
     public class PaletteViewModel : ViewModelBase, IConnectObserver
     {
        public static ObservableCollection<TabItem> TabItems { get; set; } = new ObservableCollection<TabItem>();
 
-        public PaletteViewModel()
+        public PaletteViewModel(IEventAggregator eventAggregator)
         { 
+            //if (TabItems.Count == 0)
+            //{
+            //    TabItems.Add(new TabItem
+            //    {
+            //        Content = new ProjectView() { DataContext = new ProjectViewModel() },
+            //        Header = "Connect"
+            //    });
+            //}
+
+            eventAggregator.GetEvent<AuthEvent>().Subscribe(OnAuth);
+        }
+
+        private void OnAuth(bool obj)
+        {
             if (TabItems.Count == 0)
             {
                 TabItems.Add(new TabItem
@@ -23,9 +40,8 @@
                     Header = "Connect"
                 });
             }
-           
         }
-       
+
         public void Update(IConnect connect)
         {
            

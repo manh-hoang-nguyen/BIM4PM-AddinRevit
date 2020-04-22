@@ -25,7 +25,7 @@ namespace BIM4PM.DataAccessTests.SocketClient
             var socket = new Socket.SocketClient();
             //Thread t = new Thread(() =>
             //{
-                socket.ConnectToProject(new Project { Id = "123" });
+                socket.ConnectToProject(new Project { Id = "123" , Name= "Test"});
             //});
             //t.Start();
           

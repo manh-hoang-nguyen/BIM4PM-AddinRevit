@@ -17,7 +17,7 @@ namespace BIM4PM.UI.Tools
     {
         public static void RegisterPalette(UIControlledApplication app)
         {
-            var view = new PaletteMainView();
+            var view = new PaletteMainView() { DataContext = new PaletteViewModel(EventProvider.Instance.EventAggregator) };
             App.PaletteWindow = view;
             var unused = new DockablePaneProviderData
             {
@@ -46,6 +46,7 @@ namespace BIM4PM.UI.Tools
         /// </summary>
         public static void LaunchPanel()
         {
+            
            
                 App.PaletteWindow.MainControl.Dispatcher.Invoke(() =>
             {
@@ -61,11 +62,11 @@ namespace BIM4PM.UI.Tools
                 }
 
                 // (Konrad) Now we can reset the ViewModel
-                App.PaletteWindow.DataContext = new PaletteViewModel();
-                if (App.PaletteWindow.MainControl.Items.Count > 0)
-                {
-                    App.PaletteWindow.MainControl.SelectedIndex = 0;
-                }
+                //App.PaletteWindow.DataContext = new PaletteViewModel();
+                //if (App.PaletteWindow.MainControl.Items.Count > 0)
+                //{
+                //    App.PaletteWindow.MainControl.SelectedIndex = 0;
+                //}
             }, DispatcherPriority.Normal);
         }
 

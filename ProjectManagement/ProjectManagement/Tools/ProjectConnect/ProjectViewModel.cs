@@ -167,10 +167,7 @@
             SynchronizeCommand.RaiseCanExecuteChanged();
             CompareCommand.RaiseCanExecuteChanged();
 
-            //Test
-            PaletteViewModel paletteViewModel = new PaletteViewModel();
-            ModelProvider modelProvider = new ModelProvider();
-            ProjectModelConnect connect= new ProjectModelConnect(SelectedProject, SelectedRevitModel);
+          
             
         }
 

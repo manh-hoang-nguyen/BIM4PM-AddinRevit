@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Quobject.EngineIoClientDotNet.Client.Transports;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Quobject.Collections.Immutable;
-using  Quobject.SocketIoClientDotNet.Client;
-using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
-using BIM4PM.Model;
-
-namespace BIM4PM.DataAccess.SocketClient
+﻿namespace BIM4PM.DataAccess.SocketClient
 {
-   public class SocketClient
+    using BIM4PM.Model;
+    using GalaSoft.MvvmLight.Messaging;
+    using Newtonsoft.Json.Linq;
+    using Quobject.SocketIoClientDotNet.Client;
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+
+    public class SocketClient
     {
-        
-        private  Socket _socket;
-     
+        private Socket _socket;
+
         private string BaseUrlLocal = RouteBase.BaseUrl;
+
         public SocketClient()
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
@@ -26,35 +20,43 @@ namespace BIM4PM.DataAccess.SocketClient
             var options = new IO.Options
             {
                 IgnoreServerCertificateValidation = true,
-                //AutoConnect = true,
-                //ForceNew = true,
-                //Upgrade = false,
+                AutoConnect = true,
+                ForceNew = true,
+                Upgrade = false,
                 ExtraHeaders = headers
             };
 
             //options.Transports = ImmutableList.Create<string>(WebSocket.NAME);
-            
+
             _socket = IO.Socket(BaseUrlLocal, options);
             _socket.On(Socket.EVENT_CONNECT, () =>
             {
-                
+                //MessageBox.Show("Connected");
+                //MessageBox.Show("Join");
+                Messenger.Default.Register<Project>(this, (action) => MessageBox.Show(action.Name));
             });
 
-            _socket.On("synchronization",(body) => {
+            _socket.On("synchronization", (body) =>
+            {
                 var data = JObject.FromObject(body);
                 MessageBox.Show(data.Property("_id").ToString());
+              
             });
-             
-           
-            _socket.Emit("synchronization", JObject.FromObject( new Synchronization() { Id = "123" }));
+            _socket.On("joinProject", () =>
+            {
+                MessageBox.Show("Join");
+                Messenger.Default.Register<Project>(this, (action) => MessageBox.Show(action.ToString()));
+            });
+
+            _socket.Emit("synchronization", JObject.FromObject(new Synchronization() { Id = "123" }));
         }
-        
+
         public void ConnectToProject(Project project)
         {
+            var meassage = new NotificationMessage(project, "jointproect");
+
+            Messenger.Default.Send<Project>(project);
             _socket.Emit("joinProject", JObject.FromObject(project));
-            _socket.Disconnect();
         }
-        
     }
-    
 }

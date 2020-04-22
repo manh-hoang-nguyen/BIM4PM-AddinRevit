@@ -21,7 +21,7 @@ namespace BIM4PM.UI.CmdRevit
 
             //}
 
-            AuthProvider.Instance.Logout();
+           
               
             return Result.Succeeded;
         }
