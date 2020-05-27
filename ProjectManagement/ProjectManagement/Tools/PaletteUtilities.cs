@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using BIM4PM.UI.Events;
 
 namespace BIM4PM.UI.Tools
 {
@@ -17,7 +18,7 @@ namespace BIM4PM.UI.Tools
     {
         public static void RegisterPalette(UIControlledApplication app)
         {
-            var view = new PaletteMainView() { DataContext = new PaletteViewModel(EventProvider.Instance.EventAggregator) };
+            var view = new PaletteMainView() { DataContext = new PaletteViewModel(EventInstance.Instance.EventAggregator) };
             App.PaletteWindow = view;
             var unused = new DockablePaneProviderData
             {

@@ -53,23 +53,21 @@ namespace BIM4PM.UI
             DiscussionHandler = new DiscussionRequestHandler();
             DiscussionEvent = ExternalEvent.Create(DiscussionHandler);
 
+            //Register panel
             PaletteUtilities.RegisterPalette(uicapp);
-
-
-
+             
             _uicapp = uicapp;
 
             // Obtenir le chemin du dll assembly
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
-            /************************************Création de l'onglet ***********************************************/
+           // Créer des onglets
             string nomOnglet = "Manh Hoang";
             Onglet onglet = new Onglet();
             onglet.Ajouter(uicapp, nomOnglet);
             Bouton button = new Bouton();
 
-            //********************Create panel*******************
-
+            //********************Create panel******************* 
             Ruban panneau = new Ruban();
             RibbonPanel rbAuth = panneau.Ajouter(uicapp, nomOnglet, "Authentification");
             RibbonPanel rbVerification = panneau.Ajouter(uicapp, nomOnglet, "Verification");

@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BIM4PM.UI</RootNamespace>
     <AssemblyName>BIM4PM.UI</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -175,7 +175,6 @@
     <Compile Include="CmdRevit\Utils\PanelAvailability.cs" />
     <Compile Include="Commun\CompareProvider.cs" />
     <Compile Include="Commun\DiscussionProvider.cs" />
-    <Compile Include="Commun\EventProvider.cs" />
     <Compile Include="Commun\GroupProjectProvider.cs" />
     <Compile Include="Commun\Mediator\AuthChangedEventArgs.cs" />
     <Compile Include="Commun\Mediator\Mediator.cs" />
@@ -191,6 +190,7 @@
     <Compile Include="Commun\ProjectProvider.cs" />
     <Compile Include="Commun\UserProvider.cs" />
     <Compile Include="Events\AuthEvent.cs" />
+    <Compile Include="Events\EventInstance.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Comparison.cs" />
     <Compile Include="MethodeRevitApi.cs" />

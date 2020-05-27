@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIM4PM.UI.Commun
+namespace BIM4PM.UI.Events
 {
-   public class EventProvider
+  public  class EventInstance
     {
         
-        private EventProvider() { }
-        public static EventProvider Instance { get; } = new EventProvider();
+        private EventInstance() { }
+        public static EventInstance Instance { get; } = new EventInstance();
         public IEventAggregator EventAggregator { get; private set; } = new EventAggregator();
-
     }
 }

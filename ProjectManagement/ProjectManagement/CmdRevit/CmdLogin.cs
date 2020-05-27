@@ -8,7 +8,7 @@
     using BIM4PM.UI.Tools.Auth;
     using System;
     
-    using Prism.Events;
+    using BIM4PM.UI.Events;
 
     [Transaction(TransactionMode.ReadOnly)]
     public class CmdLogin : IExternalCommand
@@ -19,7 +19,7 @@
             UIApplication uiapp = commandData.Application;
 
             
-            LoginView loginView = new LoginView(new LoginViewModel(uiapp, EventProvider.Instance.EventAggregator));
+            LoginView loginView = new LoginView(new LoginViewModel(uiapp, EventInstance.Instance.EventAggregator));
 
             loginView.ShowDialog();
 

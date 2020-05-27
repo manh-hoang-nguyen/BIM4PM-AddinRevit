@@ -341,7 +341,7 @@
             } 
 
             //Order by elevation
-            Level tmp;//bien trung gian
+            Level tmp; 
             for (int i = 0; i < levles.Count; i++)
             {
                 for (int j = i + 1; j < levles.Count; j++)

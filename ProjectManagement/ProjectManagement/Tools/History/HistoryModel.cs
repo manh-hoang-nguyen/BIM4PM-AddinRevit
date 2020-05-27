@@ -11,14 +11,13 @@ namespace BIM4PM.UI.Tools.History
 {
    public class HistoryModel
     {
-        private readonly static HistoryModel _instance = new HistoryModel();
         private HistoryModel()
         {
             HistoriesByTypeChange = new ObservableCollection<HistoryByTypeChange>();
         }
 
-        public static HistoryModel Instance => _instance;
-         
+        public static HistoryModel Instance { get; } = new HistoryModel();
+
         //public HistoryModel()
         //{
         //    _ins = this;
@@ -27,10 +26,7 @@ namespace BIM4PM.UI.Tools.History
         public static List<Models.History> Histories { get; set; }
         // public static ObservableCollection<HistoryByTypeChange> HistoriesByTypeChange { get; set; } = new ObservableCollection<HistoryByTypeChange>();
         public  ObservableCollection<HistoryByTypeChange> HistoriesByTypeChange { get; set; } 
-        public void GetGeometryChange()
-        {
-         
-        }
+    
 
         public void GetHistory()
         {
