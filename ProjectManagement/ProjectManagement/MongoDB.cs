@@ -14,7 +14,7 @@ namespace ProjectManagement
         public static MongoDB Instance { get => instance; set => instance = value; }
 
         private MongoDB() { }
-        private string link = "mongodb+srv://Manh-Hoang:123456A@cluster0-gkgpa.gcp.mongodb.net/test?retryWrites=true&w=majority";
+        private string link = "";
         public IMongoCollection<BsonDocument> Connection()
         {
             
